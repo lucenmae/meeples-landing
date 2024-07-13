@@ -1,0 +1,113 @@
+import * as React from 'react';
+import { SiFacebook, SiInstagram, SiTwitter } from 'react-icons/si';
+
+import Accent from '@/components/Accent';
+import UnstyledLink from '@/components/links/UnstyledLink';
+
+// !TODO: link social media accounts
+
+export default function Footer() {
+  return (
+    <footer className='relative inset-x-0 bottom-0 h-[260px] mt-4 bg-primary-900'>
+      <div className='layout flex flex-col items-center border-t pt-6'>
+        <FooterLinks />
+
+        <p className='mt-12 font-medium text-gray-300'>Reach us out</p>
+        <SocialLinks />
+
+        <p className='my-2 text-sm text-gray-300'>
+          © {new Date().getFullYear()} Cirquolus. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  );
+}
+
+function FooterLinks() {
+  return (
+    <div className='flex flex-wrap justify-center gap-y-4 gap-x-8 text-white'>
+      {footerLinks.map(({ href, text }) => (
+        <UnstyledLink
+          key={href}
+          className='animated-underline rounded-sm text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-primary-300 dark:text-gray-200'
+          href={href}
+        >
+          {text}
+        </UnstyledLink>
+      ))}
+    </div>
+  );
+}
+
+function SocialLinks() {
+  return (
+    <div className='mt-2 flex space-x-4'>
+      {socials.map((social) => (
+        <UnstyledLink
+          key={social.id}
+          className='inline-flex items-center justify-center rounded-sm focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
+          href={social.href}
+        >
+          <social.icon className='my-auto h-6 w-6 align-middle text-white  hover:text-primary-300' />
+        </UnstyledLink>
+      ))}
+    </div>
+  );
+}
+
+const footerLinks = [
+  {
+    href: '/about/terms',
+    text: 'Terms',
+    tooltip: 'View our Terms & Condition',
+  },
+  {
+    href: '/about/privacy',
+    text: 'Privacy',
+    tooltip: 'View our Privacy Policy',
+  },
+  {
+    href: '/contact',
+    text: 'Contact',
+    tooltip: 'Contact Us',
+  },
+  {
+    href: '/about',
+    text: 'About',
+    tooltip: 'Learn more about Seeable Tarlac',
+  },
+];
+
+const socials = [
+  {
+    href: 'https://instagram.com/seeabletarlac',
+    icon: SiInstagram,
+    id: 'Instagram',
+    text: (
+      <>
+        Follow us on <Accent className='font-medium'>Instagram</Accent>
+      </>
+    ),
+  },
+  {
+    href: 'https://www.facebook.com/profile.php?id=100088146230818',
+    icon: SiFacebook,
+    id: 'Facebook',
+    text: (
+      <>
+        Find us on <Accent className='font-medium'>Facebook</Accent>
+      </>
+    ),
+  },
+  {
+    href: 'https://twitter.com/seeabletarlac',
+    icon: SiTwitter,
+    id: 'Twitter',
+    text: (
+      <>
+        We post updates, tips and insight. Follow me us{' '}
+        <Accent className='font-medium'>Twitter</Accent>!
+      </>
+    ),
+  },
+];
