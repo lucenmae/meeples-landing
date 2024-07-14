@@ -1,150 +1,114 @@
-// header.tsx
+// import Link from 'next/link';
+// import React, { useState } from 'react';
 
-import { Dialog, DialogPanel } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useEffect, useState } from 'react';
+// import Logo from '../Logo';
+// import NextImage from '../NextImage';
+// import Tile from "../Tile"
 
-import Logo from '@/components/Logo';
-import NextImage from '@/components/NextImage';
+// const Header = () => {
+//   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-interface NavigationItem {
-  name: string;
-  href: string;
-}
+//   const handleToggleMenu = () => {
+//     setIsMenuOpen(!isMenuOpen);
+//   };
 
-const navigation: NavigationItem[] = [
-  { name: 'Rent', href: '#features' },
-  { name: 'Games', href: '#pricing' },
-];
+//   return (
+//     <nav className="w-full py-5 border-b-default border-solid border-gray-200 z-10">
+//             <div className="mx-auto max-w-7xl lg:px-8">
+//         <div className="w-full flex flex-col lg:flex-row">
+//           {/* Logo and Menu Button */}
+//           <div className="flex justify-between lg:hidden px-4">
+//             <Link href='/'  aria-label='Meeples' className="flex items-center">
+//       <NextImage
+//         useSkeleton
+//         src='/images/meeples-wordmark.png'
+//         alt='meeples wordmark'
+//         width={300}
+//         height={115}
+//       />
+//     </Link>
+//             <button
+//               type="button"
+//               className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+//               aria-controls="mobile-menu"
+//               aria-expanded={isMenuOpen ? 'true' : 'false'}
+//               onClick={handleToggleMenu}
+//             >
+//               <span className="sr-only">Open main menu</span>
+//               {/* Icon when menu is closed. */}
+//               <svg
+//                 className={isMenuOpen ? 'hidden h-6 w-6' : 'block h-6 w-6'}
+//                 xmlns="http://www.w3.org/2000/svg"
+//                 fill="none"
+//                 viewBox="0 0 24 24"
+//                 stroke="currentColor"
+//                 aria-hidden="true"
+//               >
+//                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+//               </svg>
+//               {/* Icon when menu is open. */}
+//               <svg
+//                 className={isMenuOpen ? 'block h-6 w-6' : 'hidden h-6 w-6'}
+//                 xmlns="http://www.w3.org/2000/svg"
+//                 fill="none"
+//                 viewBox="0 0 24 24"
+//                 stroke="currentColor"
+//                 aria-hidden="true"
+//               >
+//                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+//               </svg>
+//             </button>
+//           </div>
 
-const Header: React.FC = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+//           {/* Menu Items */}
+//           <div
+//             className={
+//               isMenuOpen
+//                 ? 'w-full lg:flex justify-between max-lg:bg-white py-5 max-lg:mt-1 max-lg:px-4 max-lg:shadow-lg max-lg:shadow-gray-200 max-lg:h-auto max-lg:overflow-auto transition-all duration-500 delay-200'
+//                 : 'hidden w-full lg:flex justify-between max-lg:bg-white py-5 max-lg:mt-1 max-lg:px-4 max-lg:shadow-lg max-lg:shadow-gray-200 max-lg:h-auto max-lg:overflow-auto transition-all duration-500 delay-200'
+//             }
+//             id="navbar"
+//           >
+//             <ul className="flex lg:items-center max-lg:gap-4 max-lg:mb-4 flex-col mt-4 lg:flex-1 md:mt-0 lg:flex-row">
+//               <li>
+//               <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+//                 <button className="inline-block px-6 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1 mr-4">
+//                   Rent
+//                 </button>
+//               </a>
+//               </li>
+//               <li>
+//               <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+//                 <button className="inline-block px-5 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1 mr-4">
+//                   Games
+//                 </button>
+//               </a>
+//               </li>
+//             </ul>
+//             {/* Logo */}
+//             <div  className="hidden lg:flex items-center">
+//               <Logo />
+//             </div>
+//             {/* Action Buttons */}
+//             <div className="flex lg:items-center justify-start flex-col lg:flex-row max-lg:gap-4 lg:flex-1 lg:justify-end">
+//               <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+//                 <button className="inline-block px-5 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1 mr-4">
+//                   About
+//                 </button>
+//               </a>
+//               <a href="https://discord.gg/vxDY3U8Bwn" className="text-sm font-semibold leading-6 text-gray-900">
+//                 <button className="inline-block px-5 py-2.5 text-xl font-bold text-center text-white bg-indigo-500 border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear transform scale-90 hover:bg-white hover:text-indigo-500 hover:border-indigo-500 hover:shadow-[5px_5px_0px_#6366F1] hover:-translate-y-1 active:bg-indigo-500 active:border-gray-800 active:text-white active:shadow-none active:translate-y-1">
+//                   Join Discord
+//                 </button>
+//               </a>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
 
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setMobileMenuOpen(false);
-      }
-    };
 
-    document.addEventListener('keydown', handleEscape);
+//     </nav>
+//   );
+// };
 
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-    };
-  }, []);
-
-  return (
-    <header className='absolute inset-x-0 top-0 z-50 mt-5'>
-      <nav
-        className='mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 relative'
-        aria-label='Global'
-      >
-        <div className='flex items-center justify-start sm:justify-center flex-1'>
-          <div className='sm:hidden ml-auto'>
-            <button
-              type='button'
-              className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700'
-              onClick={() => setMobileMenuOpen(true)}
-            >
-              <span className='sr-only'>Open main menu</span>
-              <Bars3Icon className='h-6 w-6' aria-hidden='true' />
-            </button>
-          </div>
-          <div className='hidden sm:flex lg:gap-x-12'>
-            {navigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className='inline-block px-5 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear  hover:-translate-y-1 active:shadow-none active:translate-y-1'
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
-        </div>
-        <div className='hidden sm:flex justify-center sm:justify-start md:justify-center flex-1'>
-          <span className='sr-only'>Meeples</span>
-          <Logo />
-        </div>
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-4'>
-          <a
-            href='#about'
-            className='inline-block px-5 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear  hover:-translate-y-1 active:shadow-none active:translate-y-1 mr-4'
-          >
-            About
-          </a>
-          <a href='#' className='text-sm font-semibold leading-6 text-gray-900'>
-            <button className='inline-block px-5 py-2.5 text-xl font-bold text-center text-white bg-indigo-500 border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear transform scale-90 hover:bg-white hover:text-indigo-500 hover:border-indigo-500 hover:shadow-[5px_5px_0px_#6366F1] hover:scale-100 active:bg-indigo-500 active:border-gray-800 active:text-white active:shadow-none active:translate-y-1'>
-              Join Discord
-            </button>
-          </a>
-        </div>
-      </nav>
-      <Dialog
-        className='lg:hidden'
-        open={mobileMenuOpen}
-        onClose={() => setMobileMenuOpen(false)}
-      >
-        <div className='fixed inset-0 z-50' />
-        <DialogPanel className='items-center fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
-          <div className='flex items-center justify-between'>
-            <a href='#' className='-m-1.5 p-1.5'>
-              <span className='sr-only'>Meeples</span>
-              <NextImage
-                useSkeleton
-                className='h-8 w-auto'
-                src='/images/cirquolus.png'
-                width='90'
-                height='90'
-                alt='cirquolus logo'
-              />
-            </a>
-            <button
-              type='button'
-              className='-m-2.5 rounded-md p-2.5 text-gray-700'
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span className='sr-only'>Close menu</span>
-              <XMarkIcon className='h-6 w-6' aria-hidden='true' />
-            </button>
-          </div>
-          <div className='mt-6 flow-root'>
-            <div className='-my-6 divide-y divide-gray-500/10'>
-              <div className='space-y-2 py-6'>
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
-                  >
-                    {item.name}
-                  </a>
-                ))}
-                <a
-                  href='#about'
-                  className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
-                >
-                  About
-                </a>
-              </div>
-              <div className='py-6'>
-                <a
-                  href='#'
-                  className='-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50'
-                >
-                  <button className='inline-block px-5 py-2.5 text-xl font-bold text-center text-white bg-indigo-500 border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear transform scale-90 hover:bg-white hover:text-indigo-500 hover:border-indigo-500 hover:shadow-[5px_5px_0px_#6366F1] hover:scale-100 active:bg-indigo-500 active:border-gray-800 active:text-white active:shadow-none active:translate-y-1'>
-                    Join Discord
-                  </button>
-                </a>
-              </div>
-            </div>
-          </div>
-        </DialogPanel>
-      </Dialog>
-    </header>
-    
-  );
-};
-
-export default Header;
+// export default Header;

@@ -5,7 +5,6 @@ import NextImage from '@/components/NextImage';
 
 export default function Logo() {
   return (
-    //className='inline-flex'
     <Link href='/'  aria-label='Meeples'>
       <NextImage
         useSkeleton

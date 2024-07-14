@@ -33,13 +33,6 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: siteConfig.title,
-    description: siteConfig.description,
-    images: [`${siteConfig.url}/images/og.jpg`],
-    // creator: '@socials',
-  },
   // authors: [
   //   {
   //     name: 'asv',

@@ -4,20 +4,12 @@ import Head from 'next/head';
 import * as React from 'react';
 import '@/lib/env';
 
-import BlogSection from '@/components/home/BlogSection';
-import DemoSection from '@/components/home/DemoSection';
-import FAQSection from '@/components/home/FAQSection';
-import FeatureSection from '@/components/home/FeatureSection';
 import HeroSection from '@/components/home/HeroSection';
-import Newsletter from '@/components/home/Newsletter';
-import PriceSection from '@/components/home/PriceSection';
-import TestimonialSection from '@/components/home/TestimonialSection';
-import TrustedSection from '@/components/home/TrustedSection';
 import Footer from '@/components/layout/Footer';
-import Header from '@/components/layout/Header';
+// import Header from '@/components/layout/Header';
 import ScrollToTopButton from '@/components/ScrollToTop';
 
-import testHead from '@/components/layout/testHead';
+import Loading from '@/app/loading';
 
 /**
  * SVGR Support
@@ -32,33 +24,39 @@ import testHead from '@/components/layout/testHead';
 // to customize the default configuration.
 
 export default function HomePage() {
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      await wait(100); // Adjust delay time as needed
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <Loading />; // Render loading indicator while waiting
+  }
+
   return (
     <main>
       <Head>
-        <title>Hi</title>
+        <title>Meeples - Tabletop Games Organization</title>
       </Head>
-      <section className='bg-white'>
-        <Header />
-        <testHead />
+
+      <section>
+        {/* <Header /> */}
         <HeroSection />
-        <TrustedSection />
-        <FeatureSection />
-        <TestimonialSection />
-        <DemoSection />
-        <PriceSection />
-        <BlogSection />
-        <FAQSection />
-        <Newsletter />
-
-        {/** Create following sections
-         * BlogSection
-         * Newletter
-         *
-         */}
         <ScrollToTopButton />
-
         <Footer />
       </section>
     </main>
   );
+}
+
+export async function wait(ms: number): Promise<void> {
+  return new Promise<void>(resolve => {
+    setTimeout(resolve, ms);
+  });
 }

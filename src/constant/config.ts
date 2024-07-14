@@ -1,7 +1,12 @@
 export const siteConfig = {
-  title: 'Cirquolus - Philippine Leading ERP System | ASV Business Solution',
+  title: 'Meeples - Tabletop Games Organization',
   description:
-    'Cirquolus is the Philippines leading ERP system offering payroll, timekeeping, HRIS, CRM, KPI, POS, warehousing, inventory, asset management, audit, and production management solutions for businesses of all sizes.',
+    'Meeples is a vibrant tabletop games organization at La Salle University Ozamiz City, fostering community through gaming passion.',
 
-  url: 'https://cirquolus.com',
+  url: 'https://meeples.tech',
+  author: 'Meeples Creatives Team',
+  email: 'contact@meeples.tech',
+  social: {
+    facebook: 'LSUMeeples',
+  },
 };

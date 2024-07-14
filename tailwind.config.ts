@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import colors from 'tailwindcss/colors';
+import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
 
 export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
@@ -7,6 +9,7 @@ export default {
     extend: {
       fontFamily: {
         primary: ['Inter', ...defaultTheme.fontFamily.sans],
+        poppins: ['Poppins', 'sans-serif'],
       },
       colors: {
         primary: {
@@ -24,6 +27,9 @@ export default {
           950: 'rgb(var(--tw-color-primary-950) / <alpha-value>)',
         },
         dark: '#222222',
+      },
+      gridTemplateColumns: {
+        20: 'repeat(25, minmax(0, 1fr))',
       },
       keyframes: {
         flicker: {
@@ -52,5 +58,17 @@ export default {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [require('@tailwindcss/forms'), addVariablesForColors],
 } satisfies Config;
+
+// This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
+function addVariablesForColors({ addBase, theme }: { addBase: any; theme: any }) {
+  const allColors = flattenColorPalette(theme('colors'));
+  const newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ':root': newVars,
+  });
+}

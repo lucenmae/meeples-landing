@@ -52,7 +52,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             'px-2 py-1 text-xs md:text-sm': size === 'sm',
             'bg-orange-600 text-white border-orange-700 border rounded-full':
               variant === 'primary',
-            'inline-block px-5 py-2.5 text-2xl font-bold text-center text-black bg-indigo-500 border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear transform scale-90 hover:bg-white hover:text-yellow-500 hover:border-yellow-500 hover:shadow-[5px_5px_0px_#EAB39D] hover:scale-100 active:bg-yellow-400 active:shadow-none active:translate-y-1':
+            'inline-block px-5 py-2.5 text-2xl font-bold text-center text-black bg-yellow-500 border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear transform scale-90 hover:bg-white hover:text-yellow-500 hover:border-yellow-500 hover:shadow-[5px_5px_0px_#EAB39D] hover:scale-100 active:bg-yellow-400 active:shadow-none active:translate-y-1':
               variant === 'header',
             'text-primary-500 shadow-none hover:bg-primary-50 active:bg-primary-100 disabled:bg-primary-100':
               variant === 'ghost',
