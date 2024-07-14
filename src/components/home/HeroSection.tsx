@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import Logo from "../Logo";
 import NextImage from "../NextImage";
 import { Boxes } from "../ui/background-boxes";
+import { FlipWords } from "../ui/flip-words";
 
 export function HeroSection() {
 
@@ -16,7 +17,7 @@ export function HeroSection() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-
+  const words = ["PLAY", "CONNECT", "THRIVE"];
   return (
     <section className="bg-[#F3F3F3] ">
             <div className="absolute inset-0 w-full h-full bg-[#F3F3F3] z-10 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
@@ -116,18 +117,18 @@ export function HeroSection() {
 
     </nav>
 
-    <div className="h-screen relative w-full  flex flex-col items-center justify-center rounded-lg">
+    <div className="h-screen relative w-full flex flex-col items-center justify-center text-gray-800 rounded-lg">
+  <Boxes />
+  <div className="h-1/2">
+    <h1 className="motto shadow-[5px_5px_0px_#2b2a28] md:text-4xl lg:text-7xl sm:text-xl uppercase relative z-20 font-poppins font-black text-center">
+      <FlipWords words={words} /> <br />
+    </h1>
+    <p className="text-center mt-5 font-semibold relative z-20">
+      LSU Meeples - An Interest-Based Organization at La Salle University Ozamiz City Promoting Tabletop Games
+    </p>
+  </div>
+</div>
 
-
-
-      <Boxes />
-      <h1 className={cn("md:text-4xl text-xl text-white relative z-20")}>
-        Tailwind is Awesome
-      </h1>
-      <p className="text-center mt-2 text-neutral-300 relative z-20">
-        Framer motion is the best animation library ngl
-      </p>
-    </div>
     </section>
   );
 }

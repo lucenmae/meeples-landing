@@ -8,15 +8,22 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
   const rows = new Array(80).fill(1);
   const cols = new Array(80).fill(1);
   const colors = [
-    "--sky-300",
-    "--pink-300",
-    "--green-300",
-    "--yellow-300",
-    "--red-300",
-    "--purple-300",
-    "--blue-300",
-    "--indigo-300",
-    "--violet-300",
+    "--#86d3ea",
+    "--#86d3ea",
+    "--#86d3ea",
+    "--#f5bf22",
+    "--#f5bf22",
+    "--#f5bf22",
+    "--#f3cc15",
+    "--#f3cc15",
+    "--#f3cc15",
+    "--#f5bf22",
+    "--#f5bf22",
+    "--#f5bf22",
+    "--#f3cc15",
+    "--#f3cc15",
+    "--#f3cc15",
+    "--#2b2a28",
   ];
   const getRandomColor = () => {
     return colors[Math.floor(Math.random() * colors.length)];
@@ -28,7 +35,7 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
         "absolute left-1/4 -top-1/4 flex -translate-x-1/2 -translate-y-1/2 w-full h-full z-0",
         className
       )}
-
+      {...rest}
     >
       {rows.map((_, i) => (
         <motion.div key={`row` + i}>
@@ -42,7 +49,7 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
                 transition: { duration: 2 },
               }}
               key={`col` + j}
-              className="w-16 h-8 border-r border-t border-slate-700 relative"
+              className="w-20 h-20 border-r border-t border-slate-700 relative"
             >
             </motion.div>
           ))}

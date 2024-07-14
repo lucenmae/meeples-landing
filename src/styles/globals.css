@@ -258,7 +258,7 @@
     background-position: 24px, 24px;
   }
 }
-.grid-pattern {
+/* .grid-pattern {
   --color: #E1E1E1;
   background-color: #F3F3F3;
   background-image: linear-gradient(
@@ -286,4 +286,19 @@
       transparent
     );
   background-size: calc(100vw / 20) calc(100vh / 12);
+} */
+
+
+.motto {
+  border-radius: 15px;
+  --un-bg-opacity: 1;
+  background-color: #f5bf22;
+  border-color: #2b2a28;
+  border-width: 8px;
+  line-height: 1;
+  text-transform: uppercase;
+  --un-text-opacity: 1;
+  color: rgba(255,255,255,var(--un-text-opacity));
+  padding: 15px 0px;  /* Add some padding for better appearance */
+
 }
