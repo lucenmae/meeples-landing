@@ -5,11 +5,11 @@ import * as React from 'react';
 import '@/lib/env';
 
 import HeroSection from '@/components/home/HeroSection';
-import Footer from '@/components/layout/Footer';
-// import Header from '@/components/layout/Header';
 import ScrollToTopButton from '@/components/ScrollToTop';
+import { FollowerPointerCard } from "@/components/ui/following-pointer";
 
 import Loading from '@/app/loading';
+
 
 /**
  * SVGR Support
@@ -40,6 +40,7 @@ export default function HomePage() {
   }
 
   return (
+    <FollowerPointerCard>
     <main>
       <Head>
         <title>Meeples - Tabletop Games Organization</title>
@@ -48,10 +49,11 @@ export default function HomePage() {
       <section>
         {/* <Header /> */}
         <HeroSection />
+        
         <ScrollToTopButton />
-        <Footer />
       </section>
     </main>
+    </FollowerPointerCard>
   );
 }
 

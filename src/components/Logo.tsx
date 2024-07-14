@@ -5,7 +5,7 @@ import NextImage from '@/components/NextImage';
 
 export default function Logo() {
   return (
-    <Link href='/'  aria-label='Meeples'>
+    <Link href='/'  aria-label='Meeples' className='cursor-none'>
       <NextImage
         useSkeleton
         //TODO! Convert To SVG
