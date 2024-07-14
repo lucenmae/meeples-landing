@@ -47,7 +47,6 @@ export default function HomePage() {
       </Head>
 
       <section>
-        {/* <Header /> */}
         <HeroSection />
         
         <ScrollToTopButton />
