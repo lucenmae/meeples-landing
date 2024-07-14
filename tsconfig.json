@@ -24,7 +24,8 @@
         "name": "next"
       }
     ],
-    "types": ["react", "react-dom", "node"]
+    "types": ["react", "react-dom", "node"],
+    "typeRoots": ["./node_modules/@types", "./tailwindcss-util.d.ts"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/loading.jsx", "src/app/loading.js"],
   "exclude": ["node_modules"]
