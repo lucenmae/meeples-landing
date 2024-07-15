@@ -3,14 +3,15 @@ import { Boxes } from "@/components/ui/background-boxes";
 const Loading = () => {
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
-                  <div className="absolute inset-0 w-full h-full bg-[#F3F3F3] z-10 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
+               
       <Boxes />
-      <div className="absolute top-44 left-0 w-full text-center text-white">
+      <div className="absolute top-44 left-0 w-full text-center">
       <h1 class="uppercase font-poppins block font-black text-gray-800 text-4xl md:text-5xl lg:text-6xl">
-        Welcome 
-        <span class="bg-clip-text bg-gradient-to-tl from-orange-600 to-yellow-600 text-transparent"> Ka-Meeples</span>
+        Got bored with
+        <span class="bg-clip-text bg-gradient-to-tl from-orange-600 to-yellow-600 text-transparent"> Current Project</span>
       </h1>
       </div>
+      <div className="absolute inset-0 w-full h-full bg-[#F3F3F3] z-10 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
       <div className="loaderViewPort bg-green-500 w-80 aspect-w-1 aspect-h-1 rounded-full border-4 border-black perspective-1000 flex justify-center items-center animate-changeColor">
         <div className="loader transform rotate-x-90 transform-style-preserve-3d animate-revolve">
           <div className="side front transform translate-z-12">
