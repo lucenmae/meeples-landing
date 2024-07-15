@@ -17,6 +17,32 @@ export function HeroSection() {
 
   const cardDataArray = [
     {
+      src: '/images/cards/Uno.jpg',
+      alt: 'Uno',
+      title: 'Uno',
+      description:
+        'a fast-paced card game where players race to match colors and numbers.',
+
+      link: 'https://boardgamegeek.com/boardgame/2223/uno',
+    },
+    {
+      src: '/images/cards/Coup.jpg',
+      alt: 'Coup',
+      title: 'Coup',
+      description:
+        "a game of bluffing and deception where players compete to eliminate opponents' influence.",
+
+      link: 'https://boardgamegeek.com/boardgame/131357/coup',
+    },
+    {
+      src: '/images/cards/onuw.jpg',
+      alt: 'One Night Ultimate Werewolf',
+      title: 'One Night Night Werewolf',
+      description:
+        'a social deduction game where players take on secret roles to unmask the werewolves.',
+      link: 'https://boardgamegeek.com/boardgame/147949/one-night-ultimate-werewolf',
+    },
+    {
       src: '/images/cards/Catan.jpg',
       alt: 'Catan Board Game',
       title: 'Catan',
@@ -25,6 +51,9 @@ export function HeroSection() {
 
       link: 'https://boardgamegeek.com/boardgame/13/catan',
     },
+    // Add game cards her
+  ];
+  const gameInventory = [
     {
       src: '/images/cards/Uno.jpg',
       alt: 'Uno',
@@ -51,13 +80,39 @@ export function HeroSection() {
         'a social deduction game where players take on secret roles to unmask the werewolves.',
       link: 'https://boardgamegeek.com/boardgame/147949/one-night-ultimate-werewolf',
     },
-    // Add game cards her
+    {
+      src: '/images/cards/Catan.jpg',
+      alt: 'Catan Board Game',
+      title: 'Catan',
+      description:
+        'a multiplayer board game where players build and trade resources to dominate the island.',
+
+      link: 'https://boardgamegeek.com/boardgame/13/catan',
+    },
+    {
+      src: '/images/cards/Catan.jpg',
+      alt: 'Catan Board Game',
+      title: 'Catan',
+      description:
+        'a multiplayer board game where players build and trade resources to dominate the island.',
+
+      link: 'https://boardgamegeek.com/boardgame/13/catan',
+    },
+    {
+      src: '/images/cards/Catan.jpg',
+      alt: 'Catan Board Game',
+      title: 'Catan',
+      description:
+        'a multiplayer board game where players build and trade resources to dominate the island.',
+
+      link: 'https://boardgamegeek.com/boardgame/13/catan',
+    },
+    // Add game cards here
   ];
 
   return (
     <section className='bg-[#F3F3F3] '>
       <div className='absolute inset-0 w-full bg-[#F3F3F3] z-10 [mask-image:radial-gradient(transparent,white)] pointer-events-none' />
-
       <nav className='absolute w-full top-5 py-5 z-30 '>
         <div className='mx-auto max-w-7xl lg:px-8'>
           <div className='w-full flex flex-col lg:flex-row'>
@@ -139,7 +194,7 @@ export function HeroSection() {
               <ul className='flex lg:items-center max-lg:gap-4 max-lg:mb-4 flex-col mt-4 lg:flex-1 md:mt-0 lg:flex-row '>
                 <li>
                   <a
-                    href='#'
+                    href='https://forms.gle/hCtVuNhBpyzZkZCv5'
                     className='cursor-none text-sm font-semibold leading-6 text-gray-900'
                   >
                     <button
@@ -197,42 +252,63 @@ export function HeroSection() {
           </div>
         </div>
       </nav>
-
+      {/* HeroSection     */}
       <div className='pt-52 lg:pt-80 h-full flex flex-col items-center justify-center py-20 text-gray-800'>
-  <div className='h-screen flex flex-col items-center justify-center flex-1'>
-    <div className='h-1/2 flex flex-col items-center justify-center'>
-      <h1 className='motto shadow-[5px_5px_0px_#2b2a28] md:text-4xl lg:text-7xl sm:text-xl uppercase relative z-20 font-poppins font-black text-center'>
-        <FlipWords words={words} /> <br />
-      </h1>
-      <p className='text-center mt-20 font-semibold text-lg relative z-20 max-w-3xl'>
-        LSU Meeples - An Interest-Based Organization at La Salle University Ozamiz City Promoting Tabletop Games
-      </p>
-    </div>
+        <div className='h-screen flex flex-col items-center justify-center flex-1'>
+          <div className='h-1/2 flex flex-col items-center justify-center'>
+            <h1 className='motto shadow-[5px_5px_0px_#2b2a28] md:text-4xl lg:text-7xl sm:text-xl uppercase relative z-20 font-poppins font-black text-center'>
+              <FlipWords words={words} /> <br />
+            </h1>
+            <p className='text-center mt-20 font-semibold text-lg relative z-20 max-w-3xl'>
+              LSU Meeples - An Interest-Based Organization at La Salle
+              University Ozamiz City Promoting Tabletop Games
+            </p>
+          </div>
 
-    <div className='mt-28 z-20'>
-    <div className='max-w-md mx-auto border-4 bg-[#f5bf22] border-gray-800   shadow-[3px_3px_0px_#2b2a28] rounded-lg px-4 py-2 flex justify-center items-center transform -rotate-3'>
-  <h4 className='md:text-xl lg:text-2xl sm:text-sm uppercase z-20 font-poppins font-black text-center'>
-    Most Played Games
-  </h4>
-</div>
+          <div className='mt-28 z-20'>
+            <div className='max-w-md mx-auto border-4 bg-[#f5bf22] border-gray-800   shadow-[3px_3px_0px_#2b2a28] rounded-lg px-4 py-2 flex justify-center items-center transform -rotate-3'>
+              <h4 className='md:text-xl lg:text-2xl sm:text-sm uppercase z-20 font-poppins font-black text-center'>
+                Most Played Games
+              </h4>
+            </div>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4 pr-24 align-middle justify-center items-center'>
+              {cardDataArray.map((card, index) => (
+                <Cards
+                  key={index}
+                  src={card.src}
+                  alt={card.alt}
+                  title={card.title}
+                  description={card.description}
+                  link={card.link}
+                />
+              ))}
+            </div>
+          </div>
 
-
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4 pr-24 align-middle justify-center items-center'>
-        {cardDataArray.map((card, index) => (
-          <Cards
-            key={index}
-            src={card.src}
-            alt={card.alt}
-            title={card.title}
-            description={card.description}
-            link={card.link}
-          />
-        ))}
-      </div>
+          <div className='mt-28 z-20 relative'>
+  <div className='absolute inset-x-0 top-5 max-w-md mx-auto border-4 bg-[#f5bf22] border-gray-800 shadow-[3px_3px_0px_#2b2a28] rounded-lg px-4 py-2 flex justify-center items-center transform -rotate-3'>
+    <h4 className='md:text-xl lg:text-2xl sm:text-sm uppercase z-20 font-poppins font-black text-center'>
+      Games Inventory
+    </h4>
+  </div>
+  <div className="ml-8 border-4 bg-[#e2e2e2] border-gray-800 shadow-[5px_5px_0px_#2b2a28] rounded-lg px-4 py-2 mt-12">
+    <div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 pb-10 pt-5 pr-10 align-middle justify-center items-center'>
+      {gameInventory.map((inventory, index) => (
+        <Cards
+          key={index}
+          src={inventory.src}
+          alt={inventory.alt}
+          title={inventory.title}
+          description={inventory.description}
+          link={inventory.link}
+        />
+      ))}
     </div>
   </div>
 </div>
 
+        </div>
+      </div>
     </section>
   );
 }
