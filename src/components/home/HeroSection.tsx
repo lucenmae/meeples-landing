@@ -198,7 +198,7 @@ export function HeroSection() {
         </div>
       </nav>
 
-      <div className='pt-80 h-full flex flex-col items-center justify-center py-20 text-gray-800'>
+      <div className='pt-52 lg:pt-80 h-full flex flex-col items-center justify-center py-20 text-gray-800'>
         <div className='h-screen flex flex-col items-center justify-center flex-1'>
           <div className='h-1/2  flex flex-col items-center justify-center'>
             <h1 className='motto shadow-[5px_5px_0px_#2b2a28] md:text-4xl lg:text-7xl sm:text-xl uppercase relative z-20 font-poppins font-black text-center'>
