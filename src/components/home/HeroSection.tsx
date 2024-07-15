@@ -8,6 +8,7 @@ import NextImage from '../NextImage';
 import { FlipWords } from '../ui/flip-words';
 import { Boxes } from '../ui/background-boxes';
 import Cards from '@/components/ui/cards';
+import { link } from 'fs';
 
 export function HeroSection() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,43 +23,33 @@ export function HeroSection() {
       src: '/images/cards/Catan.jpg',
       alt: 'Catan Board Game',
       title: 'Catan',
-      description:
-        'Catan is a multiplayer board game where players build and trade resources to dominate the island.',
+      "description": "a multiplayer board game where players build and trade resources to dominate the island.",
+
+        link: 'https://boardgamegeek.com/boardgame/13/catan',
     },
     {
       src: '/images/cards/Uno.jpg',
-      alt: 'Ticket to Ride Board Game',
-      title: 'Ticket to Ride',
-      description:
-        'Ticket to Ride is a railway-themed board game where players collect cards of various types of train cars.',
+      alt: 'Uno',
+      title: 'Uno',
+      "description": "a fast-paced card game where players race to match colors and numbers.",
+
+      link: 'https://boardgamegeek.com/boardgame/2223/uno',
     },
     {
-      src: '/images/cards/exploding-kittens.jpg',
-      alt: 'Monopoly Board Game',
-      title: 'Monopoly',
-      description:
-        'Monopoly is a classic board game where players buy, sell, and trade properties to bankrupt their opponents.',
+      src: '/images/cards/Coup.jpg',
+      alt: 'Coup',
+      title: 'Coup',
+      "description": "a game of bluffing and deception where players compete to eliminate opponents' influence.",
+
+      link: 'https://boardgamegeek.com/boardgame/131357/coup',
+
     },
     {
-      src: '/images/cards/exploding-kittens.jpg',
-      alt: 'Monopoly Board Game',
-      title: 'Monopoly',
-      description:
-        'Monopoly is a classic board game where players buy, sell, and trade properties to bankrupt their opponents.',
-    },
-    {
-      src: '/images/cards/exploding-kittens.jpg',
-      alt: 'Monopoly Board Game',
-      title: 'Monopoly',
-      description:
-        'Monopoly is a classic board game where players buy, sell, and trade properties to bankrupt their opponents.',
-    },
-    {
-      src: '/images/cards/exploding-kittens.jpg',
-      alt: 'Monopoly Board Game',
-      title: 'Monopoly',
-      description:
-        'Monopoly is a classic board game where players buy, sell, and trade properties to bankrupt their opponents.',
+      src: '/images/cards/onuw.jpg',
+      alt: 'One Night Ultimate Werewolf',
+      title: 'One Night Night Werewolf',
+"description": "a social deduction game where players take on secret roles to unmask the werewolves.",
+        link: 'https://boardgamegeek.com/boardgame/147949/one-night-ultimate-werewolf',
     },
    // Add game cards her
   ];
@@ -226,6 +217,7 @@ export function HeroSection() {
                 alt={card.alt}
                 title={card.title}
                 description={card.description}
+                link={card.link}
               />
             ))}
           </div>

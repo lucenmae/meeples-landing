@@ -1,4 +1,5 @@
 import React from 'react';
+
 import NextImage from '../NextImage';
 
 interface CardsProps {
@@ -6,9 +7,18 @@ interface CardsProps {
   alt: string;
   title: string;
   description: string;
+  link: string; 
 }
 
-const Cards: React.FC<CardsProps> = ({ src, alt, title, description }) => {
+// Helper function to truncate text
+const truncateText = (text: string, limit: number) => {
+  if (text.length <= limit) {
+    return text;
+  }
+  return text.substring(0, limit) + '...';
+};
+
+const Cards: React.FC<CardsProps> = ({ src, alt, title, description, link }) => {
   return (
     <div className='flip-card w-48 h-64 perspective-1000 font-sans m-10'>
       <div className='flip-card-inner card'>
@@ -27,14 +37,25 @@ const Cards: React.FC<CardsProps> = ({ src, alt, title, description }) => {
           </div>
         </div>
         <div className='flip-card-back flex flex-col justify-center items-center transform rotate-y-180'>
-          <div className=''>
-            <div className='card-title text-lg font-medium text-gray-900 mb-3 capitalize'>
+          <div className='p-6'>
+            <div className='block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900'>
               {title}
             </div>
-            <div className='card-subtitle text-sm font-normal text-gray-500'>
-              {description}
+            <div className='block font-sans text-base antialiased font-light leading-relaxed text-inherit'>
+              {truncateText(description, 102)}
             </div>
-            <hr className='card-divider border-t my-3 border-gray-200' />
+          </div>
+          <div className='p-6 pt-0'>
+            <a
+              href={link} 
+              className='cursor-none text-sm font-semibold leading-6 text-gray-900'
+            >
+              <button
+                className='cursor-none inline-block px-6 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1 mr-4'
+              >
+                Read More
+              </button>
+            </a>
           </div>
         </div>
       </div>
