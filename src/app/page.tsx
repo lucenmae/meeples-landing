@@ -8,17 +8,17 @@ import { wait } from '@/lib/wait';
 
 import HeroSection from '@/components/home/HeroSection';
 import ScrollToTopButton from '@/components/ScrollToTop';
+import { Boxes } from '@/components/ui/background-boxes';
 import { FollowerPointerCard } from '@/components/ui/following-pointer';
 
 import Loading from '@/app/loading';
-import { Boxes } from '@/components/ui/background-boxes';
 
 export default function HomePage() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     const fetchData = async () => {
-      await wait(1000);
+      await wait(2000);
       setLoading(false);
     };
 
