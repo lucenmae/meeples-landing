@@ -1,14 +1,11 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-import Card from '@/components/ui/cards';
+import Cards from '@/components/ui/cards';
 
 import Logo from '../Logo';
 import NextImage from '../NextImage';
 import { FlipWords } from '../ui/flip-words';
-import { Boxes } from '../ui/background-boxes';
-import Cards from '@/components/ui/cards';
-import { link } from 'fs';
 
 export function HeroSection() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,15 +20,17 @@ export function HeroSection() {
       src: '/images/cards/Catan.jpg',
       alt: 'Catan Board Game',
       title: 'Catan',
-      "description": "a multiplayer board game where players build and trade resources to dominate the island.",
+      description:
+        'a multiplayer board game where players build and trade resources to dominate the island.',
 
-        link: 'https://boardgamegeek.com/boardgame/13/catan',
+      link: 'https://boardgamegeek.com/boardgame/13/catan',
     },
     {
       src: '/images/cards/Uno.jpg',
       alt: 'Uno',
       title: 'Uno',
-      "description": "a fast-paced card game where players race to match colors and numbers.",
+      description:
+        'a fast-paced card game where players race to match colors and numbers.',
 
       link: 'https://boardgamegeek.com/boardgame/2223/uno',
     },
@@ -39,19 +38,20 @@ export function HeroSection() {
       src: '/images/cards/Coup.jpg',
       alt: 'Coup',
       title: 'Coup',
-      "description": "a game of bluffing and deception where players compete to eliminate opponents' influence.",
+      description:
+        "a game of bluffing and deception where players compete to eliminate opponents' influence.",
 
       link: 'https://boardgamegeek.com/boardgame/131357/coup',
-
     },
     {
       src: '/images/cards/onuw.jpg',
       alt: 'One Night Ultimate Werewolf',
       title: 'One Night Night Werewolf',
-"description": "a social deduction game where players take on secret roles to unmask the werewolves.",
-        link: 'https://boardgamegeek.com/boardgame/147949/one-night-ultimate-werewolf',
+      description:
+        'a social deduction game where players take on secret roles to unmask the werewolves.',
+      link: 'https://boardgamegeek.com/boardgame/147949/one-night-ultimate-werewolf',
     },
-   // Add game cards her
+    // Add game cards her
   ];
 
   return (
@@ -199,30 +199,40 @@ export function HeroSection() {
       </nav>
 
       <div className='pt-52 lg:pt-80 h-full flex flex-col items-center justify-center py-20 text-gray-800'>
-        <div className='h-screen flex flex-col items-center justify-center flex-1'>
-          <div className='h-1/2  flex flex-col items-center justify-center'>
-            <h1 className='motto shadow-[5px_5px_0px_#2b2a28] md:text-4xl lg:text-7xl sm:text-xl uppercase relative z-20 font-poppins font-black text-center'>
-              <FlipWords words={words} /> <br />
-            </h1>
-            <p className='text-center mt-20 font-semibold text-lg relative z-20 max-w-3xl'>
-              LSU Meeples - An Interest-Based Organization at La Salle
-              University Ozamiz City Promoting Tabletop Games
-            </p>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4 bg-gray-100 mt-20 align-middle justify-center items-center'>
-            {cardDataArray.map((card, index) => (
-              <Cards
-                key={index}
-                src={card.src}
-                alt={card.alt}
-                title={card.title}
-                description={card.description}
-                link={card.link}
-              />
-            ))}
-          </div>
-        </div>
+  <div className='h-screen flex flex-col items-center justify-center flex-1'>
+    <div className='h-1/2 flex flex-col items-center justify-center'>
+      <h1 className='motto shadow-[5px_5px_0px_#2b2a28] md:text-4xl lg:text-7xl sm:text-xl uppercase relative z-20 font-poppins font-black text-center'>
+        <FlipWords words={words} /> <br />
+      </h1>
+      <p className='text-center mt-20 font-semibold text-lg relative z-20 max-w-3xl'>
+        LSU Meeples - An Interest-Based Organization at La Salle University Ozamiz City Promoting Tabletop Games
+      </p>
+    </div>
+
+    <div className='mt-28 z-20'>
+    <div className='max-w-md mx-auto border-4 bg-[#f5bf22] border-gray-800   shadow-[3px_3px_0px_#2b2a28] rounded-lg px-4 py-2 flex justify-center items-center transform -rotate-3'>
+  <h4 className='md:text-xl lg:text-2xl sm:text-sm uppercase z-20 font-poppins font-black text-center'>
+    Most Played Games
+  </h4>
+</div>
+
+
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4 pr-24 align-middle justify-center items-center'>
+        {cardDataArray.map((card, index) => (
+          <Cards
+            key={index}
+            src={card.src}
+            alt={card.alt}
+            title={card.title}
+            description={card.description}
+            link={card.link}
+          />
+        ))}
       </div>
+    </div>
+  </div>
+</div>
+
     </section>
   );
 }

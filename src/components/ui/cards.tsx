@@ -42,7 +42,7 @@ const Cards: React.FC<CardsProps> = ({ src, alt, title, description, link }) => 
               {title}
             </div>
             <div className='block font-sans text-base antialiased font-light leading-relaxed text-inherit'>
-              {truncateText(description, 102)}
+              {truncateText(description, 102)} 
             </div>
           </div>
           <div className='p-6 pt-0'>
