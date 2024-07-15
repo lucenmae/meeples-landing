@@ -7,8 +7,7 @@ const Loading = () => {
       <Boxes />
       <div className="absolute top-44 left-0 w-full text-center">
       <h1 class="uppercase font-poppins block font-black text-gray-800 text-4xl md:text-5xl lg:text-6xl">
-        Got bored with
-        <span class="bg-clip-text bg-gradient-to-tl from-orange-600 to-yellow-600 text-transparent"> Current Project</span>
+        fun project 1
       </h1>
       </div>
       <div className="absolute inset-0 w-full h-full bg-[#F3F3F3] z-10 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
