@@ -30,7 +30,7 @@ export default function HomePage() {
   }
 
   return (
-    <FollowerPointerCard>
+    <FollowerPointerCard className='40'>
               <Boxes  />
       <main>
         <Head>

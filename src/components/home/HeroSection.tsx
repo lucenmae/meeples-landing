@@ -20,7 +20,7 @@ export function HeroSection() {
     <section className="bg-[#F3F3F3]">
 <div className="absolute inset-0 w-full bg-[#F3F3F3] z-10 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
 
-      <nav className="absolute w-full top-5 py-5 z-50 ">
+      <nav className="absolute w-full top-5 py-5 z-30 ">
         <div className="mx-auto max-w-7xl lg:px-8">
           <div className="w-full flex flex-col lg:flex-row">
             {/* Logo and Menu Button */}
