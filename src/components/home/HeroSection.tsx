@@ -1,12 +1,13 @@
 import Link from "next/link";
 import React, { useState } from "react";
 
-import { cn } from "@/lib/utils";
+import Card from '@/components/ui/cards';
 
 import Logo from "../Logo";
 import NextImage from "../NextImage";
-import { Boxes } from "../ui/background-boxes";
 import { FlipWords } from "../ui/flip-words";
+import { Boxes } from "../ui/background-boxes";
+
 
 export function HeroSection() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,7 +18,9 @@ export function HeroSection() {
   const words = ["PLAY", "CONNECT", "THRIVE"];
 
   return (
-    <section className="bg-[#F3F3F3]">
+    
+    <section className="bg-[#F3F3F3] ">
+           
 <div className="absolute inset-0 w-full bg-[#F3F3F3] z-10 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
 
       <nav className="absolute w-full top-5 py-5 z-30 ">
@@ -117,17 +120,26 @@ export function HeroSection() {
         </div>
       </nav>
 
-      <div className="h-screen flex flex-col items-center justify-center py-20 text-gray-800">
-        <div className="h-1/2 flex flex-col items-center justify-center">
-          <h1 className="motto shadow-[5px_5px_0px_#2b2a28] md:text-4xl lg:text-7xl sm:text-xl uppercase relative z-20 font-poppins font-black text-center">
-            <FlipWords words={words} /> <br />
-          </h1>
-          <p className="text-center mt-20 font-semibold text-lg relative z-20">
-            LSU Meeples - An Interest-Based Organization at La Salle University Ozamiz City Promoting Tabletop Games
-          </p>
+      <div className="pt-80 h-full flex flex-col items-center justify-center py-20 text-gray-800">
+        <div className="h-screen flex flex-col items-center justify-center flex-1">
+          <div className="h-1/2  flex flex-col items-center justify-center">
+            <h1 className="motto shadow-[5px_5px_0px_#2b2a28] md:text-4xl lg:text-7xl sm:text-xl uppercase relative z-20 font-poppins font-black text-center">
+              <FlipWords words={words} /> <br />
+            </h1>
+            <p className="text-center mt-20 font-semibold text-lg relative z-20 max-w-3xl">
+              LSU Meeples - An Interest-Based Organization at La Salle University Ozamiz City Promoting Tabletop Games
+            </p>
+          </div>
+          <div className="mt-24 flex items-center justify-center z-30">
+          <Card />
         </div>
+        </div>
+
+ 
       </div>
+
     </section>
+    
   );
 }
 

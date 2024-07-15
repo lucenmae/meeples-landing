@@ -2,13 +2,13 @@
 import Head from 'next/head';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+
 import { wait } from '@/lib/wait';
 
 import HeroSection from '@/components/home/HeroSection';
 import { Boxes } from '@/components/ui/background-boxes';
 import { FollowerPointerCard } from '@/components/ui/following-pointer';
 
-// Import Loading component
 import Loading from '@/app/loading';
 
 export default function HomePage() {
@@ -16,8 +16,8 @@ export default function HomePage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      await wait(2000); // Simulating data fetching
-      setLoading(false); // Data fetching complete
+      await wait(2000); 
+      setLoading(false);
     };
 
     fetchData();
@@ -42,16 +42,15 @@ export default function HomePage() {
     return matches;
   };
 
-  const isSmallScreen = useMediaQuery('(max-width: 768px)'); // Adjust as per your design
-
-  // Render Loading component only while loading and not on small screens
+  const isSmallScreen = useMediaQuery('(max-width: 768px)'); 
+  
   if (loading && !isSmallScreen) {
     return <Loading />;
   }
 
   return (
     <FollowerPointerCard className='40'>
-      <Boxes />
+
       <main>
         <Head>
           <title>Meeples - Tabletop Games Organization</title>
@@ -60,6 +59,7 @@ export default function HomePage() {
         <section>
           <HeroSection />
         </section>
+        <Boxes />
       </main>
     </FollowerPointerCard>
   );

@@ -55,7 +55,7 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "absolute left-0 top-0 w-full h-full overflow-hidden",
+        "fixed left-0 top-0 w-full h-full overflow-hidden", // Adjusted to fixed position to ensure it covers the viewport
         className
       )}
       {...rest}

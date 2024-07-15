@@ -33,12 +33,6 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
   },
-  // authors: [
-  //   {
-  //     name: 'asv',
-  //     url: 'cirquolus.com',
-  //   },
-  // ],
 };
 
 export default function RootLayout({
