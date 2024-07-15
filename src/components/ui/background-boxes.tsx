@@ -1,12 +1,35 @@
 "use client";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
 export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
-  const rows = new Array(80).fill(1);
-  const cols = new Array(80).fill(1);
+  const [dimensions, setDimensions] = useState({ rows: 0, cols: 0, boxSize: 0 });
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      const minBoxSize = 50; // Minimum box size for smaller devices
+      const maxBoxSize = 100; // Maximum box size for larger devices
+
+      // Adjust the base box size dynamically
+      const baseBoxSize = Math.max(minBoxSize, Math.min(maxBoxSize, window.innerWidth / 10));
+
+      const cols = Math.floor(window.innerWidth / baseBoxSize);
+      const rows = Math.floor(window.innerHeight / baseBoxSize);
+      const adjustedBoxSize = Math.min(window.innerWidth / cols, window.innerHeight / rows);
+
+      setDimensions({ rows, cols, boxSize: adjustedBoxSize });
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+
+    return () => {
+      window.removeEventListener("resize", updateDimensions);
+    };
+  }, []);
+
   const colors = [
     "--#86d3ea",
     "--#86d3ea",
@@ -32,14 +55,19 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "absolute left-1/4 -top-1/4 flex -translate-x-1/2 -translate-y-1/2 w-full h-full -z-0",
+        "absolute left-0 top-0 w-full h-full overflow-hidden",
         className
       )}
       {...rest}
+      style={{
+        display: "grid",
+        gridTemplateRows: `repeat(${dimensions.rows}, ${dimensions.boxSize}px)`,
+        gridTemplateColumns: `repeat(${dimensions.cols}, ${dimensions.boxSize}px)`,
+      }}
     >
-      {rows.map((_, i) => (
-        <motion.div key={`row` + i}>
-          {cols.map((_, j) => (
+      {Array.from({ length: dimensions.rows }).map((_, i) => (
+        <React.Fragment key={`row` + i}>
+          {Array.from({ length: dimensions.cols }).map((_, j) => (
             <motion.div
               whileHover={{
                 backgroundColor: `var(${getRandomColor()})`,
@@ -49,11 +77,11 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
                 transition: { duration: 2 },
               }}
               key={`col` + j}
-              className="w-20 h-20 border-r border-t border-slate-700 relative"
-            >
-            </motion.div>
+              className="border-r border-t border-slate-700"
+              style={{ width: dimensions.boxSize, height: dimensions.boxSize }}
+            />
           ))}
-        </motion.div>
+        </React.Fragment>
       ))}
     </div>
   );

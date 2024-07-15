@@ -20,17 +20,17 @@ export function HeroSection() {
     <section className="bg-[#F3F3F3]">
 <div className="absolute inset-0 w-full bg-[#F3F3F3] z-10 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
 
-      <nav className="absolute w-full top-5 py-5 z-20 ">
+      <nav className="absolute w-full top-5 py-5 z-50 ">
         <div className="mx-auto max-w-7xl lg:px-8">
           <div className="w-full flex flex-col lg:flex-row">
             {/* Logo and Menu Button */}
-            <div className="flex justify-between lg:hidden px-4  ">
+            <div className="flex justify-between lg:hidden px-4">
               <Link href="/" aria-label="Meeples" className="flex items-center ">
                 <NextImage
                   useSkeleton
                   src="/images/meeples-wordmark.png"
                   alt="meeples wordmark"
-                  width={300}
+                  width={200}
                   height={115}
                 />
               </Link>
@@ -118,7 +118,6 @@ export function HeroSection() {
       </nav>
 
       <div className="h-screen flex flex-col items-center justify-center py-20 text-gray-800">
-        <Boxes  />
         <div className="h-1/2 flex flex-col items-center justify-center">
           <h1 className="motto shadow-[5px_5px_0px_#2b2a28] md:text-4xl lg:text-7xl sm:text-xl uppercase relative z-20 font-poppins font-black text-center">
             <FlipWords words={words} /> <br />

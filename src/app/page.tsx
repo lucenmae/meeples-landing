@@ -11,13 +11,14 @@ import ScrollToTopButton from '@/components/ScrollToTop';
 import { FollowerPointerCard } from '@/components/ui/following-pointer';
 
 import Loading from '@/app/loading';
+import { Boxes } from '@/components/ui/background-boxes';
 
 export default function HomePage() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     const fetchData = async () => {
-      await wait(100);
+      await wait(1000);
       setLoading(false);
     };
 
@@ -30,6 +31,7 @@ export default function HomePage() {
 
   return (
     <FollowerPointerCard>
+              <Boxes  />
       <main>
         <Head>
           <title>Meeples - Tabletop Games Organization</title>
