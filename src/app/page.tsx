@@ -49,18 +49,30 @@ export default function HomePage() {
   }
 
   return (
-    <FollowerPointerCard>
-
-      <main>
-        <Head>
-          <title>Meeples - Tabletop Games Organization</title>
-        </Head>
-
-        <section>
-          <HeroSection />
-        </section>
-        <Boxes />
-      </main>
-    </FollowerPointerCard>
+    <>
+      {isSmallScreen ? (
+        <main>
+          <Head>
+            <title>Meeples - Tabletop Games Organization</title>
+          </Head>
+          <section>
+            <HeroSection />
+          </section>
+          <Boxes />
+        </main>
+      ) : (
+        <FollowerPointerCard>
+          <main>
+            <Head>
+              <title>Meeples - Tabletop Games Organization</title>
+            </Head>
+            <section>
+              <HeroSection />
+            </section>
+            <Boxes />
+          </main>
+        </FollowerPointerCard>
+      )}
+    </>
   );
 }

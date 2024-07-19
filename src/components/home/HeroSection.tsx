@@ -15,6 +15,8 @@ export function HeroSection() {
 
   const words = ['PLAY', 'CONNECT', 'THRIVE'];
 
+
+  // Most Played Games
   const cardDataArray = [
     {
       src: '/images/cards/Uno.jpg',
@@ -37,7 +39,7 @@ export function HeroSection() {
     {
       src: '/images/cards/onuw.jpg',
       alt: 'One Night Ultimate Werewolf',
-      title: 'One Night Night Werewolf',
+      title: 'One Night Ultimate Werewolf',
       description:
         'a social deduction game where players take on secret roles to unmask the werewolves.',
       link: 'https://boardgamegeek.com/boardgame/147949/one-night-ultimate-werewolf',
@@ -51,8 +53,8 @@ export function HeroSection() {
 
       link: 'https://boardgamegeek.com/boardgame/13/catan',
     },
-    // Add game cards her
   ];
+
   const gameInventory = [
     {
       src: '/images/cards/Uno.jpg',
@@ -75,7 +77,7 @@ export function HeroSection() {
     {
       src: '/images/cards/onuw.jpg',
       alt: 'One Night Ultimate Werewolf',
-      title: 'One Night Night Werewolf',
+      title: 'One Night Ultimate Werewolf',
       description:
         'a social deduction game where players take on secret roles to unmask the werewolves.',
       link: 'https://boardgamegeek.com/boardgame/147949/one-night-ultimate-werewolf',
@@ -90,22 +92,67 @@ export function HeroSection() {
       link: 'https://boardgamegeek.com/boardgame/13/catan',
     },
     {
-      src: '/images/cards/Catan.jpg',
-      alt: 'Catan Board Game',
-      title: 'Catan',
-      description:
-        'a multiplayer board game where players build and trade resources to dominate the island.',
-
-      link: 'https://boardgamegeek.com/boardgame/13/catan',
+      src: '/images/cards/guess-who.jpg',
+      alt: 'Guess Who? Board Game',
+      title: 'Guess Who?',
+      description: 'A fun deduction game for two players.',
+      link: 'https://boardgamegeek.com/boardgame/4143/guess-who',
     },
     {
-      src: '/images/cards/Catan.jpg',
-      alt: 'Catan Board Game',
-      title: 'Catan',
-      description:
-        'a multiplayer board game where players build and trade resources to dominate the island.',
-
-      link: 'https://boardgamegeek.com/boardgame/13/catan',
+      src: '/images/cards/scrabble.jpg',
+      alt: 'Scrabble Board Game',
+      title: 'Scrabble',
+      description: 'The classic word game for vocabulary enthusiasts.',
+      link: 'https://boardgamegeek.com/image/335812/guess-who',
+    },
+    {
+      src: '/images/cards/exploding-kittens.jpg',
+      alt: 'Exploding Kittens Board Game',
+      title: 'Exploding Kittens',
+      description: 'A highly-strategic, kitty-powered card game.',
+      link: 'https://boardgamegeek.com/boardgame/172225/exploding-kittens',
+    },
+    {
+      src: '/images/cards/sequence.jpg',
+      alt: 'Sequence Board Game',
+      title: 'Sequence',
+      description: 'An exciting game of strategy and luck.',
+      link: 'https://boardgamegeek.com/image/212893/sequence',
+    },
+    {
+      src: '/images/cards/here-to-slay.jpg',
+      alt: 'Here to Slay Board Game',
+      title: 'Here to Slay',
+      description: 'A strategic card game with role-playing elements.',
+      link: 'https://boardgamegeek.com/boardgame/299252/here-to-slay',
+    },
+    {
+      src: '/images/cards/munchkin.jpg',
+      alt: 'Munchkin Board Game',
+      title: 'Munchkin',
+      description: 'A fun and fast-paced dungeon-crawling card game.',
+      link: 'https://boardgamegeek.com/image/1871016/munchkin',
+    },
+    {
+      src: '/images/cards/avalon.jpg',
+      alt: 'The Resistance: Avalon Board Game',
+      title: 'The Resistance: Avalon',
+      description: 'A game of deception and deduction in the Arthurian legend.',
+      link: 'https://boardgamegeek.com/image/1398895/the-resistance-avalon',
+    },
+    {
+      src: '/images/cards/unstable.jpg',
+      alt: 'Unstable Unicorns Board Game',
+      title: 'Unstable Unicorns',
+      description: 'A strategic card game about building a unicorn army.',
+      link: 'https://boardgamegeek.com/image/3912914/unstable-unicorns',
+    },
+    {
+      src: '/images/cards/clue.jpg',
+      alt: 'Cluedo aka Clue Board Game',
+      title: 'Cluedo',
+      description: 'A classic mystery game of who, what, and where.',
+      link: 'https://boardgamegeek.com/image/7563466/clue',
     },
     // Add game cards here
   ];
@@ -286,7 +333,7 @@ export function HeroSection() {
           </div>
 
           <div className='mt-28 z-20 relative'>
-  <div className='absolute inset-x-0 top-5 max-w-md mx-auto border-4 bg-[#f5bf22] border-gray-800 shadow-[3px_3px_0px_#2b2a28] rounded-lg px-4 py-2 flex justify-center items-center transform -rotate-3'>
+  <div  className='absolute inset-x-0 top-5 max-w-md mx-auto border-4 bg-[#f5bf22] border-gray-800 shadow-[3px_3px_0px_#2b2a28] rounded-lg px-4 py-2 flex justify-center items-center transform -rotate-3'>
     <h4 className='md:text-xl lg:text-2xl sm:text-sm uppercase z-20 font-poppins font-black text-center'>
       Games Inventory
     </h4>

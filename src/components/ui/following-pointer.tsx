@@ -18,14 +18,21 @@ export const FollowerPointerCard = ({
   const [rect, setRect] = useState<DOMRect | null>(null);
   const [isInside, setIsInside] = useState<boolean>(false);
   const [pointerTitle, setPointerTitle] = useState<string | React.ReactNode>(
-    ""
+    title || ""
   );
   const [pointerColor, setPointerColor] = useState<string>("");
 
   useEffect(() => {
-    if (ref.current) {
-      setRect(ref.current.getBoundingClientRect());
-    }
+    const updateRect = () => {
+      if (ref.current) {
+        setRect(ref.current.getBoundingClientRect());
+      }
+    };
+    updateRect();
+    window.addEventListener("resize", updateRect);
+    return () => {
+      window.removeEventListener("resize", updateRect);
+    };
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -59,23 +66,16 @@ export const FollowerPointerCard = ({
   };
 
   const getRandomColor = () => {
-    const colors = [
-      "#86d3ea",
-      "#f5bf22",
-      "#86d3ea",
-    ];
+    const colors = ["#86d3ea", "#f5bf22", "#86d3ea"];
     return colors[Math.floor(Math.random() * colors.length)];
   };
-  
 
   return (
     <div
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
-      style={{
-        cursor: "none",
-      }}
+      style={{ cursor: "none" }}
       ref={ref}
       className={cn("relative", className)}
     >
@@ -134,9 +134,7 @@ export const FollowPointer = ({
         <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"></path>
       </svg>
       <motion.div
-        style={{
-          backgroundColor: color,
-        }}
+        style={{ backgroundColor: color }}
         initial={{
           scale: 0.5,
           opacity: 0,
