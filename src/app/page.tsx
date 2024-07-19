@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { wait } from '@/lib/wait';
 
-import HeroSection from '@/components/home/HeroSection';
+import HeroSection from '@/components/home/HomePage';
 import { Boxes } from '@/components/ui/background-boxes';
 import { FollowerPointerCard } from '@/components/ui/following-pointer';
 

@@ -15,7 +15,6 @@ export function HeroSection() {
 
   const words = ['PLAY', 'CONNECT', 'THRIVE'];
 
-
   // Most Played Games
   const cardDataArray = [
     {
@@ -318,7 +317,7 @@ export function HeroSection() {
                 Most Played Games
               </h4>
             </div>
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4 pr-24 align-middle justify-center items-center'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4 sm:pr-0 md:pr-0 lg:pr-24 align-middle justify-center items-center'> 
               {cardDataArray.map((card, index) => (
                 <Cards
                   key={index}
@@ -332,28 +331,28 @@ export function HeroSection() {
             </div>
           </div>
 
+          {/* Games Inventory */}
           <div className='mt-28 z-20 relative'>
-  <div  className='absolute inset-x-0 top-5 max-w-md mx-auto border-4 bg-[#f5bf22] border-gray-800 shadow-[3px_3px_0px_#2b2a28] rounded-lg px-4 py-2 flex justify-center items-center transform -rotate-3'>
-    <h4 className='md:text-xl lg:text-2xl sm:text-sm uppercase z-20 font-poppins font-black text-center'>
-      Games Inventory
-    </h4>
-  </div>
-  <div className="ml-8 border-4 bg-[#e2e2e2] border-gray-800 shadow-[5px_5px_0px_#2b2a28] rounded-lg px-4 py-2 mt-12">
-    <div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 pb-10 pt-5 pr-10 align-middle justify-center items-center'>
-      {gameInventory.map((inventory, index) => (
-        <Cards
-          key={index}
-          src={inventory.src}
-          alt={inventory.alt}
-          title={inventory.title}
-          description={inventory.description}
-          link={inventory.link}
-        />
-      ))}
-    </div>
-  </div>
-</div>
-
+            <div className='absolute inset-x-0 top-5 max-w-md mx-auto border-4 bg-[#f5bf22] border-gray-800 shadow-[3px_3px_0px_#2b2a28] rounded-lg sm:px-0 md:px-2 lg:px-4 py-2 flex justify-center items-center transform -rotate-3'>
+              <h4 className='md:text-xl lg:text-2xl sm:text-sm uppercase z-20 font-poppins font-black text-center'>
+                Games Inventory
+              </h4>
+            </div>
+            <div className=' border-4 bg-[#e2e2e2] border-gray-800 shadow-[5px_5px_0px_#2b2a28] rounded-lg px-4 py-2 mt-12'>
+              <div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 pb-10 pt-5 sm:pr-0 md:pr-0 lg:pr-10 align-middle justify-center items-center'>
+                {gameInventory.map((inventory, index) => (
+                  <Cards
+                    key={index}
+                    src={inventory.src}
+                    alt={inventory.alt}
+                    title={inventory.title}
+                    description={inventory.description}
+                    link={inventory.link}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
