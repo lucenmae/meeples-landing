@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { wait } from '@/lib/wait';
 
 import HeroSection from '@/components/home/HeroSection';
+import ScrollToTopButton from '@/components/ScrollToTop';
 import { Boxes } from '@/components/ui/background-boxes';
 import { FollowerPointerCard } from '@/components/ui/following-pointer';
 
@@ -34,11 +35,13 @@ export default function HomePage() {
           <Loading />
         ) : (
           <>
+                      <Boxes />
             <section>
               <HeroSection />
 
             </section>
-            <Boxes />
+
+            <ScrollToTopButton />
           </>
         )}
       </main>
