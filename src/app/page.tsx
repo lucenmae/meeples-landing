@@ -11,6 +11,7 @@ import { FollowerPointerCard } from '@/components/ui/following-pointer';
 
 import Loading from '@/app/loading';
 
+
 export default function HomePage() {
   const [loading, setLoading] = useState(true);
 
@@ -35,6 +36,7 @@ export default function HomePage() {
           <>
             <section>
               <HeroSection />
+
             </section>
             <Boxes />
           </>
