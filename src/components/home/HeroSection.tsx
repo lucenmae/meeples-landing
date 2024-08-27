@@ -376,7 +376,7 @@ export function HeroSection() {
 
           <div
             ref={aboutRef}
-            id='games'
+            id='about'
             className='h-screen flex flex-col items-center justify-center flex-1'
           >
             <div className='mt-20 z-20 relative'>
