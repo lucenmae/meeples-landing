@@ -5,14 +5,14 @@ import NextImage from '@/components/NextImage';
 
 export default function Logo() {
   return (
-    <Link href='/'  aria-label='Patriot' className='cursor-none'>
+    <Link href='/'  aria-label='Meeples' className='cursor-none'>
       <NextImage
         useSkeleton
         //TODO! Convert To SVG
-        src='/images/logo-only.png'
-        alt='patriot logo'
-        width={134}
-        height={108}
+        src='/images/meeples-wordmark.png'
+        alt='meeples wordmark'
+        width={300}
+        height={115}
       />
     </Link>
   );
