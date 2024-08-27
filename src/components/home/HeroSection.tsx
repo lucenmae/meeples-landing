@@ -1,9 +1,7 @@
 'use client';
-import { ChevronRightIcon } from '@heroicons/react/20/solid';
+
 import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import LogoText from '../LogoText';
 import NextImage from '../NextImage';
