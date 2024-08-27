@@ -440,3 +440,11 @@ Tooltip */
   bottom: unset;
   transition-duration: 0.3s;
 }
+
+
+/* Featured Section */
+.marginFeature {
+  margin-top: -500px;
+}
+
+
