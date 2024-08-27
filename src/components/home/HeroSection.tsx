@@ -6,6 +6,7 @@ import React, { useRef, useState } from 'react';
 import LogoText from '../LogoText';
 import NextImage from '../NextImage';
 import { Highlight } from '../ui/hero-highlight';
+import ScrollToTopButton from '../ScrollToTop';
 
 export function HeroSection() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -63,7 +64,7 @@ export function HeroSection() {
               <li>
                 <a
                     onClick={() => scrollToSection(aboutRef)}
-                  className='block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0  '
+                  className='block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 cursor-pointer '
                 >
                   About
                 </a>
@@ -71,7 +72,7 @@ export function HeroSection() {
               <li>
                 <a
                   onClick={() => scrollToSection(contactRef)}
-                  className='block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0  '
+                  className='block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 cursor-pointer '
                 >
                   Contact
                 </a>
@@ -253,6 +254,7 @@ export function HeroSection() {
           </div>
         </div>
       </section>
+      <ScrollToTopButton/>
 
       {/* Footer */}
 
