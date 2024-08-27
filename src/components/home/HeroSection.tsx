@@ -16,6 +16,16 @@ export function HeroSection() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+    //smooth scroll
+    const aboutRef = useRef<HTMLDivElement>(null);
+    const contactRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSection = (section: React.RefObject<HTMLDivElement>) => {
+    if (section.current) {
+      section.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <section className='bg-[#f9f9f9]'>
       <nav className='bg-white px-2 sm:px-4 py-5 rounded shadow relative z-10'>
@@ -54,7 +64,7 @@ export function HeroSection() {
             <ul className='flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium'>
               <li>
                 <a
-                  href='#'
+                    onClick={() => scrollToSection(aboutRef)}
                   className='block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0  '
                 >
                   About
@@ -62,7 +72,7 @@ export function HeroSection() {
               </li>
               <li>
                 <a
-                  href='#'
+                  onClick={() => scrollToSection(contactRef)}
                   className='block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0  '
                 >
                   Contact
@@ -155,7 +165,7 @@ export function HeroSection() {
         </div>
       </section>
       {/* About Us */}
-      <section id='aboutus-section'>
+      <section ref={aboutRef} id='about-us-section' >
         <div className='mx-auto max-w-7xl px-4 my-32 lg:px-10 bg-lightgrey rounded-3xl relative'>
           <div className='flex flex-col items-center justify-center my-10 '>
             <NextImage
@@ -218,7 +228,7 @@ export function HeroSection() {
       </section>
 
       {/* Contact Us */}
-      <section className='bg-white my-32 '>
+      <section ref={contactRef} id='contact-us-section' className='bg-white my-32 '>
         <div className='mx-auto max-w-7xl sm:py-4 lg:px-8 flex flex-col items-center text-center justify-center'>
           <h2 className='text-4xl sm:text-65xl font-bold text-center text-[#0535a1] capitalize'>
             Get In Touch
