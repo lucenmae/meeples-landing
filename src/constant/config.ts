@@ -1,5 +1,5 @@
 export const siteConfig = {
-  title: 'Patriot',
+  title: 'Meeples - Tabletop Games Organization',
   description:
     'Meeples is a vibrant tabletop games organization at La Salle University Ozamiz City, fostering community through gaming passion.',
 
