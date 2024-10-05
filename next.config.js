@@ -22,7 +22,7 @@ const nextConfig = {
   // },
 
   images: {
-    remotePatterns: ['pagedone.io', 'res.cloudinary.com', 'tailwindui.com'],
+    domains: ['pagedone.io', 'res.cloudinary.com', 'tailwindui.com'],
   },
 
   webpack(config) {
@@ -56,6 +56,9 @@ const nextConfig = {
 
     return config;
   },
+
+  // Remove or comment out if present:
+  // output: 'export',
 };
 
 module.exports = nextConfig;

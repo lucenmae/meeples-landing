@@ -1,23 +1,19 @@
 import mongoose from 'mongoose';
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
-}
-
 const connectMongoDB = async () => {
-    try {
-      if (!process.env.MONGODB_URI) {
-        throw new Error(
-          'MONGODB_URI is not defined in the environment variables',
-        );
-      }
-      await mongoose.connect(process.env.MONGODB_URI);
-      // eslint-disable-next-line no-console
-      console.log('Connected to MongoDB.');
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error connecting to MongoDB:', error);
+  try {
+    if (!process.env.MONGODB_URI) {
+      throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
     }
-  };
-  
-  export default connectMongoDB;
+    if (mongoose.connection.readyState === 1) {
+      return;
+    }
+    await mongoose.connect(process.env.MONGODB_URI);
+    // Consider using a logging library or removing this console.log
+  } catch (error) {
+    // Consider using a logging library or removing this console.error
+    throw new Error('Failed to connect to MongoDB');
+  }
+};
+
+export default connectMongoDB;

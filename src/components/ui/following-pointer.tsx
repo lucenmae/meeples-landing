@@ -1,5 +1,5 @@
-import { AnimatePresence, motion, useMotionValue } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion, MotionValue, useMotionValue } from "framer-motion";
+import React, { useEffect, useState, useCallback } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -17,6 +17,7 @@ export const FollowerPointerCard = ({
   const ref = React.useRef<HTMLDivElement>(null);
   const [rect, setRect] = useState<DOMRect | null>(null);
   const [isInside, setIsInside] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(true); // Default to true for SSR
   const [pointerTitle, setPointerTitle] = useState<string | React.ReactNode>(
     title || ""
   );
@@ -29,14 +30,24 @@ export const FollowerPointerCard = ({
       }
     };
     updateRect();
-    window.addEventListener("resize", updateRect);
+
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust this breakpoint as needed
+    };
+    checkMobile();
+
+    window.addEventListener("resize", () => {
+      updateRect();
+      checkMobile();
+    });
     return () => {
       window.removeEventListener("resize", updateRect);
+      window.removeEventListener("resize", checkMobile);
     };
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (rect) {
+    if (rect && !isMobile) {
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
       x.set(e.clientX - rect.left + scrollX);
@@ -48,13 +59,7 @@ export const FollowerPointerCard = ({
     setIsInside(false);
   };
 
-  const handleMouseEnter = () => {
-    setIsInside(true);
-    setPointerTitle(getRandomTitle());
-    setPointerColor(getRandomColor());
-  };
-
-  const getRandomTitle = () => {
+  const getRandomTitle = useCallback(() => {
     const titles = [
       "Amazing You",
       "Cool You",
@@ -63,24 +68,32 @@ export const FollowerPointerCard = ({
       "Pretty You",
     ];
     return titles[Math.floor(Math.random() * titles.length)];
-  };
+  }, []);
 
-  const getRandomColor = () => {
+  const getRandomColor = useCallback(() => {
     const colors = ["#86d3ea", "#f5bf22", "#86d3ea"];
     return colors[Math.floor(Math.random() * colors.length)];
-  };
+  }, []);
+
+  const handleMouseEnter = useCallback(() => {
+    if (!isMobile) {
+      setIsInside(true);
+      setPointerTitle(getRandomTitle());
+      setPointerColor(getRandomColor());
+    }
+  }, [isMobile, getRandomTitle, getRandomColor]);
 
   return (
     <div
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
-      style={{ cursor: "none" }}
+      style={{ cursor: isMobile ? "default" : "none" }}
       ref={ref}
       className={cn("relative", className)}
     >
       <AnimatePresence>
-        {isInside && (
+        {isInside && !isMobile && (
           <FollowPointer x={x} y={y} title={pointerTitle} color={pointerColor} />
         )}
       </AnimatePresence>
@@ -95,8 +108,8 @@ export const FollowPointer = ({
   title,
   color,
 }: {
-  x: any;
-  y: any;
+  x: MotionValue<number>;
+  y: MotionValue<number>;
   title?: string | React.ReactNode;
   color: string;
 }) => {

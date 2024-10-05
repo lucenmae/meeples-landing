@@ -21,24 +21,20 @@ const ScrollToTopButton = () => {
 
   return (
     <div
-      className={`fixed bottom-6 right-6 z-50 transition-transform duration-300 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+      className={`fixed bottom-6 right-6 z-50 transition-opacity duration-300 ${
+        isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
     >
-      {isVisible && (
-        <button
-          title='Scroll to top'
-          aria-label='Scroll to top'
-          onClick={scrollToTop}
-          className='button' 
-        >
-          <svg className='svgIcon' viewBox='0 0 384 512'>
-            <path
-              d='M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z'
-            ></path>
-          </svg>
-        </button>
-      )}
+      <button
+        title='Scroll to top'
+        aria-label='Scroll to top'
+        onClick={scrollToTop}
+        className='bg-[#f5bf22] hover:bg-[#e2ae1f] text-white w-12 h-12 rounded-full shadow-lg transition-colors duration-300 flex items-center justify-center'
+      >
+        <svg className='w-6 h-6' fill='currentColor' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'>
+          <path fillRule='evenodd' d='M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z' clipRule='evenodd'></path>
+        </svg>
+      </button>
     </div>
   );
 };
