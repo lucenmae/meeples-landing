@@ -17,6 +17,7 @@ export const FollowerPointerCard = ({
   const ref = React.useRef<HTMLDivElement>(null);
   const [rect, setRect] = useState<DOMRect | null>(null);
   const [isInside, setIsInside] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(true); // Default to true for SSR
   const [pointerTitle, setPointerTitle] = useState<string | React.ReactNode>(
     title || ""
   );
@@ -29,14 +30,24 @@ export const FollowerPointerCard = ({
       }
     };
     updateRect();
-    window.addEventListener("resize", updateRect);
+
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust this breakpoint as needed
+    };
+    checkMobile();
+
+    window.addEventListener("resize", () => {
+      updateRect();
+      checkMobile();
+    });
     return () => {
       window.removeEventListener("resize", updateRect);
+      window.removeEventListener("resize", checkMobile);
     };
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (rect) {
+    if (rect && !isMobile) {
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
       x.set(e.clientX - rect.left + scrollX);
@@ -49,9 +60,11 @@ export const FollowerPointerCard = ({
   };
 
   const handleMouseEnter = () => {
-    setIsInside(true);
-    setPointerTitle(getRandomTitle());
-    setPointerColor(getRandomColor());
+    if (!isMobile) {
+      setIsInside(true);
+      setPointerTitle(getRandomTitle());
+      setPointerColor(getRandomColor());
+    }
   };
 
   const getRandomTitle = () => {
@@ -75,12 +88,12 @@ export const FollowerPointerCard = ({
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
-      style={{ cursor: "none" }}
+      style={{ cursor: isMobile ? "default" : "none" }}
       ref={ref}
       className={cn("relative", className)}
     >
       <AnimatePresence>
-        {isInside && (
+        {isInside && !isMobile && (
           <FollowPointer x={x} y={y} title={pointerTitle} color={pointerColor} />
         )}
       </AnimatePresence>

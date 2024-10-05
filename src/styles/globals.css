@@ -385,61 +385,6 @@ Tooltip */
   transform: rotateY(180deg);
 }
 
-/* scroll to top */
-
-.button {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: rgb(22, 22, 22);
-  border: none;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0px 0px 0px 4px #0534a133;
-  cursor: pointer;
-  transition-duration: 0.3s;
-  overflow: hidden;
-  position: relative;
-}
-
-.svgIcon {
-  width: 12px;
-  transition-duration: 0.3s;
-}
-
-.svgIcon path {
-  fill: white;
-}
-
-.button:hover {
-  width: 140px;
-  border-radius: 50px;
-  transition-duration: 0.3s;
-  background-color: #0535a1;
-  align-items: center;
-}
-
-.button:hover .svgIcon {
-  transition-duration: 0.3s;
-  transform: translateY(-200%);
-}
-
-.button::before {
-  position: absolute;
-  bottom: -20px;
-  content: 'Back to Top';
-  color: rgb(250, 250, 250);
-  font-size: 0px;
-}
-
-.button:hover::before {
-  font-size: 13px;
-  opacity: 1;
-  bottom: unset;
-  transition-duration: 0.3s;
-}
 
 
 /* Featured Section */
@@ -448,3 +393,78 @@ Tooltip */
 }
 
 
+
+
+/* Loader */
+
+.loader {
+  width: 54px;
+  height: 54px;
+  position: relative;
+  border-radius: 4px;
+  background-color: #f5bf22;
+  border: 3px solid #2b2a28;
+  background-image: radial-gradient(circle 5px, #f7f7f7 100%, transparent 0),
+    radial-gradient(circle 5px, #f7f7f7 100%, transparent 0),
+    radial-gradient(circle 5px, #f7f7f7 100%, transparent 0),
+    radial-gradient(circle 5px, #f7f7f7 100%, transparent 0),
+    radial-gradient(circle 5px, #f7f7f7 100%, transparent 0),
+    radial-gradient(circle 5px, #f7f7f7 100%, transparent 0);
+  background-repeat: no-repeat;
+  animation: move 4s linear infinite, rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  0%,
+  20% {
+    transform: rotate(0deg);
+  }
+  30%,
+  40% {
+    transform: rotate(90deg);
+  }
+  50%,
+  60% {
+    transform: rotate(180deg);
+  }
+  70%,
+  80% {
+    transform: rotate(270deg);
+  }
+  90%,
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes move {
+  0%,
+  9% {
+    background-position: -12px -15px, -12px 0px, -12px 15px, 12px -15px,
+      12px 0px, 12px 15px;
+  }
+  10%,
+  25% {
+    background-position: 0px -15px, -12px 0px, -12px 15px, 34px -15px, 12px 0px,
+      12px 15px;
+  }
+  30%,
+  45% {
+    background-position: 0px -34px, -12px -10px, -12px 12px, 34px -15px,
+      12px -10px, 12px 12px;
+  }
+  50%,
+  65% {
+    background-position: 0px -34px, -12px -34px, -12px 12px, 34px -12px,
+      0px -10px, 12px 12px;
+  }
+  70%,
+  85% {
+    background-position: 0px -34px, -12px -34px, 0px 12px, 34px -12px, 0px -10px,
+      34px 12px;
+  }
+  90%,
+  100% {
+    background-position: 0px -34px, -12px -34px, 0px 0px, 34px -12px, 0px 0px,
+      34px 12px;
+  }
+}

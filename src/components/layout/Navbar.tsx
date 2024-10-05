@@ -80,26 +80,26 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
                   href='https://forms.gle/hCtVuNhBpyzZkZCv5'
                   className='cursor-none text-sm font-semibold leading-6 text-gray-900'
                 >
-                  <button
+                  <span
                     className='cursor-none inline-block px-6 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1 mr-4 btn-tooltip tooltip'
                     data-tooltip='can I join? 🥺'
                   >
                     Rent
-                  </button>
+                  </span>
                 </a>
               </li>
               <li>
-                <button
+                <span
                   onClick={() => scrollToSection(gamesRef)}
                   className='cursor-none text-sm font-semibold leading-6 text-gray-900'
                 >
-                  <button
+                  <span
                     className='cursor-none inline-block px-5 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1 mr-4 btn-tooltip tooltip'
                     data-tooltip="let's play? 😍"
                   >
                     Games
-                  </button>
-                </button>
+                  </span>
+                </span>
               </li>
             </ul>
 
@@ -111,7 +111,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
             {/* Action Buttons */}
             <ul className='flex lg:justify-end lg:gap-2 lg:items-center max-lg:gap-4 max-lg:mb-4 flex-col mt-4 lg:flex-1 md:mt-0 lg:flex-row'>
               <li>
-                <button
+                <span
                   onClick={() => scrollToSection(aboutRef)}
                   className='cursor-none text-sm font-semibold leading-6 text-gray-900 tooltip-container'
                 >
@@ -121,19 +121,19 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
                   >
                     About
                   </span>
-                </button>
+                </span>
               </li>
               <li>
                 <a
                   href='https://discord.gg/vxDY3U8Bwn'
                   className='text-sm font-semibold leading-6 text-gray-900 cursor-none tooltip-container'
                 >
-                  <button
+                  <span
                     className='btn-tooltip tooltip cursor-none inline-block px-5 py-2.5 text-xl font-bold text-center text-white bg-indigo-500 border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear transform scale-90 hover:bg-white hover:text-indigo-500 hover:border-indigo-500 hover:shadow-[5px_5px_0px_#6366F1] hover:-translate-y-1 active:bg-indigo-500 active:border-gray-800 active:text-white active:shadow-none active:translate-y-1'
                     data-tooltip='please join 🥺'
                   >
                     Join Discord
-                  </button>
+                  </span>
                 </a>
               </li>
             </ul>
