@@ -7,6 +7,13 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
+  env: {
+    MONGODB_URI: process.env.MONGODB_URI,
+    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+    AWS_REGION: process.env.AWS_REGION,
+  },
+
   // Uncoment to add domain whitelist
   // images: {
   //   domains: [
@@ -15,7 +22,7 @@ const nextConfig = {
   // },
 
   images: {
-    remotePatterns: ['pagedone.io'],
+    remotePatterns: ['pagedone.io', 'res.cloudinary.com', 'tailwindui.com'],
   },
 
   webpack(config) {
