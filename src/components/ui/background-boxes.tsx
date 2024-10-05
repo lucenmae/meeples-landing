@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import React, { useEffect, useMemo,useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -38,9 +38,9 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
     "#86d3ea", "#f5bf22", "#f3cc15", "#2b2a28"
   ], []);
 
-  const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
-
   const boxes = useMemo(() => {
+    const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
+
     return Array.from({ length: dimensions.rows * dimensions.cols }).map((_, index) => (
       <motion.div
         key={index}
@@ -51,7 +51,7 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
         }}
       />
     ));
-  }, [dimensions, getRandomColor]);
+  }, [dimensions, colors]);
 
   if (isLoading) {
     return <div className="fixed left-0 top-0 w-full h-full bg-[#F3F3F3]" />;
@@ -76,9 +76,9 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
 };
 
 // Debounce function to limit the frequency of resize events
-function debounce(func: Function, wait: number) {
+function debounce<T extends (...args: any[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
-  return function executedFunction(...args: any[]) {
+  return function executedFunction(...args: Parameters<T>) {
     const later = () => {
       clearTimeout(timeout);
       func(...args);

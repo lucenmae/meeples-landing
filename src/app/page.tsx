@@ -27,22 +27,22 @@ export default function HomePage() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <FollowerPointerCard>
-      <main>
-        <Head>
-          <title>Meeples - Tabletop Games Organization</title>
-        </Head>
-        <DynamicBoxes />
-        <section>
-          <HeroSection />
-        </section>
-        <ScrollToTopButton />
-      </main>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <main>
+          <Head>
+            <title>Meeples - Tabletop Games Organization</title>
+          </Head>
+          <DynamicBoxes />
+          <section>
+            <HeroSection />
+          </section>
+          <ScrollToTopButton />
+        </main>
+      )}
     </FollowerPointerCard>
   );
 }

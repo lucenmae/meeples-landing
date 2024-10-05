@@ -1,7 +1,7 @@
 import svgToDataUri from "mini-svg-data-uri";
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
-import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
+// import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
 
 const config: Config = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
@@ -32,59 +32,49 @@ const config: Config = {
         20: 'repeat(25, minmax(0, 1fr))',
       },
       keyframes: {
-        spotlight: {
-          "0%": {
-            opacity: 0,
-            transform: "translate(-72%, -62%) scale(0.5)",
-          },
-          "100%": {
-            opacity: 1,
-            transform: "translate(-50%,-40%) scale(1)",
-          },
-        },
       },
       animation: {
-        spotlight: "spotlight 2s ease .75s 1 forwards",
+        
       },
     },
   },
   plugins: [
-    addVariablesForColors,
-    function ({ matchUtilities, theme }: { matchUtilities: (arg0: Record<string, (value: string) => Record<string, string>>, arg1: { values: Record<string, string> }) => void, theme: (arg0: string) => Record<string, string> }) {
-      matchUtilities(
-        {
-          "bg-grid": (value: string) => ({
-            backgroundImage: `url("${svgToDataUri(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
-            )}")`,
-          }),
-          "bg-grid-small": (value: string) => ({
-            backgroundImage: `url("${svgToDataUri(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="8" height="8" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
-            )}")`,
-          }),
-          "bg-dot": (value: string) => ({
-            backgroundImage: `url("${svgToDataUri(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none"><circle fill="${value}" id="pattern-circle" cx="10" cy="10" r="1.6257413380501518"></circle></svg>`
-            )}")`,
-          }),
-        },
-        { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
-      );
-    },
+    // addVariablesForColors,
+    // function ({ matchUtilities, theme }: { matchUtilities: (arg0: Record<string, (value: string) => Record<string, string>>, arg1: { values: Record<string, string> }) => void, theme: (arg0: string) => Record<string, string> }) {
+    //   matchUtilities(
+    //     {
+    //       "bg-grid": (value: string) => ({
+    //         backgroundImage: `url("${svgToDataUri(
+    //           `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
+    //         )}")`,
+    //       }),
+    //       "bg-grid-small": (value: string) => ({
+    //         backgroundImage: `url("${svgToDataUri(
+    //           `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="8" height="8" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
+    //         )}")`,
+    //       }),
+    //       "bg-dot": (value: string) => ({
+    //         backgroundImage: `url("${svgToDataUri(
+    //           `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none"><circle fill="${value}" id="pattern-circle" cx="10" cy="10" r="1.6257413380501518"></circle></svg>`
+    //         )}")`,
+    //       }),
+    //     },
+    //     { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
+    //   );
+    // },
   ],
 };
 
 export default config;
 
-// This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
-function addVariablesForColors({ addBase, theme }: { addBase: any; theme: any }) {
-  const allColors = flattenColorPalette(theme('colors'));
-  const newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
-  );
+// // This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
+// function addVariablesForColors({ addBase, theme }: { addBase: any; theme: any }) {
+//   const allColors = flattenColorPalette(theme('colors'));
+//   const newVars = Object.fromEntries(
+//     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+//   );
 
-  addBase({
-    ':root': newVars,
-  });
-}
+//   addBase({
+//     ':root': newVars,
+//   });
+// }

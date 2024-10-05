@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 export interface IAdmin extends mongoose.Document {
   username: string;
   password: string;
+  comparePassword(password: string): Promise<boolean>;
 }
 
 const AdminSchema = new mongoose.Schema({
