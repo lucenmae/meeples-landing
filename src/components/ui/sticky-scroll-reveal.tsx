@@ -4,16 +4,18 @@ import { useMotionValueEvent, useScroll } from "framer-motion";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-export const StickyScroll = ({
+// Sort imports and replace any with more specific types
+interface ContentItem {
+  title: string;
+  description: string;
+}
+
+interface StickyScrollRevealProps {
+  content: ContentItem[];
+}
+
+export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
   content,
-  contentClassName,
-}: {
-  content: {
-    title: string;
-    description: string;
-    content?: React.ReactNode | any;
-  }[];
-  contentClassName?: string;
 }) => {
   const [activeCard, setActiveCard] = React.useState(0);
   const ref = useRef<any>(null);
@@ -44,9 +46,8 @@ export const StickyScroll = ({
     "var(--blue-400)",
   ];
   const linearGradients = [
-" /images/bg.jpg",
-" /images/hero-image.jpg",
-
+    " /images/bg.jpg",
+    " /images/hero-image.jpg",
   ];
 
   const [backgroundGradient, setBackgroundGradient] = useState(
