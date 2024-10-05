@@ -15,7 +15,7 @@ const nextConfig = {
   // },
 
   images: {
-    domains: ['pagedone.io'],
+    remotePatterns: ['pagedone.io'],
   },
 
   webpack(config) {
