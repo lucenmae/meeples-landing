@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "ts-node src/backend/server.ts",
-    "build": "tsc",
+    "dev": "next dev",
+    "build": "next build",
     "start": "node dist/backend/server.js",
     "lint": "next lint",
     "lint:fix": "eslint src --fix && pnpm format",
@@ -50,6 +50,7 @@
     "@testing-library/react": "^13.4.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.13",
     "@types/node": "^16.18.112",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",

@@ -56,6 +56,9 @@ const nextConfig = {
 
     return config;
   },
+
+  // Remove or comment out if present:
+  // output: 'export',
 };
 
 module.exports = nextConfig;

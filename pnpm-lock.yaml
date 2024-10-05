@@ -99,6 +99,9 @@ importers:
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
+      '@types/jest':
+        specifier: ^29.5.13
+        version: 29.5.13
       '@types/node':
         specifier: ^16.18.112
         version: 16.18.112
