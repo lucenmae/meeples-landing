@@ -1,13 +1,15 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+
 import { cn } from "@/lib/utils";
 
 // Sort imports and replace any with more specific types
 interface ContentItem {
   title: string;
   description: string;
+  content?: React.ReactNode;
 }
 
 interface StickyScrollRevealProps {
@@ -17,8 +19,8 @@ interface StickyScrollRevealProps {
 export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
   content,
 }) => {
-  const [activeCard, setActiveCard] = React.useState(0);
-  const ref = useRef<any>(null);
+  const [activeCard, setActiveCard] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     // uncomment line 22 and comment line 23 if you DONT want the overflow container and want to have it change on the entire page scroll
     // target: ref
@@ -56,7 +58,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
 
   useEffect(() => {
     setBackgroundGradient(linearGradients[activeCard % linearGradients.length]);
-  }, [activeCard]);
+  }, [activeCard, linearGradients]);
 
   return (
     <motion.div

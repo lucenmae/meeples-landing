@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+
 import Dashboard from '../../../components/admin/Dashboard';
 
 export default function AdminDashboardPage() {

@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server';
-import { AdminService } from '../../../models/Admin';
 import jwt from 'jsonwebtoken';
+import { NextResponse } from 'next/server';
+
 import connectMongoDB from '../../../../lib/mongodb';
+import { AdminService } from '../../../models/Admin';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 

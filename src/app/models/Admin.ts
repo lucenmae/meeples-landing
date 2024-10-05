@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose';
 
 export interface IAdmin extends mongoose.Document {
   username: string;

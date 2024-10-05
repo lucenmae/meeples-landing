@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
-import { AdminService } from '../../../models/Admin';
+
 import connectMongoDB from '../../../../lib/mongodb';
+import { AdminService } from '../../../models/Admin';
 
 export async function POST(request: Request) {
   await connectMongoDB();

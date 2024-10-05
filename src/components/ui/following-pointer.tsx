@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useMotionValue } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -59,15 +59,15 @@ export const FollowerPointerCard = ({
     setIsInside(false);
   };
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = useCallback(() => {
     if (!isMobile) {
       setIsInside(true);
       setPointerTitle(getRandomTitle());
       setPointerColor(getRandomColor());
     }
-  };
+  }, [isMobile, getRandomTitle, getRandomColor]);
 
-  const getRandomTitle = () => {
+  const getRandomTitle = useCallback(() => {
     const titles = [
       "Amazing You",
       "Cool You",
@@ -76,12 +76,12 @@ export const FollowerPointerCard = ({
       "Pretty You",
     ];
     return titles[Math.floor(Math.random() * titles.length)];
-  };
+  }, []);
 
-  const getRandomColor = () => {
+  const getRandomColor = useCallback(() => {
     const colors = ["#86d3ea", "#f5bf22", "#86d3ea"];
     return colors[Math.floor(Math.random() * colors.length)];
-  };
+  }, []);
 
   return (
     <div
@@ -108,8 +108,8 @@ export const FollowPointer = ({
   title,
   color,
 }: {
-  x: any;
-  y: any;
+  x: number;
+  y: number;
   title?: string | React.ReactNode;
   color: string;
 }) => {
