@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
 import { SessionProvider } from 'next-auth/react';
+import React from 'react';
+
 import { AdminWrapper } from '@/components/AdminWrapper';
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {

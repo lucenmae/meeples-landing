@@ -1,6 +1,8 @@
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth/next';
+
+import { authOptions } from '@/lib/auth';
+
 import LogoutButton from '@/components/LogoutButton';
 
 export default async function AdminDashboard() {

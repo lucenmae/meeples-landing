@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+
 import { siteConfig } from '@/constant/config';
 
 export const metadata: Metadata = {

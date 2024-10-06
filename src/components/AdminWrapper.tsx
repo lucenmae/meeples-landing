@@ -1,8 +1,9 @@
 'use client';
 
-import { useAdmin } from '@/hooks/useAdmin';
-import { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
+import { ReactNode } from 'react';
+
+import { useAdmin } from '@/hooks/useAdmin';
 
 interface AdminWrapperProps {
   children: ReactNode;
