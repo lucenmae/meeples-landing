@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
@@ -30,9 +31,13 @@ export default function AdminDashboard() {
           <h2 className="text-xl font-semibold mb-4">Welcome, {session.user?.name || 'Admin'}</h2>
           <p className="mb-4">This is your admin dashboard. You can manage your site from here.</p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <DashboardCard title="Users" count="1,234" />
-            <DashboardCard title="Posts" count="56" />
-            <DashboardCard title="Comments" count="789" />
+            <Link href="/admin/create-admin" className="block">
+              <div className="bg-blue-100 p-4 rounded-lg">
+                <h3 className="text-lg font-semibold mb-2">Create Admin User</h3>
+                <p>Click to create a new admin user</p>
+              </div>
+            </Link>
+            {/* Add other dashboard cards here */}
           </div>
         </div>
       </div>

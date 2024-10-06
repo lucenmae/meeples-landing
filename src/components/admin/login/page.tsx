@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-export default function LoginPage() {
+export default function LoginPageComponent() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -34,7 +34,7 @@ export default function LoginPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="px-8 py-6 mt-4 text-left bg-white shadow-lg">
-        <h3 className="text-2xl font-bold text-center">Admin Login</h3>
+        <h3 className="text-2xl font-bold text-center">Login</h3>
         <form onSubmit={handleSubmit}>
           <div className="mt-4">
             <div>

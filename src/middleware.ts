@@ -5,7 +5,7 @@ import { getToken } from 'next-auth/jwt';
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
   const isAuth = !!token;
-  const isAuthPage = request.nextUrl.pathname.startsWith('/admin/login');
+  const isAuthPage = request.nextUrl.pathname === '/login'; // Update this line
 
   if (isAuthPage) {
     if (isAuth) {
@@ -21,11 +21,11 @@ export async function middleware(request: NextRequest) {
     }
 
     return NextResponse.redirect(
-      new URL(`/admin/login?from=${encodeURIComponent(from)}`, request.url)
+      new URL(`/login?from=${encodeURIComponent(from)}`, request.url)
     );
   }
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/login', '/admin/:path*'], // Update this line
 };

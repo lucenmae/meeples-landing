@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import NextAuth, { DefaultSession, User as NextAuthUser } from 'next-auth';
+import NextAuth, { DefaultSession } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { JWT } from 'next-auth/jwt';
 import bcrypt from 'bcryptjs';
-import dbConnect from '@/lib/mongodb';
 import User from '@/models/User';
-import { MongoClient } from 'mongodb';
+import connectToDatabase from '@/lib/mongodb';
 
 // Extend the built-in session types
 declare module 'next-auth' {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      isAdmin: boolean;
+      role: 'user' | 'admin';
     } & DefaultSession['user']
   }
 }
@@ -21,11 +19,11 @@ declare module 'next-auth' {
 declare module 'next-auth/jwt' {
   interface JWT {
     id: string;
-    isAdmin: boolean;
+    role: 'user' | 'admin';
   }
 }
 
-export const authOptions = {
+const authOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -38,15 +36,7 @@ export const authOptions = {
           return null;
         }
 
-        let client: MongoClient;
-        try {
-          client = await dbConnect;
-          // Connection to the database is now established
-        } catch (error) {
-          console.error('Failed to connect to the database:', error);
-          return null;
-        }
-
+        await connectToDatabase();
         const user = await User.findOne({ username: credentials.username });
 
         if (!user) {
@@ -61,32 +51,31 @@ export const authOptions = {
 
         return {
           id: user._id.toString(),
-          name: user.username,
-          isAdmin: user.isAdmin,
+          username: user.username,
+          role: user.role as 'user' | 'admin',
         };
       }
     })
   ],
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user: NextAuthUser | undefined }) {
+    async jwt({ token, user }: { token: any; user: any }) {
       if (user) {
         token.id = user.id;
-        token.isAdmin = (user as NextAuthUser & { isAdmin: boolean }).isAdmin;
+        token.role = user.role;
       }
       return token;
     },
-    async session({ session, token }: { session: any; token: JWT }) {
-      if (session.user) {
+    async session({ session, token }: { session: any; token: any }) {
+      if (session?.user) {
         session.user.id = token.id;
-        session.user.isAdmin = token.isAdmin;
+        session.user.role = token.role;
       }
       return session;
-    }
+    },
   },
   pages: {
-    signIn: '/login',
+    signIn: '/login', // Update this line
   },
-  secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);
