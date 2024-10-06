@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import NextAuth, { DefaultSession, User } from 'next-auth';
+import NextAuth, { DefaultSession, User as NextAuthUser } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { JWT } from 'next-auth/jwt';
+import bcrypt from 'bcryptjs';
+import dbConnect from '@/lib/mongodb';
+import User from '@/models/User';
 
 // Extend the built-in session types
 declare module 'next-auth' {
   interface Session extends DefaultSession {
     user: {
+      id: string;
       isAdmin: boolean;
     } & DefaultSession['user']
   }
@@ -15,6 +19,7 @@ declare module 'next-auth' {
 // Extend the built-in JWT types
 declare module 'next-auth/jwt' {
   interface JWT {
+    id: string;
     isAdmin: boolean;
   }
 }
@@ -32,30 +37,39 @@ export const authOptions = {
           return null;
         }
 
-        // Temporary admin credentials
-        const tempAdminUsername = 'admin';
-        const tempAdminPassword = 'password123';
+        await dbConnect();
 
-        if (
-          credentials.username === tempAdminUsername &&
-          credentials.password === tempAdminPassword
-        ) {
-          return { id: '1', name: 'Admin', isAdmin: true } as User;
+        const user = await User.findOne({ username: credentials.username });
+
+        if (!user) {
+          return null;
         }
 
-        return null;
+        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
+
+        if (!isPasswordCorrect) {
+          return null;
+        }
+
+        return {
+          id: user._id.toString(),
+          name: user.username,
+          isAdmin: user.isAdmin,
+        };
       }
     })
   ],
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user: User | undefined }) {
+    async jwt({ token, user }: { token: JWT; user: NextAuthUser | undefined }) {
       if (user) {
-        token.isAdmin = (user as User & { isAdmin: boolean }).isAdmin;
+        token.id = user.id;
+        token.isAdmin = (user as NextAuthUser & { isAdmin: boolean }).isAdmin;
       }
       return token;
     },
     async session({ session, token }: { session: any; token: JWT }) {
       if (session.user) {
+        session.user.id = token.id;
         session.user.isAdmin = token.isAdmin;
       }
       return session;
@@ -64,6 +78,7 @@ export const authOptions = {
   pages: {
     signIn: '/auth/login',
   },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);
