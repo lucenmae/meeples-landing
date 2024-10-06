@@ -12,7 +12,7 @@ export async function createAdminUser() {
 
   if (existingAdmin) {
     console.log('Admin user already exists');
-    return;
+    process.exit(0);
   }
 
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
