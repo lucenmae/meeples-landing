@@ -5,6 +5,7 @@ import { JWT } from 'next-auth/jwt';
 import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/mongodb';
 import User from '@/models/User';
+import { MongoClient } from 'mongodb';
 
 // Extend the built-in session types
 declare module 'next-auth' {
@@ -37,7 +38,14 @@ export const authOptions = {
           return null;
         }
 
-        await dbConnect();
+        let client: MongoClient;
+        try {
+          client = await dbConnect;
+          // Connection to the database is now established
+        } catch (error) {
+          console.error('Failed to connect to the database:', error);
+          return null;
+        }
 
         const user = await User.findOne({ username: credentials.username });
 
@@ -76,7 +84,7 @@ export const authOptions = {
     }
   },
   pages: {
-    signIn: '/auth/login',
+    signIn: '/login',
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
