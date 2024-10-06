@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import Link from 'next/link';
 
 import Navbar from '@/components/layout/Navbar';
 import Cards from '@/components/ui/cards';
@@ -355,6 +356,11 @@ export function HeroSection() {
               </div>
             </div>
           </div>
+
+          {/* Add this button after the existing content */}
+          <Link href="/auth/login" className="mt-8 px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-900 z-40">
+            Admin Login
+          </Link>
         </div>
         <footer className='mt-20 footer footer-center z-30 w-full p-4 bg-[#2b2a28] text-gray-200'>
           <div className='text-center'>

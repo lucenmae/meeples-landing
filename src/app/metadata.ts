@@ -1,9 +1,4 @@
 import { Metadata } from 'next';
-import * as React from 'react';
-
-import '@/styles/globals.css';
-import { ClientWrapper } from '../components/ClientWrapper';
-
 import { siteConfig } from '@/constant/config';
 
 export const metadata: Metadata = {
@@ -30,17 +25,3 @@ export const metadata: Metadata = {
     locale: 'en_US',
   },
 };
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang='en'>
-      <body>
-        <ClientWrapper>{children}</ClientWrapper>
-      </body>
-    </html>
-  );
-}
