@@ -8,8 +8,7 @@ const userSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now },
   lastLogin: { type: Date, default: null },
   isActive: { type: Boolean, default: true },
-
-});
+}, { collection: 'users' });
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 

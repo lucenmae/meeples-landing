@@ -1,5 +1,5 @@
-import LoginPageComponent from '@/components/admin/login/page';
+import LoginPageClient from './LoginPageClient';
 
 export default function LoginPage() {
-  return <LoginPageComponent />;
+  return <LoginPageClient />;
 }
