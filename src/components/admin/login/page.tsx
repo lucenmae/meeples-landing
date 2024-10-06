@@ -22,7 +22,8 @@ export default function LoginPage() {
       if (result?.error) {
         setError('Invalid credentials');
       } else {
-        router.push('/admin');
+        // Redirect to admin dashboard upon successful login
+        router.push('/admin/dashboard');
       }
     } catch (error) {
       console.error('An error occurred during login:', error);
