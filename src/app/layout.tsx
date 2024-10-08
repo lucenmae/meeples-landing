@@ -6,7 +6,7 @@ import '../styles/globals.css';
 
 import SessionProvider from '@/components/SessionProvider';
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';  // Updated import
 import { siteConfig } from '@/config/site';
 
 const inter = Inter({ subsets: ['latin'] });
