@@ -5,9 +5,7 @@ import { getServerSession } from 'next-auth/next';
 import '../styles/globals.css';
 
 import { authOptions } from '@/lib/auth';
-
 import SessionProvider from '@/components/SessionProvider';
-
 import { siteConfig } from '@/config/site';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -51,8 +49,8 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={inter.className}>
+      <body>
         <SessionProvider session={session}>
           {children}
         </SessionProvider>

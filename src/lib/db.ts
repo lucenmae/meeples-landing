@@ -17,10 +17,12 @@ if (!cached) {
 
 export async function connectToDatabase() {
   if (!MONGODB_URI) {
+    console.error("MONGODB_URI is not defined");
     throw new Error("Please define the MONGODB_URI environment variable");
   }
 
   if (cached.conn) {
+    console.log("Using cached database connection");
     return cached.conn;
   }
 
@@ -29,14 +31,23 @@ export async function connectToDatabase() {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      return mongoose.connection;
-    });
+    console.log("Attempting to connect to MongoDB...");
+    cached.promise = mongoose.connect(MONGODB_URI, opts)
+      .then((mongoose) => {
+        console.log("Successfully connected to MongoDB");
+        return mongoose.connection;
+      })
+      .catch((error) => {
+        console.error("Failed to connect to MongoDB:", error);
+        throw error;
+      });
   }
 
   try {
     cached.conn = await cached.promise;
+    console.log("Database connection established");
   } catch (e) {
+    console.error("Error in database connection:", e);
     cached.promise = null;
     throw e;
   }
