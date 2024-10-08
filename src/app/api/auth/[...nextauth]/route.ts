@@ -1,36 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import bcrypt from 'bcryptjs';
-import NextAuth from 'next-auth/next';
+import NextAuth, { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-import connectToDatabase from '@/lib/mongodb';
+import connectMongoDB from '@/lib/mongodb';
 
 import User from '@/models/User';
 
-// Extend the Session and JWT types directly
-declare module "next-auth" {
-  interface Session {
-    user: {
-      id: string;
-      username: string;
-      role: string;
-    };
-  }
-}
-
-declare module "next-auth/jwt" {
-  interface JWT {
-    id: string;
-    username: string;
-    role: string;
-  }
-}
-
-export const authOptions = {
+// Define types explicitly for authOptions
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
@@ -38,7 +21,7 @@ export const authOptions = {
           return null;
         }
 
-        await connectToDatabase();
+        await connectMongoDB();
 
         const user = await User.findOne({ username: credentials.username });
 
@@ -46,14 +29,16 @@ export const authOptions = {
           return null;
         }
 
-        const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
 
-        if (!isPasswordValid) {
+        if (!isPasswordCorrect) {
           return null;
         }
 
         return {
           id: user._id.toString(),
+          email: user.email,
+          name: `${user.firstName} ${user.lastName}`,
           username: user.username,
           role: user.role,
         };
@@ -64,26 +49,25 @@ export const authOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.username = user.username;
         token.role = user.role;
+        token.username = user.username;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token) {
-        session.user = {
-          id: token.id,
-          username: token.username,
-          role: token.role,
-        };
+      if (token && session.user) {
+        session.user.id = token.id;
+        session.user.role = token.role as string;
+        session.user.username = token.username as string;
       }
       return session;
-    },
+    }
   },
   pages: {
     signIn: '/login',
   },
 };
+
 
 const handler = NextAuth(authOptions);
 
