@@ -7,10 +7,10 @@ if (!MONGODB_URI) {
 }
 
 declare global {
-  let mongoose: {
+  var mongoose: {
     conn: mongoose.Connection | null;
     promise: Promise<mongoose.Connection> | null;
-  };
+  } | undefined;
 }
 
 let cached = global.mongoose;
@@ -20,15 +20,16 @@ if (!cached) {
 }
 
 export async function connectToDatabase() {
-  if (cached.conn) {
+  if (cached?.conn) {
     return cached.conn;
   }
 
-  if (!cached.promise) {
+  if (!cached?.promise) {
     const opts = {
       bufferCommands: false,
     };
 
+    cached = global.mongoose = { conn: null, promise: null };
     cached.promise = mongoose.connect(MONGODB_URI as string, opts).then((mongoose) => {
       return mongoose.connection;
     });
