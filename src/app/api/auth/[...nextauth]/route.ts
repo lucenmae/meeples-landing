@@ -1,8 +1,29 @@
-import NextAuth from 'next-auth';
-import CredentialsProvider from "next-auth/providers/credentials";
-import connectToDatabase from '@/lib/mongodb';
-import User from '@/models/User';
 import bcrypt from 'bcryptjs';
+import NextAuth from 'next-auth/next';
+import CredentialsProvider from 'next-auth/providers/credentials';
+
+import connectToDatabase from '@/lib/mongodb';
+
+import User from '@/models/User';
+
+// Extend the Session and JWT types directly
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      username: string;
+      role: string;
+    };
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id: string;
+    username: string;
+    role: string;
+  }
+}
 
 export const authOptions = {
   providers: [

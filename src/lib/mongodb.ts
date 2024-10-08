@@ -14,6 +14,7 @@ async function connectToDatabase() {
     }
 
     console.log('Connecting to MongoDB...');
+    mongoose.set('strictQuery', true); // address the deprecation warning
     await mongoose.connect(uri);
     console.log('Successfully connected to MongoDB');
   } catch (error) {

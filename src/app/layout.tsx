@@ -3,9 +3,9 @@ import { getServerSession } from 'next-auth/next';
 
 import '../styles/globals.css';
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-
 import SessionProvider from '@/components/SessionProvider';
+
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 const inter = Inter({ subsets: ['latin'] });
 
