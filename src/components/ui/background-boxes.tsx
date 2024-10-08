@@ -76,7 +76,7 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
 };
 
 // Debounce function to limit the frequency of resize events
-function debounce<T extends (...args: any[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
+function debounce<T extends (...args: unknown[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
   return function executedFunction(...args: Parameters<T>) {
     const later = () => {

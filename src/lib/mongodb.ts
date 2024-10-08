@@ -1,19 +1,18 @@
 import mongoose from 'mongoose';
 
-const connectMongoDB = async () => {
-  try {
-    if (!process.env.MONGODB_URI) {
-      throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
-    }
-    if (mongoose.connection.readyState === 1) {
-      return;
-    }
-    await mongoose.connect(process.env.MONGODB_URI);
-    // Consider using a logging library or removing this console.log
-  } catch (error) {
-    // Consider using a logging library or removing this console.error
-    throw new Error('Failed to connect to MongoDB');
-  }
-};
+if (!process.env.MONGODB_URI) {
+  throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
+}
 
-export default connectMongoDB;
+const uri = process.env.MONGODB_URI;
+
+async function connectToDatabase() {
+  if (mongoose.connection.readyState >= 1) {
+    return;
+  }
+
+  mongoose.set('strictQuery', true); // address the deprecation warning
+  await mongoose.connect(uri);
+}
+
+export default connectToDatabase;

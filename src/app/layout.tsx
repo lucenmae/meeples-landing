@@ -1,9 +1,15 @@
 import { Metadata } from 'next';
-import * as React from 'react';
+import { Inter } from 'next/font/google';
+import { getServerSession } from 'next-auth/next';
 
-import '@/styles/globals.css';
+import '../styles/globals.css';
 
-import { siteConfig } from '@/constant/config';
+import SessionProvider from '@/components/SessionProvider';
+
+import { authOptions } from '@/lib/auth';
+import { siteConfig } from '@/config/site';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -13,7 +19,6 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   robots: { index: true, follow: true },
-
   icons: {
     icon: '/favicon/favicon.ico',
     shortcut: '/favicon/favicon-16x16.png',
@@ -29,19 +34,27 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [`${siteConfig.url}/images/og.jpg`],
+  },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
+
   return (
-    <html lang='en' >
-      <body >
-        <div className="relative flex min-h-screen min-w-full flex-col">
-          <div>{children}</div>
-        </div>
+    <html lang="en">
+      <body className={inter.className}>
+        <SessionProvider session={session}>
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
