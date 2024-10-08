@@ -2,10 +2,6 @@ import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error("MONGODB_URI is not defined");
-}
-
 // Define the type for our cached mongoose connection
 interface MongooseConnection {
   conn: mongoose.Connection | null;
@@ -20,6 +16,10 @@ if (!cached) {
 }
 
 export async function connectToDatabase() {
+  if (!MONGODB_URI) {
+    throw new Error("Please define the MONGODB_URI environment variable");
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
@@ -29,8 +29,7 @@ export async function connectToDatabase() {
       bufferCommands: false,
     };
 
-    // Assert MONGODB_URI as string
-    cached.promise = mongoose.connect(MONGODB_URI as string, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       return mongoose.connection;
     });
   }
