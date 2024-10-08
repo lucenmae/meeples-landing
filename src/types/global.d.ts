@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
 declare global {
-  let mongoose: {
+  const mongoose: { 
     conn: mongoose.Connection | null;
     promise: Promise<mongoose.Connection> | null;
   } | undefined;
 }
 
-export {}; 
+export {};
