@@ -7,7 +7,7 @@ if (!MONGODB_URI) {
 }
 
 declare global {
-  var mongoose: {
+  let mongoose: {
     conn: mongoose.Connection | null;
     promise: Promise<mongoose.Connection> | null;
   } | undefined;
