@@ -6,6 +6,13 @@ if (!MONGODB_URI) {
   throw new Error("MONGODB_URI is not defined");
 }
 
+declare global {
+  var mongoose: {
+    conn: mongoose.Connection | null;
+    promise: Promise<mongoose.Connection> | null;
+  };
+}
+
 let cached = global.mongoose;
 
 if (!cached) {
@@ -23,7 +30,7 @@ export async function connectToDatabase() {
     };
 
     cached.promise = mongoose.connect(MONGODB_URI as string, opts).then((mongoose) => {
-      return mongoose;
+      return mongoose.connection;
     });
   }
 
