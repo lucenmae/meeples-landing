@@ -1,4 +1,3 @@
-import { Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
 
 export function useAdmin() {
