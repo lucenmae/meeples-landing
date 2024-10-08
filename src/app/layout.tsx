@@ -1,12 +1,13 @@
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { getServerSession } from 'next-auth/next';
+import { Session } from 'next-auth';
 
 import '../styles/globals.css';
 
 import SessionProvider from '@/components/SessionProvider';
 
-import { authOptions } from '@/lib/auth';  // Updated import
+import { authOptions } from '@/lib/auth';
 import { siteConfig } from '@/config/site';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -42,20 +43,12 @@ export const metadata: Metadata = {
   },
 };
 
-interface CustomSession {
-  user: {
-    id: string;
-    username: string;
-    role: string;
-  };
-}
-
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = (await getServerSession(authOptions)) as CustomSession | null;
+  const session = await getServerSession(authOptions) as Session | null;
 
   return (
     <html lang="en">
