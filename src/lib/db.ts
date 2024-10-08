@@ -6,30 +6,33 @@ if (!MONGODB_URI) {
   throw new Error("MONGODB_URI is not defined");
 }
 
-declare global {
-  let mongoose: {
-    conn: mongoose.Connection | null;
-    promise: Promise<mongoose.Connection> | null;
-  } | undefined;
+// Create an interface for the cached mongoose connection
+interface CachedMongoose {
+  conn: mongoose.Connection | null;
+  promise: Promise<mongoose.Connection> | null;
 }
 
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+// Extend the NodeJS.Global interface to include mongoose
+export interface Global {
+    mongoose: CachedMongoose;
 }
+
+// Create a variable to hold the cached mongoose connection
+const cached: CachedMongoose = global.mongoose || { conn: null, promise: null };
+
+// Assign the cached connection back to global.mongoose
+global.mongoose = cached;
 
 export async function connectToDatabase() {
-  if (cached?.conn) {
+  if (cached.conn) {
     return cached.conn;
   }
 
-  if (!cached?.promise) {
+  if (!cached.promise) {
     const opts = {
       bufferCommands: false,
     };
 
-    cached = global.mongoose = { conn: null, promise: null };
     cached.promise = mongoose.connect(MONGODB_URI as string, opts).then((mongoose) => {
       return mongoose.connection;
     });
