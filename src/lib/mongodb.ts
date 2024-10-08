@@ -7,20 +7,12 @@ if (!process.env.MONGODB_URI) {
 const uri = process.env.MONGODB_URI;
 
 async function connectToDatabase() {
-  try {
-    if (mongoose.connection.readyState >= 1) {
-      console.log('Already connected to MongoDB');
-      return;
-    }
-
-    console.log('Connecting to MongoDB...');
-    mongoose.set('strictQuery', true); // address the deprecation warning
-    await mongoose.connect(uri);
-    console.log('Successfully connected to MongoDB');
-  } catch (error) {
-    console.error('Failed to connect to MongoDB:', error);
-    throw error;
+  if (mongoose.connection.readyState >= 1) {
+    return;
   }
+
+  mongoose.set('strictQuery', true); // address the deprecation warning
+  await mongoose.connect(uri);
 }
 
 export default connectToDatabase;
