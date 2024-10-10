@@ -11,33 +11,41 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        username: { label: "Username", type: "text" },
+        usernameOrEmail: { label: "Username or Email", type: "text" },
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.username || !credentials?.password) {
+        if (!credentials?.usernameOrEmail || !credentials?.password) {
           return null;
         }
 
         await connectMongoDB();
 
-        const user = await User.findOne({ username: credentials.username });
+        const user = await User.findOne({
+          $or: [
+            { userName: credentials.usernameOrEmail },
+            { email: credentials.usernameOrEmail }
+          ]
+        });
 
         if (!user) {
+          console.log('User not found:', credentials.usernameOrEmail);
           return null;
         }
 
         const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
 
         if (!isPasswordCorrect) {
+          console.log('Incorrect password for user:', credentials.usernameOrEmail);
           return null;
         }
 
+        console.log('User authenticated successfully:', credentials.usernameOrEmail);
         return {
           id: user._id.toString(),
           email: user.email,
           name: `${user.firstName} ${user.lastName}`,
-          username: user.username,
+          username: user.userName,
           role: user.role,
         };
       }

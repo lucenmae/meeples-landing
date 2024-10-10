@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [username, setUsername] = useState('');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -20,14 +20,14 @@ export default function LoginPage() {
     try {
       const result = await signIn('credentials', {
         redirect: false,
-        username,
+        usernameOrEmail,
         password,
       });
 
       console.log('SignIn result:', result);
 
       if (result?.error) {
-        setError('Invalid username or password');
+        setError('Invalid username/email or password');
         console.error('SignIn error:', result.error);
       } else if (result?.ok) {
         router.push('/admin/dashboard');
@@ -72,17 +72,17 @@ export default function LoginPage() {
 
                 <form onSubmit={handleSubmit} className="mt-8 grid grid-cols-6 gap-6">
                   <div className="col-span-6">
-                    <label htmlFor="Username" className="block text-sm font-medium text-gray-700">
-                      Username
+                    <label htmlFor="UsernameOrEmail" className="block text-sm font-medium text-gray-700">
+                      Username or Email
                     </label>
 
                     <input
                       type="text"
-                      id="Username"
-                      name="username"
+                      id="UsernameOrEmail"
+                      name="usernameOrEmail"
                       className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      value={usernameOrEmail}
+                      onChange={(e) => setUsernameOrEmail(e.target.value)}
                       required
                     />
                   </div>
