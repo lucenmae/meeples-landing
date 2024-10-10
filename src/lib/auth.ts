@@ -11,17 +11,25 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        username: { label: "Username", type: "text" },
+        usernameOrEmail: { label: "Username or Email", type: "text" },
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.username || !credentials?.password) {
+        if (!credentials?.usernameOrEmail || !credentials?.password) {
+          console.log('Missing credentials');
           return null;
         }
 
         await connectMongoDB();
 
-        const user = await User.findOne({ username: credentials.username });
+        console.log('Searching for user:', credentials.usernameOrEmail);
+
+        const user = await User.findOne({
+          $or: [
+            { userName: { $regex: new RegExp(`^${credentials.usernameOrEmail}$`, 'i') } },
+            { email: credentials.usernameOrEmail.toLowerCase() }
+          ]
+        });
 
         if (!user) {
           return null;
@@ -37,7 +45,7 @@ export const authOptions: AuthOptions = {
           id: user._id.toString(),
           email: user.email,
           name: `${user.firstName} ${user.lastName}`,
-          username: user.username,
+          username: user.userName,
           role: user.role,
         };
       }
