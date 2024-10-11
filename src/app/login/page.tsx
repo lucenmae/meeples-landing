@@ -1,12 +1,22 @@
 import { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 
 import LoginForm from './LoginForm';
+
 
 export const metadata: Metadata = {
   title: 'Login',
   description: 'Login to your account',
 };
 
+const DynamicBoxes = dynamic(() => import('@/components/ui/background-boxes').then(mod => mod.Boxes), {
+  ssr: false,
+  loading: () => <div className="fixed left-0 top-0 w-full h-full bg-[#F3F3F3]" />
+});
+
 export default function LoginPage() {
-  return <LoginForm />;
+  return <>
+            <DynamicBoxes />
+  <LoginForm />;  
+  </>
 }

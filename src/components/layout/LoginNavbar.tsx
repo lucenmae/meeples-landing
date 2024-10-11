@@ -5,13 +5,7 @@ import React, { useState } from 'react';
 import Logo from '../Logo';
 import NextImage from '../NextImage';
 
-interface NavbarProps {
-  scrollToSection?: (section: React.RefObject<HTMLDivElement>) => void;
-  gamesRef?: React.RefObject<HTMLDivElement>;
-  aboutRef?: React.RefObject<HTMLDivElement>;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) => {
+const LoginNavbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
@@ -19,17 +13,8 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleScrollToSection = (ref: React.RefObject<HTMLDivElement> | undefined) => {
-    if (scrollToSection && ref) {
-      scrollToSection(ref);
-    } else {
-      // If we're not on the home page, navigate to it and then scroll
-      if (ref === gamesRef) {
-        router.push('/?section=games');
-      } else if (ref === aboutRef) {
-        router.push('/?section=about');
-      }
-    }
+  const handleNavigation = (path: string) => {
+    router.push(path);
   };
 
   return (
@@ -57,7 +42,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
               <span className='sr-only'>Open main menu</span>
               {/* Icon when menu is closed. */}
               <svg
-                className={isMenuOpen ? 'hidden h-6 w-6 cursor-none' : 'block h-6 w-6 cursor-none'}
+                className={isMenuOpen ? 'hidden h-6 w-6' : 'block h-6 w-6'}
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
                 viewBox='0 0 24 24'
@@ -68,7 +53,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
               </svg>
               {/* Icon when menu is open. */}
               <svg
-                className={isMenuOpen ? 'block h-6 w-6 cursor-none' : 'hidden h-6 w-6 cursor-none'}
+                className={isMenuOpen ? 'block h-6 w-6' : 'hidden h-6 w-6'}
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
                 viewBox='0 0 24 24'
@@ -93,10 +78,10 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
               <li>
                 <a
                   href='https://forms.gle/hCtVuNhBpyzZkZCv5'
-                  className='cursor-none text-sm font-semibold leading-6 text-gray-900'
+                  className='text-sm font-semibold leading-6 text-gray-900'
                 >
                   <span
-                    className='cursor-none inline-block px-6 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1 mr-4 btn-tooltip tooltip'
+                    className='inline-block px-6 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1 mr-4 btn-tooltip tooltip'
                     data-tooltip='can I join? 🥺'
                   >
                     Rent
@@ -105,11 +90,11 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
               </li>
               <li>
                 <span
-                  onClick={() => handleScrollToSection(gamesRef)}
-                  className='cursor-none text-sm font-semibold leading-6 text-gray-900'
+                  onClick={() => handleNavigation('/?section=games')}
+                  className='text-sm font-semibold leading-6 text-gray-900'
                 >
                   <span
-                    className='cursor-none inline-block px-5 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1 mr-4 btn-tooltip tooltip'
+                    className='inline-block px-5 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1 mr-4 btn-tooltip tooltip'
                     data-tooltip="let's play? 😍"
                   >
                     Games
@@ -119,7 +104,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
             </ul>
 
             {/* Logo */}
-            <div className='hidden lg:flex items-center cursor-none'>
+            <div className='hidden lg:flex items-center'>
               <Logo />
             </div>
 
@@ -127,8 +112,8 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
             <ul className='flex lg:justify-end lg:gap-2 lg:items-center max-lg:gap-4 max-lg:mb-4 flex-col mt-4 lg:flex-1 md:mt-0 lg:flex-row'>
               <li>
                 <span
-                  onClick={() => handleScrollToSection(aboutRef)}
-                  className='cursor-none text-sm font-semibold leading-6 text-gray-900 tooltip-container'
+                  onClick={() => handleNavigation('/?section=about')}
+                  className='text-sm font-semibold leading-6 text-gray-900 tooltip-container'
                 >
                   <span
                     className='inline-block px-5 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1 btn-tooltip tooltip'
@@ -141,10 +126,10 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
               <li>
                 <a
                   href='https://discord.gg/vxDY3U8Bwn'
-                  className='text-sm font-semibold leading-6 text-gray-900 cursor-none tooltip-container'
+                  className='text-sm font-semibold leading-6 text-gray-900 tooltip-container'
                 >
                   <span
-                    className='btn-tooltip tooltip cursor-none inline-block px-5 py-2.5 text-xl font-bold text-center text-white bg-indigo-500 border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear transform scale-90 hover:bg-white hover:text-indigo-500 hover:border-indigo-500 hover:shadow-[5px_5px_0px_#6366F1] hover:-translate-y-1 active:bg-indigo-500 active:border-gray-800 active:text-white active:shadow-none active:translate-y-1'
+                    className='btn-tooltip tooltip inline-block px-5 py-2.5 text-xl font-bold text-center text-white bg-indigo-500 border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear transform scale-90 hover:bg-white hover:text-indigo-500 hover:border-indigo-500 hover:shadow-[5px_5px_0px_#6366F1] hover:-translate-y-1 active:bg-indigo-500 active:border-gray-800 active:text-white active:shadow-none active:translate-y-1'
                     data-tooltip='please join 🥺'
                   >
                     Join Discord
@@ -159,4 +144,4 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
   );
 };
 
-export default Navbar;
+export default LoginNavbar;
