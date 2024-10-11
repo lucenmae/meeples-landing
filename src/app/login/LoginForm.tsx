@@ -42,7 +42,7 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center ">
+    <main className="flex h-screen items-center justify-center">
       <div className="wrapper">
         <div className="card-switch">
           <label className="switch">
@@ -122,10 +122,10 @@ export default function LoginPage() {
         </div>
       </div>
       {error && (
-          <div className="error-message sm:mt-40 md:mt-44 lg:mt-44 xl:mt-44 2xl:mt-44 z-50">
-            <p className="text-red-500">{error}</p>
-          </div>
-        )}
+        <div className="error-message absolute bottom-4 left-1/2 transform -translate-x-1/2">
+          <p className="text-red-500">{error}</p>
+        </div>
+      )}
     </main>
   );
 }

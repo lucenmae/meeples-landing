@@ -473,6 +473,11 @@ Tooltip */
 /* Login Page and Sign Page*/
 
 .wrapper {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  height: 100%; 
   --input-focus: #2d8cf0;
   --font-color: #323232;
   --font-color-sub: #666;
