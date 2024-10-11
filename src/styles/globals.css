@@ -601,7 +601,7 @@ Tooltip */
   justify-content: center;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  background: lightgrey;
+  background: #f3cc15;
   gap: 20px;
   border-radius: 5px;
   border: 2px solid var(--main-color);
@@ -678,7 +678,7 @@ Tooltip */
   justify-content: center;
   height: 100%;
   text-align: center;
-  color: #666;
+  color: #333333;
 }
 
 .coming-soon-message p {
