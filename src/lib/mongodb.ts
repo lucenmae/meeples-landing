@@ -10,6 +10,7 @@ const connectMongoDB = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     // eslint-disable-next-line no-console
   } catch (error) {
+    // eslint-disable-next-line no-console
   }
 };
 

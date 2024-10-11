@@ -669,3 +669,23 @@ Tooltip */
   color: var(--font-color);
   cursor: pointer;
 } 
+
+/* Add this to your existing CSS file */
+.coming-soon-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #666;
+}
+
+.coming-soon-message p {
+  margin: 5px 0;
+}
+
+.coming-soon-message p:first-child {
+  font-size: 1.2em;
+  font-weight: bold;
+}
