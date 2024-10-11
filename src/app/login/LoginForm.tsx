@@ -81,6 +81,11 @@ export default function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
+                        {error && (
+        <div className="error-message text-center">
+          <p className="text-red-500 text-sm mb-0">{error}</p>
+        </div>
+      )}
                   <button className="flip-card__btn" type="submit">Let's go!</button>
                 </form>
               </div>
@@ -121,11 +126,7 @@ export default function LoginPage() {
 
         </div>
       </div>
-      {error && (
-        <div className="error-message absolute bottom-4 left-1/2 transform -translate-x-1/2">
-          <p className="text-red-500">{error}</p>
-        </div>
-      )}
+
     </main>
   );
 }
