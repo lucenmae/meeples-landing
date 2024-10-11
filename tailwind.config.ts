@@ -26,6 +26,9 @@ const config: Config = {
           950: 'rgb(var(--tw-color-primary-950) / <alpha-value>)',
         },
         dark: '#222222',
+        meeple: {
+          primary: '#f5bf22', // Added meeple-primary color
+        },
       },
       gridTemplateColumns: {
         20: 'repeat(25, minmax(0, 1fr))',
