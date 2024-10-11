@@ -27,7 +27,10 @@ const config: Config = {
         },
         dark: '#222222',
         meeple: {
-          primary: '#f5bf22', // Added meeple-primary color
+          primary: '#f3cc15',
+          secondary: '#f5bf22',
+          tertiary: '#86d3ea', 
+          shadow: '#2b2a28', 
         },
       },
       gridTemplateColumns: {
