@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect,useRef } from 'react';
 
@@ -190,6 +189,7 @@ export function HeroSection() {
               University Ozamiz City Promoting Tabletop Games
             </p>
           </div>
+          
 
           <div className='mt-28 z-20'>
             <div className='max-w-md mx-auto border-4 bg-[#f5bf22] border-gray-800   shadow-[3px_3px_0px_#2b2a28] rounded-lg px-4 py-2 flex justify-center items-center transform -rotate-3'>
@@ -368,11 +368,6 @@ export function HeroSection() {
               </div>
             </div>
           </div>
-
-          {/* Add this button after the existing content */}
-          <Link href="/login" className="cursor-none  mt-8 px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-900 z-40">
-            Admin Login
-          </Link>
         </div>
         <footer className='mt-20 footer footer-center z-30 w-full p-4 bg-[#2b2a28] text-gray-200'>
           <div className='text-center'>
