@@ -138,13 +138,13 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
                   </span>
                 </span>
               </li>
-              <li>
+              <li className='pl-3 sm:pl-0 md:pl-2'>
                 <a
                   href='https://discord.gg/vxDY3U8Bwn'
                   className='text-sm font-semibold leading-6 text-gray-900 cursor-none tooltip-container'
                 >
                   <span
-                    className='btn-tooltip tooltip cursor-none inline-block px-5 py-2.5 text-xl font-bold text-center text-white bg-indigo-500 border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear transform scale-90 hover:bg-white hover:text-indigo-500 hover:border-indigo-500 hover:shadow-[5px_5px_0px_#6366F1] hover:-translate-y-1 active:bg-indigo-500 active:border-gray-800 active:text-white active:shadow-none active:translate-y-1'
+                    className='btn-tooltip tooltip cursor-none inline-block px-5 py-2.5 text-md font-bold text-center text-white bg-indigo-500 border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear  hover:bg-white hover:text-indigo-500 hover:border-indigo-500 hover:shadow-[5px_5px_0px_#6366F1] hover:-translate-y-1 active:bg-indigo-500 active:border-gray-800 active:text-white active:shadow-none active:translate-y-1'
                     data-tooltip='please join 🥺'
                   >
                     Join Discord
