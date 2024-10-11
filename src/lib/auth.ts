@@ -16,13 +16,10 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.usernameOrEmail || !credentials?.password) {
-          console.log('Missing credentials');
           return null;
         }
 
         await connectMongoDB();
-
-        console.log('Searching for user:', credentials.usernameOrEmail);
 
         const user = await User.findOne({
           $or: [

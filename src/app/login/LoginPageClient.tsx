@@ -24,18 +24,15 @@ export default function LoginPage() {
         password,
       });
 
-      console.log('SignIn result:', result);
 
       if (result?.error) {
         setError('Invalid username/email or password');
-        console.error('SignIn error:', result.error);
       } else if (result?.ok) {
         router.push('/admin/dashboard');
       } else {
         setError('An unexpected error occurred');
       }
     } catch (error) {
-      console.error('Login error:', error);
       setError('An error occurred during login');
     }
   };
