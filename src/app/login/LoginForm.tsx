@@ -1,6 +1,7 @@
 /* eslint-disable unused-imports/no-unused-vars */
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import React, { useState } from 'react';
@@ -55,7 +56,12 @@ export default function LoginPage() {
             <span className="card-side"></span>
             <div className="flip-card__inner">
               <div className="flip-card__front">
+                <div className="flex justify-center">
+                  <Image src="/images/meeples-wordmark.png" alt="Meeples Wordmark" className="mt-4" width={200} height={100} />
+                </div>
+
                 <div className="title">Log in</div>
+
                 <form className="flip-card__form" onSubmit={handleSubmit}>
                   <input
                     className="flip-card__input"
@@ -107,7 +113,7 @@ export default function LoginPage() {
                 </form>
                 */}
                 <div className="coming-soon-message">
-                  <p>Sign up functionality coming soon!</p>
+                  <p>Sign up functionality coming soon! ^^</p>
                 </div>
               </div>
             </div>
