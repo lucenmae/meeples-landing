@@ -18,6 +18,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@auth/mongodb-adapter": "^3.7.0",
     "@headlessui/react": "^2.1.9",
     "@heroicons/react": "^2.1.5",
     "@nextui-org/navbar": "^2.0.37",
