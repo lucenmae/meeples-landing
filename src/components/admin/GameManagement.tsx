@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import BGGSearch from './BGGSearch';
 
 interface Game {
   _id: string;
@@ -69,6 +70,23 @@ export default function GameManagement() {
       } catch (error) {
         console.error('Error deleting game:', error);
       }
+    }
+  };
+
+  const handleAddGameFromBGG = async (bggGame: any) => {
+    try {
+      const newGame = {
+        name: bggGame.name,
+        description: bggGame.description,
+        minPlayers: bggGame.minPlayers,
+        maxPlayers: bggGame.maxPlayers,
+        imageUrl: bggGame.imageUrl,
+        bggLink: bggGame.bggLink,
+      };
+      await axios.post('/api/games', newGame);
+      fetchGames();
+    } catch (error) {
+      console.error('Error adding game from BGG:', error);
     }
   };
 
@@ -170,6 +188,8 @@ export default function GameManagement() {
           </button>
         </form>
       )}
+
+      <BGGSearch onAddGame={handleAddGameFromBGG} />
 
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <table className="min-w-full leading-normal">

@@ -22,7 +22,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   } else if (req.method === 'POST') {
     try {
-      const newGame = new Game(req.body);
+      const { name, description, minPlayers, maxPlayers, imageUrl, bggLink } = req.body;
+      const newGame = new Game({
+        name,
+        description,
+        minPlayers,
+        maxPlayers,
+        imageUrl,
+        bggLink,
+      });
       await newGame.save();
       res.status(201).json(newGame);
     } catch (error) {
