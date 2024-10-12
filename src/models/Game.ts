@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
 
 const GameSchema = new mongoose.Schema({
-  name: String,
-  description: String,
-  minPlayers: Number,
-  maxPlayers: Number,
-});
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  minPlayers: { type: Number, required: true },
+  maxPlayers: { type: Number, required: true },
+  imageUrl: { type: String, required: true },
+  bggLink: { type: String, required: true },
+}, { timestamps: true });
 
 export const Game = mongoose.models.Game || mongoose.model('Game', GameSchema);

@@ -1,10 +1,21 @@
 import { useSearchParams } from 'next/navigation';
-import React, { useEffect,useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
 import Navbar from '@/components/layout/Navbar';
 import Cards from '@/components/ui/cards';
 
 import { FlipWords } from '../ui/flip-words';
+
+interface Game {
+  _id: string;
+  name: string;
+  description: string;
+  minPlayers: number;
+  maxPlayers: number;
+  imageUrl: string;
+  bggLink: string;
+}
 
 export function HeroSection() {
   const words = ['PLAY', 'CONNECT', 'THRIVE'];
@@ -48,108 +59,20 @@ export function HeroSection() {
     },
   ];
 
-  // Games Inventory
-  const gameInventory = [
-    {
-      src: '/images/cards/Uno.jpg',
-      alt: 'Uno',
-      title: 'Uno',
-      description:
-        'a fast-paced card game where players race to match colors and numbers.',
+  const [gameInventory, setGameInventory] = useState<Game[]>([]);
 
-      link: 'https://boardgamegeek.com/boardgame/2223/uno',
-    },
-    {
-      src: '/images/cards/Coup.jpg',
-      alt: 'Coup',
-      title: 'Coup',
-      description:
-        "a game of bluffing and deception where players compete to eliminate opponents' influence.",
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const response = await axios.get<Game[]>('/api/games');
+        setGameInventory(response.data);
+      } catch (error) {
+        console.error('Error fetching games:', error);
+      }
+    };
 
-      link: 'https://boardgamegeek.com/boardgame/131357/coup',
-    },
-    {
-      src: '/images/cards/onuw.jpg',
-      alt: 'One Night Ultimate Werewolf',
-      title: 'One Night Ultimate Werewolf',
-      description:
-        'a social deduction game where players take on secret roles to unmask the werewolves.',
-      link: 'https://boardgamegeek.com/boardgame/147949/one-night-ultimate-werewolf',
-    },
-    {
-      src: '/images/cards/Catan.jpg',
-      alt: 'Catan Board Game',
-      title: 'Catan',
-      description:
-        'a multiplayer board game where players build and trade resources to dominate the island.',
-
-      link: 'https://boardgamegeek.com/boardgame/13/catan',
-    },
-    {
-      src: '/images/cards/guess-who.jpg',
-      alt: 'Guess Who? Board Game',
-      title: 'Guess Who?',
-      description: 'A fun deduction game for two players.',
-      link: 'https://boardgamegeek.com/boardgame/4143/guess-who',
-    },
-    {
-      src: '/images/cards/scrabble.jpg',
-      alt: 'Scrabble Board Game',
-      title: 'Scrabble',
-      description: 'The classic word game for vocabulary enthusiasts.',
-      link: 'https://boardgamegeek.com/image/335812/guess-who',
-    },
-    {
-      src: '/images/cards/exploding-kittens.jpg',
-      alt: 'Exploding Kittens Board Game',
-      title: 'Exploding Kittens',
-      description: 'A highly-strategic, kitty-powered card game.',
-      link: 'https://boardgamegeek.com/boardgame/172225/exploding-kittens',
-    },
-    {
-      src: '/images/cards/sequence.jpg',
-      alt: 'Sequence Board Game',
-      title: 'Sequence',
-      description: 'An exciting game of strategy and luck.',
-      link: 'https://boardgamegeek.com/image/212893/sequence',
-    },
-    {
-      src: '/images/cards/here-to-slay.jpg',
-      alt: 'Here to Slay Board Game',
-      title: 'Here to Slay',
-      description: 'A strategic card game with role-playing elements.',
-      link: 'https://boardgamegeek.com/boardgame/299252/here-to-slay',
-    },
-    {
-      src: '/images/cards/munchkin.jpg',
-      alt: 'Munchkin Board Game',
-      title: 'Munchkin',
-      description: 'A fun and fast-paced dungeon-crawling card game.',
-      link: 'https://boardgamegeek.com/image/1871016/munchkin',
-    },
-    {
-      src: '/images/cards/avalon.jpg',
-      alt: 'The Resistance: Avalon Board Game',
-      title: 'The Resistance: Avalon',
-      description: 'A game of deception and deduction in the Arthurian legend.',
-      link: 'https://boardgamegeek.com/image/1398895/the-resistance-avalon',
-    },
-    {
-      src: '/images/cards/unstable.jpg',
-      alt: 'Unstable Unicorns Board Game',
-      title: 'Unstable Unicorns',
-      description: 'A strategic card game about building a unicorn army.',
-      link: 'https://boardgamegeek.com/image/3912914/unstable-unicorns',
-    },
-    {
-      src: '/images/cards/clue.jpg',
-      alt: 'Cluedo aka Clue Board Game',
-      title: 'Cluedo',
-      description: 'A classic mystery game of who, what, and where.',
-      link: 'https://boardgamegeek.com/image/7563466/clue',
-    },
-    // Add game cards here
-  ];
+    fetchGames();
+  }, []);
 
   //smooth scroll
   const gamesRef = useRef<HTMLDivElement>(null);
@@ -220,14 +143,14 @@ export function HeroSection() {
             </div>
             <div className=' border-4 bg-[#e2e2e2] border-gray-800 shadow-[5px_5px_0px_#2b2a28] rounded-lg px-4 py-2 mt-12'>
               <div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 pb-10 pt-5 sm:pr-0 md:pr-0 lg:pr-10 align-middle justify-center items-center'>
-                {gameInventory.map((inventory, index) => (
+                {gameInventory.map((game) => (
                   <Cards
-                    key={index}
-                    src={inventory.src}
-                    alt={inventory.alt}
-                    title={inventory.title}
-                    description={inventory.description}
-                    link={inventory.link}
+                    key={game._id}
+                    src={game.imageUrl}
+                    alt={game.name}
+                    title={game.name}
+                    description={game.description}
+                    link={game.bggLink}
                   />
                 ))}
               </div>
@@ -264,7 +187,7 @@ export function HeroSection() {
                           </p>
                           <p className='mb-2 text-gray-600'>
                             a passionate and inclusive tabletop games
-                            organization dedicated tofostering a vibrant and
+                            organization dedicated to fostering a vibrant and
                             welcoming community for tabletop gaming enthusiasts
                             of all ages and backgrounds.
                           </p>
