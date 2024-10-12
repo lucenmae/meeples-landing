@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
+
 import { authOptions } from '@/lib/auth';
 import connectMongoDB from '@/lib/mongodb';
+
 import { Game } from '@/models/Game';
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {

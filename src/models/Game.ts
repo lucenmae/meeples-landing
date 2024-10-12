@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 const GameSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
-  minPlayers: { type: Number, required: true },
-  maxPlayers: { type: Number, required: true },
   imageUrl: { type: String, required: true },
   bggLink: { type: String, required: true },
 }, { timestamps: true });

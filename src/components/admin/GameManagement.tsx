@@ -7,10 +7,9 @@ interface Game {
   _id: string;
   name: string;
   description: string;
-  minPlayers: number;
-  maxPlayers: number;
   imageUrl: string;
   bggLink: string;
+  createdAt: string;
 }
 
 export default function GameManagement() {
@@ -18,8 +17,6 @@ export default function GameManagement() {
   const [newGame, setNewGame] = useState({
     name: '',
     description: '',
-    minPlayers: 1,
-    maxPlayers: 1,
     imageUrl: '',
     bggLink: '',
   });
@@ -50,8 +47,6 @@ export default function GameManagement() {
       setNewGame({
         name: '',
         description: '',
-        minPlayers: 1,
-        maxPlayers: 1,
         imageUrl: '',
         bggLink: '',
       });
@@ -78,15 +73,18 @@ export default function GameManagement() {
       const newGame = {
         name: bggGame.name,
         description: bggGame.description,
-        minPlayers: bggGame.minPlayers,
-        maxPlayers: bggGame.maxPlayers,
         imageUrl: bggGame.imageUrl,
         bggLink: bggGame.bggLink,
       };
-      await axios.post('/api/games', newGame);
+      console.log('Attempting to add game:', newGame); // Add this line for debugging
+      const response = await axios.post('/api/games', newGame);
+      console.log('Server response:', response.data); // Add this line for debugging
       fetchGames();
     } catch (error) {
       console.error('Error adding game from BGG:', error);
+      if (axios.isAxiosError(error)) {
+        console.error('Error response:', error.response?.data); // Add this line for more detailed error logging
+      }
     }
   };
 
@@ -131,57 +129,31 @@ export default function GameManagement() {
           </div>
           <div className="flex mb-4">
             <div className="w-1/2 mr-2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="minPlayers">
-                Min Players
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="imageUrl">
+                Image URL
               </label>
               <input
-                type="number"
-                name="minPlayers"
-                value={newGame.minPlayers}
+                type="url"
+                name="imageUrl"
+                value={newGame.imageUrl}
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 required
               />
             </div>
             <div className="w-1/2 ml-2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="maxPlayers">
-                Max Players
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="bggLink">
+                BoardGameGeek Link
               </label>
               <input
-                type="number"
-                name="maxPlayers"
-                value={newGame.maxPlayers}
+                type="url"
+                name="bggLink"
+                value={newGame.bggLink}
                 onChange={handleInputChange}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 required
               />
             </div>
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="imageUrl">
-              Image URL
-            </label>
-            <input
-              type="url"
-              name="imageUrl"
-              value={newGame.imageUrl}
-              onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="bggLink">
-              BoardGameGeek Link
-            </label>
-            <input
-              type="url"
-              name="bggLink"
-              value={newGame.bggLink}
-              onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              required
-            />
           </div>
           <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
             Add Game
@@ -199,7 +171,7 @@ export default function GameManagement() {
                 Game
               </th>
               <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Players
+                Date Added
               </th>
               <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Actions
@@ -221,7 +193,9 @@ export default function GameManagement() {
                   </div>
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <p className="text-gray-900 whitespace-no-wrap">{game.minPlayers} - {game.maxPlayers}</p>
+                  <p className="text-gray-900 whitespace-no-wrap">
+                    {new Date(game.createdAt).toLocaleDateString()}
+                  </p>
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                   <button className="text-blue-600 hover:text-blue-900 mr-3">

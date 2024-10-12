@@ -18,8 +18,17 @@ export async function POST(request: Request) {
   }
 
   await connectMongoDB();
-  const data = await request.json();
-  const newGame = new Game(data);
-  await newGame.save();
-  return NextResponse.json(newGame, { status: 201 });
+  const { name, description, imageUrl, bggLink } = await request.json();
+  const newGame = new Game({ name, description, imageUrl, bggLink });
+  try {
+    await newGame.save();
+    return NextResponse.json(newGame, { status: 201 });
+  } catch (error) {
+    console.error('Error creating game:', error);
+    if (error instanceof Error) {
+      return NextResponse.json({ message: 'Error creating game', error: error.message, stack: error.stack }, { status: 500 });
+    } else {
+      return NextResponse.json({ message: 'Error creating game', error: 'Unknown error' }, { status: 500 });
+    }
+  }
 }

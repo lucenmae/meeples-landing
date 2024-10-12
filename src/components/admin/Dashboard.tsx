@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { Session } from 'next-auth';
 import { useState } from 'react';
 
-import Sidebar from './Sidebar';
 import GameManagement from './GameManagement';
+import Sidebar from './Sidebar';
 
 interface DashboardProps {
   session: Session;
