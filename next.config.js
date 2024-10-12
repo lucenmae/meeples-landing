@@ -24,7 +24,7 @@ const nextConfig = {
   // },
 
   images: {
-    domains: ['pagedone.io', 'res.cloudinary.com', 'tailwindui.com'],
+    domains: ['pagedone.io', 'res.cloudinary.com', 'tailwindui.com', 'cf.geekdo-images.com'],
   },
 
   webpack(config) {

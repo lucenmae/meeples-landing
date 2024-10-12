@@ -1,6 +1,6 @@
+import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 
 import Navbar from '@/components/layout/Navbar';
 import Cards from '@/components/ui/cards';
@@ -87,11 +87,13 @@ export function HeroSection() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const section = searchParams.get('section');
-    if (section === 'games' && gamesRef.current) {
-      gamesRef.current.scrollIntoView({ behavior: 'smooth' });
-    } else if (section === 'about' && aboutRef.current) {
-      aboutRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (searchParams) {
+      const section = searchParams.get('section');
+      if (section === 'games' && gamesRef.current) {
+        gamesRef.current.scrollIntoView({ behavior: 'smooth' });
+      } else if (section === 'about' && aboutRef.current) {
+        aboutRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }, [searchParams]);
 
