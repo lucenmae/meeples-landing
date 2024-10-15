@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
+
+// Add this import
 import BGGSearch from './BGGSearch';
+import MeepleButton from '../ui/meeple-button';
+
 
 interface Game {
   _id: string;
@@ -12,14 +16,12 @@ interface Game {
   createdAt: string;
 }
 
-export default function GameManagement() {
+interface GameManagementProps {
+  onAddGame: () => void;
+}
+
+export default function GameManagement({ onAddGame }: GameManagementProps) {
   const [games, setGames] = useState<Game[]>([]);
-  const [newGame, setNewGame] = useState({
-    name: '',
-    description: '',
-    imageUrl: '',
-    bggLink: '',
-  });
   const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
@@ -32,28 +34,6 @@ export default function GameManagement() {
       setGames(response.data);
     } catch (error) {
       console.error('Error fetching games:', error);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setNewGame({ ...newGame, [name]: value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await axios.post('/api/games', newGame);
-      setNewGame({
-        name: '',
-        description: '',
-        imageUrl: '',
-        bggLink: '',
-      });
-      fetchGames();
-      setIsAdding(false);
-    } catch (error) {
-      console.error('Error creating game:', error);
     }
   };
 
@@ -76,94 +56,33 @@ export default function GameManagement() {
         imageUrl: bggGame.imageUrl,
         bggLink: bggGame.bggLink,
       };
-      console.log('Attempting to add game:', newGame); // Add this line for debugging
       const response = await axios.post('/api/games', newGame);
-      console.log('Server response:', response.data); // Add this line for debugging
+      console.log('Server response:', response.data);
       fetchGames();
     } catch (error) {
       console.error('Error adding game from BGG:', error);
       if (axios.isAxiosError(error)) {
-        console.error('Error response:', error.response?.data); // Add this line for more detailed error logging
+        console.error('Error response:', error.response?.data);
       }
     }
   };
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
         <h2 className="text-2xl font-semibold">Game Management</h2>
-        <button
-          onClick={() => setIsAdding(!isAdding)}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+        <MeepleButton
+          onClick={onAddGame}
+          className="w-full sm:w-auto cursor-pointer z-0 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          icon={<FaPlus />}
         >
-          {isAdding ? 'Cancel' : 'Add New Game'}
-        </button>
+          New Game
+        </MeepleButton>
       </div>
-      
-      {isAdding && (
-        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-              Game Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={newGame.name}
-              onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
-              Description
-            </label>
-            <textarea
-              name="description"
-              value={newGame.description}
-              onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              required
-            />
-          </div>
-          <div className="flex mb-4">
-            <div className="w-1/2 mr-2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="imageUrl">
-                Image URL
-              </label>
-              <input
-                type="url"
-                name="imageUrl"
-                value={newGame.imageUrl}
-                onChange={handleInputChange}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                required
-              />
-            </div>
-            <div className="w-1/2 ml-2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="bggLink">
-                BoardGameGeek Link
-              </label>
-              <input
-                type="url"
-                name="bggLink"
-                value={newGame.bggLink}
-                onChange={handleInputChange}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                required
-              />
-            </div>
-          </div>
-          <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-            Add Game
-          </button>
-        </form>
-      )}
 
       <BGGSearch onAddGame={handleAddGameFromBGG} />
 
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="bg-white shadow-md rounded-lg overflow-x-auto">
         <table className="min-w-full leading-normal">
           <thead>
             <tr>
