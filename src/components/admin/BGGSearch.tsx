@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
+import React, { useCallback, useState } from 'react';
 
 interface BGGGame {
   id: string;
@@ -75,7 +75,7 @@ export default function BGGSearch({ onAddGame }: BGGSearchProps) {
   };
 
   return (
-    <div className="mt-6">
+    <div className="mt-6 space-y-4">
       <h3 className="text-xl font-semibold mb-4">Search BoardGameGeek</h3>
       <div className="mb-4">
         <input
@@ -86,12 +86,12 @@ export default function BGGSearch({ onAddGame }: BGGSearchProps) {
           className="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
-      {isLoading && <p>Loading...</p>}
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+      {isLoading && <p className="text-center">Loading...</p>}
+      {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
       <div className="space-y-4">
         {searchResults.map((game) => (
-          <div key={game.id} className="flex border-b pb-4">
-            <img src={game.imageUrl} alt={game.name} className="w-20 h-20 object-cover mr-4" />
+          <div key={game.id} className="flex flex-col sm:flex-row border-b pb-4">
+            <img src={game.imageUrl} alt={game.name} className="w-full sm:w-20 h-20 object-cover mb-2 sm:mb-0 sm:mr-4" />
             <div className="flex-grow">
               <h4 className="font-semibold">{game.name} ({game.yearPublished})</h4>
               <p className="text-sm text-gray-600 mb-2">{game.description.substring(0, 100)}...</p>
@@ -100,7 +100,7 @@ export default function BGGSearch({ onAddGame }: BGGSearchProps) {
             </div>
             <button
               onClick={() => onAddGame(game)}
-              className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded text-sm h-10"
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded text-sm h-10 mt-2 sm:mt-0"
             >
               Add to Inventory
             </button>
@@ -110,7 +110,7 @@ export default function BGGSearch({ onAddGame }: BGGSearchProps) {
       {searchResults.length < totalResults && (
         <button
           onClick={loadMore}
-          className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          className="mt-4 w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
           disabled={isLoading}
         >
           Load More
