@@ -5,7 +5,9 @@ import { getServerSession } from 'next-auth/next';
 import '../styles/globals.css';
 
 import { authOptions } from '@/lib/auth';
+
 import SessionProvider from '@/components/SessionProvider';
+
 import { siteConfig } from '@/config/site';
 
 const inter = Inter({ subsets: ['latin'] });
