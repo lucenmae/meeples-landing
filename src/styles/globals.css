@@ -92,6 +92,9 @@
   .min-h-main {
     @apply min-h-[calc(100vh-56px)];
   }
+  :root {
+    --radius: 0.5rem;
+  }
 }
 
 @layer utilities {

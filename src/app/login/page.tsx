@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 
-import LoginForm from './LoginForm';
+import Navbar from '@/components/layout/Navbar';
+import LoginForm from '../../components/login/LoginForm';
 
 
 export const metadata: Metadata = {
@@ -15,8 +16,15 @@ const DynamicBoxes = dynamic(() => import('@/components/ui/background-boxes').th
 });
 
 export default function LoginPage() {
-  return <>
-            <DynamicBoxes />
-  <LoginForm />;  
-  </>
+  return (
+    <>
+      <DynamicBoxes />
+      <Navbar 
+        buttonClassName="cursor-pointer" 
+        logoClassName="cursor-pointer"
+        cursorStyle="pointer"
+      />
+      <LoginForm />
+    </>
+  );
 }

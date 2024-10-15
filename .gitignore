@@ -42,5 +42,8 @@ robots.txt
 sitemap.xml
 sitemap-*.xml
 
-# Add this line to your existing .gitignore file
-src/scripts/createAdminUser.js
+# Script
+src/scripts/
+
+# Prompt
+/prompt

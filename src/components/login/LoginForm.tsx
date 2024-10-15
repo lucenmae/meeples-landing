@@ -6,9 +6,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import React, { useState } from 'react';
 
-import LoginNavbar from '@/components/layout/LoginNavbar';
-
-export default function LoginPage() {
+export default function LoginForm() {
   const router = useRouter();
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,7 +45,6 @@ export default function LoginPage() {
     <main className='flex flex-col h-screen'>
       <div className='absolute inset-0 w-full bg-[#F3F3F3] z--10 [mask-image:radial-gradient(transparent,white)] pointer-events-none' />
 
-      <LoginNavbar />
       <div className='flex-grow flex items-center justify-center'>
         <div className='wrapper'>
           <div className='card-switch'>

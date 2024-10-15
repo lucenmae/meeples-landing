@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -11,9 +13,19 @@ interface NavbarProps {
   scrollToSection?: (section: React.RefObject<HTMLDivElement>) => void;
   gamesRef?: React.RefObject<HTMLDivElement>;
   aboutRef?: React.RefObject<HTMLDivElement>;
+  buttonClassName?: string;
+  logoClassName?: string;
+  cursorStyle?: 'none' | 'pointer';
 }
 
-const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) => {
+const Navbar: React.FC<NavbarProps> = ({ 
+  scrollToSection, 
+  gamesRef, 
+  aboutRef,
+  buttonClassName = '',
+  logoClassName = '',
+  cursorStyle = 'none'
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
@@ -32,6 +44,10 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
         router.push('/?section=about');
       }
     }
+  };
+
+  const handleNavigation = (path: string) => {
+    router.push(path);
   };
 
   return (
@@ -94,7 +110,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
             <ul className='flex lg:items-center max-lg:gap-4 max-lg:mb-4 flex-col mt-4 lg:flex-1 md:mt-0 lg:flex-row'>
               <li>
                 <a href='https://forms.gle/hCtVuNhBpyzZkZCv5'>
-                  <MeepleButton variant='primary' tooltip='can I join? 🥺'>
+                  <MeepleButton variant='primary' tooltip='can I join? 🥺' className={buttonClassName}>
                     Rent
                   </MeepleButton>
                 </a>
@@ -104,6 +120,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
                   variant='primary' 
                   onClick={() => handleScrollToSection(gamesRef)}
                   tooltip="let's play? 😍"
+                  className={`${buttonClassName} cursor-${cursorStyle}`}
                 >
                   Games
                 </MeepleButton>
@@ -113,6 +130,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
                   variant='primary' 
                   onClick={() => handleScrollToSection(aboutRef)}
                   tooltip='games! 🎲💛'
+                  className={buttonClassName}
                 >
                   About
                 </MeepleButton>
@@ -120,25 +138,28 @@ const Navbar: React.FC<NavbarProps> = ({ scrollToSection, gamesRef, aboutRef }) 
             </ul>
 
             {/* Logo */}
-            <div className='hidden lg:flex items-center '>
-              <Logo className='cursor-none' size={200} />
+            <div className='hidden lg:flex items-center'>
+              <Logo size={200} className={`cursor-${cursorStyle} ${logoClassName}`} />
             </div>
 
             {/* Action Buttons */}
             <ul className='flex lg:justify-end lg:items-center max-lg:gap-4 max-lg:mb-4 flex-col mt-4 lg:flex-1 md:mt-0 lg:flex-row'>
               <li>
                 <a href='https://discord.gg/vxDY3U8Bwn'>
-                  <MeepleButton variant='secondary' tooltip='please join 🥺'>
+                  <MeepleButton variant='secondary' tooltip='please join 🥺' className={buttonClassName}>
                     Discord
                   </MeepleButton>
                 </a>
               </li>              
               <li className='lg:pl-3 sm:pl-0 md:pl-2'>
-                <Link href="/login">
-                  <MeepleButton variant='outline' tooltip='meeple admin for now 🥺'>
-                    Login
-                  </MeepleButton>
-                </Link>
+                <MeepleButton 
+                  variant='outline' 
+                  onClick={() => handleNavigation('/login')}
+                  tooltip='meeple admin for now 🥺'
+                  className={buttonClassName}
+                >
+                  Login
+                </MeepleButton>
               </li>
             </ul>
           </div>

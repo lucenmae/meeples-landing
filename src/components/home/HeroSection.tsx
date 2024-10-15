@@ -100,7 +100,12 @@ export function HeroSection() {
   return (
     <section className='bg-[#F3F3F3]'>
       <div className='absolute inset-0 w-full bg-[#F3F3F3] z-10 [mask-image:radial-gradient(transparent,white)] pointer-events-none' />
-      <Navbar scrollToSection={scrollToSection} gamesRef={gamesRef} aboutRef={aboutRef} />
+      <Navbar 
+        scrollToSection={scrollToSection} 
+        gamesRef={gamesRef} 
+        aboutRef={aboutRef}
+        cursorStyle="none"
+      />
 
       {/* HeroSection     */}
       <div className='pt-52 lg:pt-80 h-full flex flex-col items-center justify-center  text-gray-800'>
