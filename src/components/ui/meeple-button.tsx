@@ -19,7 +19,7 @@ const MeepleButton: React.FC<MeepleButtonProps> = ({
   icon,
   ...props
 }) => {
-  const baseStyles = "inline-block font-bold text-center rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:-translate-y-1 active:shadow-none active:translate-y-1 lg:pl-3 sm:pl-0 md:pl-2";
+  const baseStyles = "inline-flex items-center justify-center font-bold text-center rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:-translate-y-1 active:shadow-none active:translate-y-1";
   
   const variantStyles = {
     primary: "text-black bg-white border-2 border-black hover:bg-yellow-400",
@@ -47,7 +47,7 @@ const MeepleButton: React.FC<MeepleButtonProps> = ({
       {...props}
     >
       {icon && <span className="mr-2">{icon}</span>}
-      {children}
+      <span>{children}</span>
     </button>
   );
 };
