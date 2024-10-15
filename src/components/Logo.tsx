@@ -5,11 +5,12 @@ import NextImage from '@/components/NextImage';
 
 interface LogoProps {
   size: number; // Add this line to define the size prop
+  className?: string; // Add this line to accept className
 }
 
-export default function Logo({ size }: LogoProps) {
+const Logo: React.FC<LogoProps> = ({ size, className }) => {
   return (
-    <Link href='/'  aria-label='Meeples' className='cursor-none'>
+    <Link href='/' aria-label='Meeples'>
       <NextImage
         useSkeleton
         //TODO! Convert To SVG
@@ -17,7 +18,10 @@ export default function Logo({ size }: LogoProps) {
         alt='meeples wordmark'
         width={300}
         height={115}
+        className={className}
       />
     </Link>
   );
 }
+
+export default Logo;
