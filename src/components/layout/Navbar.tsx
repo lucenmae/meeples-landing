@@ -15,7 +15,6 @@ interface NavbarProps {
   aboutRef?: React.RefObject<HTMLDivElement>;
   buttonClassName?: string;
   logoClassName?: string;
-  cursorStyle?: 'none' | 'pointer';
 }
 
 const Navbar: React.FC<NavbarProps> = ({ 
@@ -23,8 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({
   gamesRef, 
   aboutRef,
   buttonClassName = '',
-  logoClassName = '',
-  cursorStyle = 'none'
+  logoClassName = ''
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
@@ -120,7 +118,7 @@ const Navbar: React.FC<NavbarProps> = ({
                   variant='primary' 
                   onClick={() => handleScrollToSection(gamesRef)}
                   tooltip="let's play? 😍"
-                  className={`${buttonClassName} cursor-${cursorStyle}`}
+                  className={buttonClassName}
                 >
                   Games
                 </MeepleButton>
@@ -139,7 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
             {/* Logo */}
             <div className='hidden lg:flex items-center'>
-              <Logo size={200} className={`cursor-${cursorStyle} ${logoClassName}`} />
+              <Logo size={200} className={`cursor-none ${logoClassName}`} />
             </div>
 
             {/* Action Buttons */}

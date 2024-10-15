@@ -7,6 +7,7 @@ interface MeepleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement
   children: React.ReactNode;
   className?: string;
   tooltip?: string;
+  icon?: React.ReactNode;
 }
 
 const MeepleButton: React.FC<MeepleButtonProps> = ({
@@ -15,6 +16,7 @@ const MeepleButton: React.FC<MeepleButtonProps> = ({
   children,
   className,
   tooltip,
+  icon,
   ...props
 }) => {
   const baseStyles = "inline-block font-bold text-center rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:-translate-y-1 active:shadow-none active:translate-y-1 lg:pl-3 sm:pl-0 md:pl-2";
@@ -44,6 +46,7 @@ const MeepleButton: React.FC<MeepleButtonProps> = ({
       data-tooltip={tooltip}
       {...props}
     >
+      {icon && <span className="mr-2">{icon}</span>}
       {children}
     </button>
   );

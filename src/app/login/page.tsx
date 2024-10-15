@@ -22,7 +22,6 @@ export default function LoginPage() {
       <Navbar 
         buttonClassName="cursor-pointer" 
         logoClassName="cursor-pointer"
-        cursorStyle="pointer"
       />
       <LoginForm />
     </>
