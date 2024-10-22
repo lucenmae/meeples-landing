@@ -1,5 +1,6 @@
 import axios from 'axios';
 import debounce from 'lodash/debounce';
+import Image from 'next/image';
 import React, { useCallback, useState } from 'react';
 
 interface BGGGame {
@@ -76,7 +77,8 @@ export default function BGGSearch({ onAddGame }: BGGSearchProps) {
 
   return (
     <div className="mt-6 space-y-4">
-      <h3 className="text-xl font-semibold mb-4">Search BoardGameGeek</h3>
+      <h3 className="text-xl font-semibold mb-4">Search Board Game</h3>
+      <p className="text-sm text-gray-600 mb-4">If not game not found, please add manually using the "New Game" button</p>
       <div className="mb-4">
         <input
           type="text"
@@ -91,7 +93,13 @@ export default function BGGSearch({ onAddGame }: BGGSearchProps) {
       <div className="space-y-4">
         {searchResults.map((game) => (
           <div key={game.id} className="flex flex-col sm:flex-row border-b pb-4">
-            <img src={game.imageUrl} alt={game.name} className="w-full sm:w-20 h-20 object-cover mb-2 sm:mb-0 sm:mr-4" />
+            <Image 
+              src={game.imageUrl} 
+              alt={game.name} 
+              width={80} 
+              height={80} 
+              className="object-cover mb-2 sm:mb-0 sm:mr-4" 
+            />
             <div className="flex-grow">
               <h4 className="font-semibold">{game.name} ({game.yearPublished})</h4>
               <p className="text-sm text-gray-600 mb-2">{game.description.substring(0, 100)}...</p>
