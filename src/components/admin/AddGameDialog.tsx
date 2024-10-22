@@ -63,7 +63,7 @@ export default function AddGameDialog({ open, onOpenChange }: AddGameDialogProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto bg-meeple-secondary border-4 border-black rounded-lg shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+      <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto bg-meeple-secondary border-4 border-black rounded-lg shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] z-50">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-black">Add New Game</DialogTitle>
           <DialogDescription className="text-black">
