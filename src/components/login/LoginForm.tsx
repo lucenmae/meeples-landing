@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import React, { useState } from 'react';
+import MeepleButton from '../ui/meeple-button';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -95,9 +96,13 @@ export default function LoginForm() {
                         <p className='text-red-500 text-sm mb-0'>{error}</p>
                       </div>
                     )}
-                    <button className='flip-card__btn' type='submit'>
+                    <MeepleButton
+                      type='submit'
+                      variant='primary'
+                      className='w-full'
+                    >
                       Let's go!
-                    </button>
+                    </MeepleButton>
                   </form>
                 </div>
                 <div className='flip-card__back'>
