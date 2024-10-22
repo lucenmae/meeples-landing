@@ -2,10 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
 
-// Add this import
 import BGGSearch from './BGGSearch';
+import EditGameDialog from './EditGameDialog';
 import MeepleButton from '../ui/meeple-button';
-
 
 interface Game {
   _id: string;
@@ -14,6 +13,7 @@ interface Game {
   imageUrl: string;
   bggLink: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 interface GameManagementProps {
@@ -23,6 +23,8 @@ interface GameManagementProps {
 export default function GameManagement({ onAddGame }: GameManagementProps) {
   const [games, setGames] = useState<Game[]>([]);
   const [isAdding, setIsAdding] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [gameToEdit, setGameToEdit] = useState<Game | null>(null);
 
   useEffect(() => {
     fetchGames();
@@ -64,6 +66,25 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
       if (axios.isAxiosError(error)) {
         console.error('Error response:', error.response?.data);
       }
+    }
+  };
+
+  const handleEdit = (game: Game) => {
+    setGameToEdit(game);
+    setIsEditModalOpen(true);
+  };
+
+  const handleUpdateGame = async (updatedGame: Game) => {
+    try {
+      const response = await axios.put(`/api/games/${updatedGame._id}`, updatedGame);
+      if (response.status === 200) {
+        fetchGames();
+        setIsEditModalOpen(false);
+      } else {
+        console.error('Error updating game:', response.data);
+      }
+    } catch (error) {
+      console.error('Error updating game:', error);
     }
   };
 
@@ -117,7 +138,7 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
                   </p>
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <button className="text-blue-600 hover:text-blue-900 mr-3">
+                  <button onClick={() => handleEdit(game)} className="text-blue-600 hover:text-blue-900 mr-3">
                     <FaEdit />
                   </button>
                   <button onClick={() => handleDelete(game._id)} className="text-red-600 hover:text-red-900">
@@ -129,6 +150,15 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
           </tbody>
         </table>
       </div>
+
+      {gameToEdit && (
+        <EditGameDialog
+          open={isEditModalOpen}
+          onOpenChange={setIsEditModalOpen}
+          game={gameToEdit}
+          onUpdateGame={handleUpdateGame}
+        />
+      )}
     </div>
   );
 }
