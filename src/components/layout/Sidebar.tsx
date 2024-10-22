@@ -41,7 +41,7 @@ export default function Sidebar({ isOpen, setIsOpen, toggleSidebar, isMinimized 
       <div className={`${isLargeScreen ? 'translate-x-0' : isOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarWidth} h-screen bg-meeple-secondary text-black font-bold transition-all duration-300 ease-in-out flex flex-col fixed left-0 top-0 z-40 lg:relative border-r-4 border-b-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}>
         <div className="flex items-center justify-between h-16 px-4 border-b-2 border-black">
           {(!isLargeScreen || !isMinimized) && (
-            <Link href="/admin/dashboard" className="flex items-center">
+            <Link href="/admin/game-management" className="flex items-center">
               <span className="ml-2 text-lg font-bold">Admin Dashboard</span>
             </Link>
           )}
