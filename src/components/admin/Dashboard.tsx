@@ -1,6 +1,6 @@
 "use client"
 
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun, User, Settings, LogOut } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Session } from "next-auth"
 import { signOut } from "next-auth/react"
@@ -89,15 +89,15 @@ export default function Dashboard({ session }: DashboardProps) {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="icon" className="p-0 bg-meeple-primary border-2 border-black rounded-md hover:translate-x-1 hover:-translate-y-1 transition-transform duration-200 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
                     <Avatar className="h-full w-full rounded-none">
-                      <AvatarImage src={session.user.image || ""} alt={session.user.name || ""} className="object-cover" />
-                      <AvatarFallback className="rounded-none">{session.user.name?.[0] || "U"}</AvatarFallback>
+                      <AvatarImage src={session.user.image || ""} alt={session.user.name || ""} className="object-cover " />
+                      <AvatarFallback className="rounded-none ">{session.user.name?.[0] || "U"}</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 bg-meeple-primary border-2 border-black rounded-md shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                   <div className="flex items-center justify-start gap-2 p-2 border-b-2 border-black">
                     <div className="flex flex-col space-y-1 leading-none">
-                      {session.user.name && <p className="font-medium">{session.user.name}</p>}
+                      {session.user.name && <p className="font-bold ">{session.user.name}</p>}
                       {session.user.email && (
                         <p className="w-[200px] truncate text-sm text-muted-foreground">
                           {session.user.email}
@@ -105,20 +105,23 @@ export default function Dashboard({ session }: DashboardProps) {
                       )}
                     </div>
                   </div>
-                  <DropdownMenuItem onSelect={() => router.push("/dashboard")} className="hover:bg-meeple-shadow hover:text-white">
-                    Dashboard
+                  <DropdownMenuItem onSelect={() => router.push("/profile")} className="hover:bg-meeple-shadow hover:text-white">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => router.push("/dashboard/settings")} className="hover:bg-meeple-shadow hover:text-white">
-                    Settings
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className="cursor-pointer hover:bg-meeple-shadow hover:text-white"
+                    className="cursor-pointer bg-red-500 font-bold hover:bg-meeple-shadow hover:text-white"
                     onSelect={(event) => {
                       event.preventDefault()
                       handleLogout()
                     }}
                   >
-                    Log out
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
