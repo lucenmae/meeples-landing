@@ -29,7 +29,7 @@ export default function BGGSearch({ onAddGame }: BGGSearchProps) {
   const [totalResults, setTotalResults] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handleSearch = useCallback(async (query: string, page: number) => {
+  const handleSearch = useCallback(async (query: string, page: number, isRetry: boolean = false) => {
     if (!query.trim()) return;
 
     setIsLoading(true);
@@ -41,7 +41,12 @@ export default function BGGSearch({ onAddGame }: BGGSearchProps) {
         setSearchResults(prevResults => page === 1 ? response.data.games : [...prevResults, ...response.data.games]);
         setTotalResults(response.data.totalResults);
         if (response.data.games.length === 0) {
-          setError('No games found. Please try a different search term.');
+          if (!isRetry) {
+            // If no results and it's not a retry, append "original" to the query and search again
+            handleSearch(`${query} original`, 1, true);
+          } else {
+            setError('No games found. Please try a different search term.');
+          }
         }
       } else {
         setError('Unexpected response format. Please try again.');
