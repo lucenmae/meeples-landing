@@ -110,7 +110,7 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
         <BGGSearch onAddGame={handleAddGameFromBGG} />
       </div>
 
-      <div className="bg-meeple-secondary border-4 border-black rounded-lg shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] overflow-x-auto">
+      <div className="bg-meeple-secondary border-4 border-black rounded-lg shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] overflow-x-auto relative">
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-meeple-primary">
@@ -142,25 +142,26 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
                 <td className="px-6 py-4 whitespace-nowrap border-b border-black">
                   <div className="text-sm text-black">{new Date(game.createdAt).toLocaleDateString()}</div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap border-b border-black">
-                  <MeepleButton
-                    onClick={() => handleEdit(game)}
-                    variant="outline"
-                    size="sm"
-                    className="mr-2"
-                    icon={<FaEdit />}
-                  >
-                    Edit
-                  </MeepleButton>
-                  <MeepleButton
-                    onClick={() => handleDelete(game._id)}
-                    variant="outline"
-                    size="sm"
-                    className="bg-red-500 hover:bg-red-700"
-                    icon={<FaTrash />}
-                  >
-                    Delete
-                  </MeepleButton>
+                <td className="px-6 py-4 whitespace-nowrap border-b border-black relative z-10">
+                  <div className="flex space-x-2">
+                    <MeepleButton
+                      onClick={() => handleEdit(game)}
+                      variant="outline"
+                      size="sm"
+                      icon={<FaEdit />}
+                    >
+                      Edit
+                    </MeepleButton>
+                    <MeepleButton
+                      onClick={() => handleDelete(game._id)}
+                      variant="outline"
+                      size="sm"
+                      className="bg-red-500 hover:bg-red-700"
+                      icon={<FaTrash />}
+                    >
+                      Delete
+                    </MeepleButton>
+                  </div>
                 </td>
               </tr>
             ))}

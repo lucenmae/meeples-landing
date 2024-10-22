@@ -79,7 +79,7 @@ export default function EditGameDialog({ open, onOpenChange, game, onUpdateGame 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto bg-meeple-secondary border-4 border-black rounded-lg shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] z-50">
         <DialogHeader>
           <DialogTitle>Edit Game</DialogTitle>
         </DialogHeader>
