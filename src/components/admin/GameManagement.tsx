@@ -2,9 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
 
+import MeepleButton from '../ui/meeple-button';
+
 import BGGSearch from './BGGSearch';
 import EditGameDialog from './EditGameDialog';
-import MeepleButton from '../ui/meeple-button';
 
 interface Game {
   _id: string;
@@ -94,8 +95,9 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
         <h2 className="text-2xl font-semibold">Game Management</h2>
         <MeepleButton
           onClick={onAddGame}
-          className="w-full sm:w-auto cursor-pointer z-0 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          className="w-full sm:w-auto cursor-pointer z-10"
           icon={<FaPlus />}
+          variant="primary"
         >
           New Game
         </MeepleButton>
