@@ -2,6 +2,8 @@ import axios from 'axios';
 import debounce from 'lodash/debounce';
 import Image from 'next/image';
 import React, { useCallback, useState } from 'react';
+import { FaSearch, FaPlus } from 'react-icons/fa';
+import MeepleButton from '../ui/meeple-button';
 
 interface BGGGame {
   id: string;
@@ -28,6 +30,8 @@ export default function BGGSearch({ onAddGame }: BGGSearchProps) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const handleSearch = useCallback(async (query: string, page: number) => {
+    if (!query.trim()) return;
+
     setIsLoading(true);
     setError(null);
 
@@ -76,53 +80,61 @@ export default function BGGSearch({ onAddGame }: BGGSearchProps) {
   };
 
   return (
-    <div className="mt-6 space-y-4">
-      <h3 className="text-xl font-semibold mb-4">Search Board Game</h3>
-      <p className="text-sm text-gray-600 mb-4">If not game not found, please add manually using the "New Game" button</p>
-      <div className="mb-4">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={handleInputChange}
-          placeholder="Search for a game by title..."
-          className="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        />
+    <div className="bg-meeple-secondary border-4 border-black rounded-lg p-4 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]">
+      <div className="flex flex-col sm:flex-row gap-2">
+        <div className="flex-grow relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={handleInputChange}
+            placeholder="Search BoardGameGeek..."
+            className="w-full px-4 py-2 border-2 border-black rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-meeple-shadow"
+          />
+          <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+        </div>
       </div>
-      {isLoading && <p className="text-center">Loading...</p>}
-      {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
-      <div className="space-y-4">
-        {searchResults.map((game) => (
-          <div key={game.id} className="flex flex-col sm:flex-row border-b pb-4">
-            <Image 
-              src={game.imageUrl} 
-              alt={game.name} 
-              width={80} 
-              height={80} 
-              className="object-cover mb-2 sm:mb-0 sm:mr-4" 
-            />
-            <div className="flex-grow">
-              <h4 className="font-semibold">{game.name} ({game.yearPublished})</h4>
-              <p className="text-sm text-gray-600 mb-2">{game.description.substring(0, 100)}...</p>
-              <p className="text-sm">Rating: {game.averageRating} ({game.numVoters} voters)</p>
-              <p className="text-sm">Rank: {game.rank}</p>
-            </div>
-            <button
-              onClick={() => onAddGame(game)}
-              className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded text-sm h-10 mt-2 sm:mt-0"
-            >
-              Add to Inventory
-            </button>
+
+      {isLoading && <p className="mt-4 text-center font-bold">Searching...</p>}
+      {error && <p className="mt-4 text-center text-red-500">{error}</p>}
+
+      {searchResults.length > 0 && (
+        <div className="mt-4 space-y-4">
+          <h3 className="text-xl font-bold">Search Results:</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {searchResults.map((game: BGGGame) => (
+              <div key={game.id} className="bg-white border-2 border-black rounded-lg p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:-translate-y-1 transition-transform duration-200">
+                <Image 
+                  src={game.imageUrl} 
+                  alt={game.name} 
+                  width={160}
+                  height={160}
+                  className="w-full h-40 object-cover mb-2 rounded border-2 border-black" 
+                />
+                <h4 className="font-bold text-lg mb-1">{game.name}</h4>
+                <p className="text-sm mb-2">Year: {game.yearPublished}</p>
+                <p className="text-sm mb-2">{game.description?.substring(0, 100)}...</p>
+                <p className="text-sm mb-2">Rating: {game.averageRating} ({game.numVoters} voters)</p>
+                <p className="text-sm mb-2">Rank: {game.rank}</p>
+                <MeepleButton
+                  onClick={() => onAddGame(game)}
+                  variant="outline"
+                  size="sm"
+                  className="w-full"
+                  icon={<FaPlus />}
+                >
+                  Add Game
+                </MeepleButton>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      {searchResults.length < totalResults && (
-        <button
-          onClick={loadMore}
-          className="mt-4 w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-          disabled={isLoading}
-        >
-          Load More
-        </button>
+          {searchResults.length < totalResults && (
+            <div className="text-center mt-4">
+              <MeepleButton onClick={loadMore} variant="primary">
+                Load More
+              </MeepleButton>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
