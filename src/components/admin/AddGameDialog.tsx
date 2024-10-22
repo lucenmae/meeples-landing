@@ -2,10 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { ControllerRenderProps, FieldValues } from "react-hook-form"
 import * as z from "zod"
 
-import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -24,6 +22,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import MeepleButton from "@/components/ui/meeple-button"
 
 const formSchema = z.object({
   gameName: z.string().min(2, {
@@ -64,10 +63,10 @@ export default function AddGameDialog({ open, onOpenChange }: AddGameDialogProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto bg-meeple-secondary border-4 border-black rounded-lg shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
         <DialogHeader>
-          <DialogTitle>Add New Game</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-2xl font-bold text-black">Add New Game</DialogTitle>
+          <DialogDescription className="text-black">
             Enter the details of the new game you want to add to your collection.
           </DialogDescription>
         </DialogHeader>
@@ -76,11 +75,11 @@ export default function AddGameDialog({ open, onOpenChange }: AddGameDialogProps
             <FormField
               control={form.control}
               name="gameName"
-              render={({ field }: { field: ControllerRenderProps<FieldValues, "gameName"> }) => (
+              render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Game Name</FormLabel>
+                  <FormLabel className="text-lg font-semibold text-black">Game Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter game name" {...field} />
+                    <Input placeholder="Enter game name" {...field} className="border-2 border-black bg-white focus:ring-2 focus:ring-meeple-shadow" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -89,13 +88,13 @@ export default function AddGameDialog({ open, onOpenChange }: AddGameDialogProps
             <FormField
               control={form.control}
               name="description"
-              render={({ field }: { field: ControllerRenderProps<FieldValues, "description"> }) => (
+              render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel className="text-lg font-semibold text-black">Description</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Enter game description"
-                      className="resize-none"
+                      className="resize-none border-2 border-black bg-white focus:ring-2 focus:ring-meeple-shadow"
                       {...field}
                     />
                   </FormControl>
@@ -106,11 +105,11 @@ export default function AddGameDialog({ open, onOpenChange }: AddGameDialogProps
             <FormField
               control={form.control}
               name="imageUrl"
-              render={({ field }: { field: ControllerRenderProps<FieldValues, "imageUrl"> }) => (
+              render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Image URL</FormLabel>
+                  <FormLabel className="text-lg font-semibold text-black">Image URL</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter image URL" {...field} />
+                    <Input placeholder="Enter image URL" {...field} className="border-2 border-black bg-white focus:ring-2 focus:ring-meeple-shadow" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -119,18 +118,20 @@ export default function AddGameDialog({ open, onOpenChange }: AddGameDialogProps
             <FormField
               control={form.control}
               name="bggLink"
-              render={({ field }: { field: ControllerRenderProps<FieldValues, "bggLink"> }) => (
+              render={({ field }) => (
                 <FormItem>
-                  <FormLabel>BoardGameGeek Link</FormLabel>
+                  <FormLabel className="text-lg font-semibold text-black">BoardGameGeek Link</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter BoardGameGeek URL" {...field} />
+                    <Input placeholder="Enter BoardGameGeek URL" {...field} className="border-2 border-black bg-white focus:ring-2 focus:ring-meeple-shadow" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <DialogFooter>
-              <Button type="submit" className="w-full sm:w-auto">Add Game</Button>
+              <MeepleButton type="submit" variant="primary" className="w-full sm:w-auto hover:bg-white">
+                Add Game
+              </MeepleButton>
             </DialogFooter>
           </form>
         </Form>
