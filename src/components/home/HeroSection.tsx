@@ -100,7 +100,13 @@ export function HeroSection() {
   return (
     <section className='bg-[#F3F3F3]'>
       <div className='absolute inset-0 w-full bg-[#F3F3F3] z-10 [mask-image:radial-gradient(transparent,white)] pointer-events-none' />
-      <Navbar scrollToSection={scrollToSection} gamesRef={gamesRef} aboutRef={aboutRef} />
+      <Navbar
+        scrollToSection={scrollToSection}
+        gamesRef={gamesRef}
+        aboutRef={aboutRef}
+        buttonClassName='cursor-none'
+        logoClassName='cursor-none'
+      />
 
       {/* HeroSection     */}
       <div className='pt-52 lg:pt-80 h-full flex flex-col items-center justify-center  text-gray-800'>
@@ -114,7 +120,6 @@ export function HeroSection() {
               University Ozamiz City Promoting Tabletop Games
             </p>
           </div>
-          
 
           <div className='mt-28 z-20'>
             <div className='max-w-md mx-auto border-4 bg-[#f5bf22] border-gray-800   shadow-[3px_3px_0px_#2b2a28] rounded-lg px-4 py-2 flex justify-center items-center transform -rotate-3'>
