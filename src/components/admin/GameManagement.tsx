@@ -91,7 +91,7 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
   return (
     <div className="space-y-6 p-4 lg:p-6">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-16">
-        <h2 className="text-3xl font-bold text-black">Game Management</h2>
+        <h2 className="text-3xl font-bold text-black">Inventory Management</h2>
         <MeepleButton
           onClick={onAddGame}
           className="w-full sm:w-auto cursor-pointer z-10"
