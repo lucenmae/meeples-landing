@@ -90,7 +90,7 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
 
   return (
     <div className="space-y-6 p-4 lg:p-6">
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-16">
         <h2 className="text-3xl font-bold text-black">Game Management</h2>
         <MeepleButton
           onClick={onAddGame}
@@ -102,7 +102,13 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
         </MeepleButton>
       </div>
 
-      <BGGSearch onAddGame={handleAddGameFromBGG} />
+      <div className="mb-8">
+        <h3 className="text-2xl font-bold text-black mb-2">Search Games</h3>
+        <p className="text-sm text-gray-600 mb-4">
+          Search for games to add to your inventory. If a game is not found, please add it manually using the "New Game" button above.
+        </p>
+        <BGGSearch onAddGame={handleAddGameFromBGG} />
+      </div>
 
       <div className="bg-meeple-secondary border-4 border-black rounded-lg shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] overflow-x-auto">
         <table className="w-full border-collapse">
