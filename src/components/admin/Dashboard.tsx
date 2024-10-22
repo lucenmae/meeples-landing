@@ -1,19 +1,20 @@
 "use client"
 
-import { Menu, Moon, Sun } from "lucide-react"
+import { Moon, Sun } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Session } from "next-auth"
 import { signOut } from "next-auth/react"
 import { useTheme } from "next-themes"
-import { useEffect, useState, useCallback } from "react"
+import { useCallback,useEffect, useState } from "react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
+import Sidebar from "../layout/Sidebar"
+
 import AddGameDialog from "./AddGameDialog"
 import GameManagement from "./GameManagement"
-import Sidebar from "../layout/Sidebar"
 
 interface DashboardProps {
   session: Session
@@ -69,17 +70,21 @@ export default function Dashboard({ session }: DashboardProps) {
         isMinimized={isSidebarMinimized}
       />
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="sticky top-0 z-30 bg-meeple-primary border-b-4 border-black">
+        <header className="sticky top-0 z-30 bg-meeple-secondary border-b-5 shadow-[5px_5px_0px_#000] border-meeple-shadow">
           <div className="flex items-center justify-between px-4 py-2 max-w-7xl mx-auto">
+            {/* Left side - currently empty */}
+            <div></div>
+            
+            {/* Moon/Sun toggle and Avatar */}
             <div className="flex items-center space-x-4">
-              <Button 
+              {/* <Button 
                 variant="outline" 
                 size="icon" 
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className={toggleButtonClass}
+                className={`${toggleButtonClass} ${theme === "dark" ? "bg-meeple-secondary" : "bg-white"}`}
               >
-                {theme === "dark" ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
-              </Button>
+                {theme === "dark" ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6 " />}
+              </Button> */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="icon" className="p-0 bg-meeple-primary border-2 border-black rounded-md hover:translate-x-1 hover:-translate-y-1 transition-transform duration-200 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
@@ -118,7 +123,6 @@ export default function Dashboard({ session }: DashboardProps) {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            {/* Menu button remains commented out */}
             {/* <button
               onClick={toggleSidebar}
               className={toggleButtonClass}
