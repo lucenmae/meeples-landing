@@ -23,7 +23,6 @@ interface GameManagementProps {
 
 export default function GameManagement({ onAddGame }: GameManagementProps) {
   const [games, setGames] = useState<Game[]>([]);
-  const [isAdding, setIsAdding] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [gameToEdit, setGameToEdit] = useState<Game | null>(null);
 
@@ -92,7 +91,7 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
   return (
     <div className="space-y-6 p-4 lg:p-6">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-        <h2 className="text-2xl font-semibold">Game Management</h2>
+        <h2 className="text-3xl font-bold text-black">Game Management</h2>
         <MeepleButton
           onClick={onAddGame}
           className="w-full sm:w-auto cursor-pointer z-10"
@@ -105,47 +104,57 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
 
       <BGGSearch onAddGame={handleAddGameFromBGG} />
 
-      <div className="bg-white shadow-md rounded-lg overflow-x-auto">
-        <table className="min-w-full leading-normal">
+      <div className="bg-meeple-secondary border-4 border-black rounded-lg shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] overflow-x-auto">
+        <table className="w-full border-collapse">
           <thead>
-            <tr>
-              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            <tr className="bg-meeple-primary">
+              <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider border-b-2 border-black">
                 Game
               </th>
-              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider border-b-2 border-black">
                 Date Added
               </th>
-              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider border-b-2 border-black">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
-            {games.map((game) => (
-              <tr key={game._id}>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+            {games.map((game, index) => (
+              <tr key={game._id} className={index % 2 === 0 ? 'bg-white' : 'bg-meeple-tertiary'}>
+                <td className="px-6 py-4 whitespace-nowrap border-b border-black">
                   <div className="flex items-center">
-                    <div className="flex-shrink-0 w-10 h-10">
-                      <img className="w-full h-full rounded-full" src={game.imageUrl} alt={game.name} />
+                    <div className="flex-shrink-0 h-16 w-16 border-2 border-black rounded-md overflow-hidden">
+                      <img className="h-full w-full object-cover" src={game.imageUrl} alt={game.name} />
                     </div>
-                    <div className="ml-3">
-                      <p className="text-gray-900 whitespace-no-wrap font-semibold">{game.name}</p>
-                      <p className="text-gray-600 whitespace-no-wrap">{game.description.substring(0, 50)}...</p>
+                    <div className="ml-4">
+                      <div className="text-sm font-bold text-black">{game.name}</div>
+                      <div className="text-sm text-gray-700">{game.description.substring(0, 50)}...</div>
                     </div>
                   </div>
                 </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <p className="text-gray-900 whitespace-no-wrap">
-                    {new Date(game.createdAt).toLocaleDateString()}
-                  </p>
+                <td className="px-6 py-4 whitespace-nowrap border-b border-black">
+                  <div className="text-sm text-black">{new Date(game.createdAt).toLocaleDateString()}</div>
                 </td>
-                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                  <button onClick={() => handleEdit(game)} className="text-blue-600 hover:text-blue-900 mr-3">
-                    <FaEdit />
-                  </button>
-                  <button onClick={() => handleDelete(game._id)} className="text-red-600 hover:text-red-900">
-                    <FaTrash />
-                  </button>
+                <td className="px-6 py-4 whitespace-nowrap border-b border-black">
+                  <MeepleButton
+                    onClick={() => handleEdit(game)}
+                    variant="outline"
+                    size="sm"
+                    className="mr-2"
+                    icon={<FaEdit />}
+                  >
+                    Edit
+                  </MeepleButton>
+                  <MeepleButton
+                    onClick={() => handleDelete(game._id)}
+                    variant="outline"
+                    size="sm"
+                    className="bg-red-500 hover:bg-red-700"
+                    icon={<FaTrash />}
+                  >
+                    Delete
+                  </MeepleButton>
                 </td>
               </tr>
             ))}
