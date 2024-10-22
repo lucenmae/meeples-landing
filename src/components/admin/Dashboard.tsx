@@ -20,15 +20,13 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ session }: DashboardProps) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [isAddGameModalOpen, setIsAddGameModalOpen] = useState(false)
   const router = useRouter()
 
   useEffect(() => setMounted(true), [])
-
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen)
 
   const handleAddGame = () => {
     setIsAddGameModalOpen(true);
@@ -44,12 +42,9 @@ export default function Dashboard({ session }: DashboardProps) {
     <div className="flex h-screen bg-background text-foreground">
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
-      <div className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${isSidebarOpen ? 'lg:ml-64' : 'lg:ml-20'}`}>
+      <div className="flex-1 flex flex-col overflow-hidden transition-all duration-300">
         <header className="sticky top-0 z-30 bg-background/80 backdrop-blur-sm border-b">
-          <div className="flex items-center justify-between px-4 py-2 max-w-7xl mx-auto">
-            <Button variant="ghost" size="icon" onClick={toggleSidebar} >
-              <Menu className="h-6 w-6" />
-            </Button>
+          <div className="flex items-center justify-end px-4 py-2 max-w-7xl mx-auto">
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
                 {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
