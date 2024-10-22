@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { Session } from "next-auth"
 import { signOut } from "next-auth/react"
 import { useTheme } from "next-themes"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -21,12 +21,32 @@ interface DashboardProps {
 
 export default function Dashboard({ session }: DashboardProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isLargeScreen, setIsLargeScreen] = useState(false)
+  const [isSidebarMinimized, setIsSidebarMinimized] = useState(false)
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [isAddGameModalOpen, setIsAddGameModalOpen] = useState(false)
   const router = useRouter()
 
-  useEffect(() => setMounted(true), [])
+  const toggleSidebar = useCallback(() => {
+    if (isLargeScreen) {
+      setIsSidebarMinimized(prev => !prev);
+    } else {
+      setIsSidebarOpen(prev => !prev);
+    }
+  }, [isLargeScreen]);
+
+  useEffect(() => {
+    setMounted(true)
+    const checkScreenSize = () => {
+      const largeScreen = window.innerWidth >= 1024;
+      setIsLargeScreen(largeScreen);
+      setIsSidebarOpen(largeScreen);
+    };
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, [])
 
   const handleAddGame = () => {
     setIsAddGameModalOpen(true);
@@ -38,28 +58,39 @@ export default function Dashboard({ session }: DashboardProps) {
 
   if (!mounted) return null
 
-  return (
-    <div className="flex h-screen bg-background text-foreground">
-      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+  const toggleButtonClass = "p-2 rounded-md bg-meeple-primary border-2 border-black hover:translate-x-1 hover:-translate-y-1 transition-transform duration-200 text-black font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]";
 
-      <div className="flex-1 flex flex-col overflow-hidden transition-all duration-300">
-        <header className="sticky top-0 z-30 bg-background/80 backdrop-blur-sm border-b">
-          <div className="flex items-center justify-end px-4 py-2 max-w-7xl mx-auto">
+  return (
+    <div className="flex h-screen bg-background">
+      <Sidebar 
+        isOpen={isSidebarOpen} 
+        setIsOpen={setIsSidebarOpen} 
+        toggleSidebar={toggleSidebar}
+        isMinimized={isSidebarMinimized}
+      />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <header className="sticky top-0 z-30 bg-meeple-primary border-b-4 border-black">
+          <div className="flex items-center justify-between px-4 py-2 max-w-7xl mx-auto">
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-                {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              <Button 
+                variant="outline" 
+                size="icon" 
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className={toggleButtonClass}
+              >
+                {theme === "dark" ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-full">
-                    <Avatar>
-                      <AvatarImage src={session.user.image || ""} alt={session.user.name || ""} />
-                      <AvatarFallback>{session.user.name?.[0] || "U"}</AvatarFallback>
+                  <Button variant="outline" size="icon" className="p-0 bg-meeple-primary border-2 border-black rounded-md hover:translate-x-1 hover:-translate-y-1 transition-transform duration-200 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+                    <Avatar className="h-full w-full rounded-none">
+                      <AvatarImage src={session.user.image || ""} alt={session.user.name || ""} className="object-cover" />
+                      <AvatarFallback className="rounded-none">{session.user.name?.[0] || "U"}</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <div className="flex items-center justify-start gap-2 p-2">
+                <DropdownMenuContent align="end" className="w-56 bg-meeple-primary border-2 border-black rounded-md shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <div className="flex items-center justify-start gap-2 p-2 border-b-2 border-black">
                     <div className="flex flex-col space-y-1 leading-none">
                       {session.user.name && <p className="font-medium">{session.user.name}</p>}
                       {session.user.email && (
@@ -69,14 +100,14 @@ export default function Dashboard({ session }: DashboardProps) {
                       )}
                     </div>
                   </div>
-                  <DropdownMenuItem onSelect={() => router.push("/dashboard")}>
+                  <DropdownMenuItem onSelect={() => router.push("/dashboard")} className="hover:bg-meeple-shadow hover:text-white">
                     Dashboard
                   </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => router.push("/dashboard/settings")}>
+                  <DropdownMenuItem onSelect={() => router.push("/dashboard/settings")} className="hover:bg-meeple-shadow hover:text-white">
                     Settings
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className="cursor-pointer"
+                    className="cursor-pointer hover:bg-meeple-shadow hover:text-white"
                     onSelect={(event) => {
                       event.preventDefault()
                       handleLogout()
@@ -87,9 +118,16 @@ export default function Dashboard({ session }: DashboardProps) {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
+            {/* Menu button remains commented out */}
+            {/* <button
+              onClick={toggleSidebar}
+              className={toggleButtonClass}
+            >
+              <Menu className="w-6 h-6" />
+            </button> */}
           </div>
         </header>
-
+        
         <main className="flex-1 overflow-x-hidden overflow-y-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <GameManagement onAddGame={handleAddGame} />

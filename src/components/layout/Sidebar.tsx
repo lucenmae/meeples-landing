@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 interface SidebarProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  toggleSidebar: () => void;
+  isMinimized: boolean;
 }
 
 const navItems = [
@@ -16,9 +18,8 @@ const navItems = [
   { icon: Clock, label: "Activity Log", href: "/admin/activity" },
 ];
 
-export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
+export default function Sidebar({ isOpen, setIsOpen, toggleSidebar, isMinimized }: SidebarProps) {
   const [isLargeScreen, setIsLargeScreen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -31,28 +32,12 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  const toggleSidebar = () => {
-    if (isLargeScreen) {
-      setIsMinimized(!isMinimized);
-    } else {
-      setIsOpen(!isOpen);
-    }
-  };
-
   const sidebarWidth = isLargeScreen ? (isMinimized ? 'w-20' : 'w-64') : 'w-64';
 
-  const toggleButtonClass = "p-2 rounded-md bg-meeple-primary border-2 border-black hover:translate-x-1 hover:-translate-y-1 transition-transform duration-200 text-black font-bold";
+  const toggleButtonClass = "p-2 rounded-md bg-meeple-primary border-2 border-black hover:translate-x-1 hover:-translate-y-1 transition-transform duration-200 text-black font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]";
 
   return (
     <>
-      {!isLargeScreen && !isOpen && (
-        <button
-          onClick={toggleSidebar}
-          className={`fixed top-4 left-4 z-50 ${toggleButtonClass}`}
-        >
-          <Menu className="w-6 h-6" />
-        </button>
-      )}
       <div className={`${isLargeScreen ? 'translate-x-0' : isOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarWidth} h-screen bg-meeple-primary text-black font-bold transition-all duration-300 ease-in-out flex flex-col fixed left-0 top-0 z-40 lg:relative border-r-4 border-b-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}>
         <div className="flex items-center justify-between h-16 px-4 border-b-2 border-black">
           {(!isLargeScreen || !isMinimized) && (
@@ -62,7 +47,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
           )}
           <button
             onClick={toggleSidebar}
-            className={`${toggleButtonClass} ml-2`}
+            className={`${toggleButtonClass} ml-2 ${isLargeScreen ? '' : ''}`}
           >
             <Menu className="w-6 h-6" />
           </button>
