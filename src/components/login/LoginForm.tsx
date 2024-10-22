@@ -28,7 +28,7 @@ export default function LoginForm() {
         if (result?.error) {
           setError('Invalid username/email or password');
         } else if (result?.ok) {
-          router.push('/admin/game-management');
+          router.push('/admin/game-inventory');
         } else {
           setError('An unexpected error occurred');
         }
