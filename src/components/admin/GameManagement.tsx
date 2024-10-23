@@ -129,7 +129,7 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
         <h2 className="text-3xl font-bold text-black">Inventory Management</h2>
         <MeepleButton
           onClick={onAddGame}
-          className="w-full sm:w-auto cursor-pointer z-10"
+          className="w-full sm:w-auto cursor-pointer z-10 hover:bg-white"
           icon={<FaPlus />}
           variant="primary"
         >
@@ -191,7 +191,7 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
                       onClick={() => handleDelete(game)}
                       variant="outline"
                       size="sm"
-                      className="bg-red-500 hover:bg-red-700"
+                      className="bg-red-500 hover:bg-white"
                       icon={<FaTrash />}
                     >
                       Delete
