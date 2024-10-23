@@ -1,5 +1,7 @@
 import React from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+
+import { Dialog, DialogContent, DialogDescription, DialogFooter,DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
 import MeepleButton from '../ui/meeple-button';
 
 interface DeleteGameDialogProps {
@@ -20,25 +22,26 @@ export default function DeleteGameDialog({ open, onOpenChange, onConfirmDelete, 
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mt-6 flex justify-end space-x-4">
-          <MeepleButton
-            onClick={() => onOpenChange(false)}
-            variant="outline"
-            size="lg"
-            className="bg-meeple-tertiary hover:bg-meeple-primary"
-          >
-            Cancel
-          </MeepleButton>
-          <MeepleButton
+        <MeepleButton
             onClick={() => {
               onConfirmDelete();
               onOpenChange(false);
             }}
             variant="outline"
             size="lg"
-            className="bg-red-500 hover:bg-red-600 text-white"
+            className="bg-red-500 hover:bg-white hover:text-black text-white"
           >
             Delete
           </MeepleButton>
+          <MeepleButton
+            onClick={() => onOpenChange(false)}
+            variant="outline"
+            size="lg"
+            className="bg-white hover:bg-meeple-tertiary"
+          >
+            Cancel
+          </MeepleButton>
+         
         </DialogFooter>
       </DialogContent>
     </Dialog>
