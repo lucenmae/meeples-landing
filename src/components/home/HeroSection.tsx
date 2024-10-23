@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter,useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
+import Loading from '@/app/loading';
 import Navbar from '@/components/layout/Navbar';
 import Cards from '@/components/ui/cards';
-import Loading from '@/app/loading';
 
 import { FlipWords } from '../ui/flip-words';
 

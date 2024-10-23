@@ -1,6 +1,6 @@
 'use client';
 
-import { LogOut, Settings, User } from 'lucide-react';
+import { LogOut, Menu, Settings, User } from 'lucide-react';
 import { Session } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
@@ -65,7 +65,7 @@ export default function Dashboard({ session }: DashboardProps) {
   if (!mounted) return null;
 
   const toggleButtonClass =
-    'p-2 rounded-md bg-meeple-primary border-2 border-black hover:translate-x-1 hover:-translate-y-1 transition-transform duration-200 text-black font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
+    'p-2 rounded-md bg-meeple-tertiary border-2 border-black hover:translate-x-1 hover:-translate-y-1 transition-transform duration-200 text-black font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]';
 
   return (
     <div className='flex h-screen bg-background'>
@@ -78,19 +78,23 @@ export default function Dashboard({ session }: DashboardProps) {
       <div className='flex-1 flex flex-col overflow-hidden'>
         <header className='sticky top-0 z-30 bg-meeple-secondary border-b-5 shadow-[5px_5px_0px_#000] border-meeple-shadow'>
           <div className='flex items-center justify-between px-4 py-2 max-w-7xl mx-auto'>
-            {/* Left side - currently empty */}
-            <div></div>
-
-            {/* Moon/Sun toggle and Avatar */}
-            <div className='flex items-center space-x-4'>
-              {/* <Button 
-                variant="outline" 
-                size="icon" 
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className={`${toggleButtonClass} ${theme === "dark" ? "bg-meeple-secondary" : "bg-white"}`}
+            {/* Left side - Menu button for small screens */}
+            <div className='lg:hidden'>
+              <button
+                onClick={toggleSidebar}
+                className={`${toggleButtonClass} hover:bg-white`}
               >
-                {theme === "dark" ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6 " />}
-              </Button> */}
+                <Menu className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Center - empty space or title */}
+            <div className='flex-grow text-center'>
+              {/* You can add a title or leave it empty */}
+            </div>
+
+            {/* Right side - Avatar */}
+            <div className='flex items-center space-x-4'>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -155,12 +159,6 @@ export default function Dashboard({ session }: DashboardProps) {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            {/* <button
-              onClick={toggleSidebar}
-              className={toggleButtonClass}
-            >
-              <Menu className="w-6 h-6" />
-            </button> */}
           </div>
         </header>
 
