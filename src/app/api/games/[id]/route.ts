@@ -6,6 +6,11 @@ import connectMongoDB from '@/lib/mongodb';
 import { Game } from '@/models/Game';
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
   const { id } = params;
   const { name, description, imageUrl, bggLink } = await request.json();
 
@@ -32,6 +37,11 @@ export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     await connectMongoDB();
     const id = params.id;
