@@ -1,8 +1,7 @@
 'use client';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import HeroSection from '@/components/home/HeroSection';
 import ScrollToTopButton from '@/components/ScrollToTop';
@@ -10,10 +9,13 @@ import { FollowerPointerCard } from '@/components/ui/following-pointer';
 
 import Loading from '@/app/loading';
 
-const DynamicBoxes = dynamic(() => import('@/components/ui/background-boxes').then(mod => mod.Boxes), {
-  ssr: false,
-  loading: () => <Loading />
-});
+const DynamicBoxes = dynamic(
+  () => import('@/components/ui/background-boxes').then((mod) => mod.Boxes),
+  {
+    ssr: false,
+    loading: () => <Loading />,
+  },
+);
 
 export default function HomePage() {
   const [isBoxesLoaded, setIsBoxesLoaded] = useState(false);

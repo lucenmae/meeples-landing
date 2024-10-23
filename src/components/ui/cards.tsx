@@ -7,7 +7,7 @@ interface CardsProps {
   alt: string;
   title: string;
   description: string;
-  link: string; 
+  link: string;
 }
 
 // Helper function to truncate text
@@ -18,7 +18,13 @@ const truncateText = (text: string, limit: number) => {
   return text.substring(0, limit) + '...';
 };
 
-const Cards: React.FC<CardsProps> = ({ src, alt, title, description, link }) => {
+const Cards: React.FC<CardsProps> = ({
+  src,
+  alt,
+  title,
+  description,
+  link,
+}) => {
   return (
     <div className='flip-card w-48 h-64 perspective-1000 font-sans m-10'>
       <div className='flip-card-inner card'>
@@ -42,17 +48,15 @@ const Cards: React.FC<CardsProps> = ({ src, alt, title, description, link }) => 
               {title}
             </div>
             <div className='block font-sans text-sm antialiased font-light leading-relaxed text-inherit overflow-y-auto flex-grow'>
-              {truncateText(description, 102)} 
+              {truncateText(description, 102)}
             </div>
           </div>
           <div className='mb-4'>
             <a
-              href={link} 
+              href={link}
               className='cursor-none text-sm font-semibold leading-6 text-gray-900'
             >
-              <button
-                className='cursor-none inline-block px-6 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1'
-              >
+              <button className='cursor-none inline-block px-6 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1'>
                 Read More
               </button>
             </a>
