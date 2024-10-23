@@ -48,9 +48,9 @@ export default function Sidebar({ isOpen, setIsOpen, toggleSidebar, isMinimized 
           )}
           <button
             onClick={toggleSidebar}
-            className={`${toggleButtonClass} ml-2 ${isLargeScreen ? '' : ''}`}
+            className={`${toggleButtonClass} ml-2  hover:bg-white ${isLargeScreen ? '' : ''}`}
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-6 h-6 " />
           </button>
         </div>
         <nav className="flex-1 mt-4 overflow-y-auto">
