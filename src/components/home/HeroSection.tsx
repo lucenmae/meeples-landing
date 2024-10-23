@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
 import Navbar from '@/components/layout/Navbar';
 import Cards from '@/components/ui/cards';
+import Loading from '@/app/loading';
 
 import { FlipWords } from '../ui/flip-words';
 
@@ -18,6 +19,8 @@ interface Game {
 }
 
 export function HeroSection() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const words = ['PLAY', 'CONNECT', 'THRIVE'];
 
   // Most Played Games
@@ -97,6 +100,15 @@ export function HeroSection() {
     }
   }, [searchParams]);
 
+  const handleLoginClick = () => {
+    setIsLoading(true);
+    router.push('/login');
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <section className='bg-[#F3F3F3]'>
       <div className='absolute inset-0 w-full bg-[#F3F3F3] z-10 [mask-image:radial-gradient(transparent,white)] pointer-events-none' />
@@ -106,6 +118,9 @@ export function HeroSection() {
         aboutRef={aboutRef}
         buttonClassName='cursor-none'
         logoClassName='cursor-none'
+        onLoginClick={handleLoginClick}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
 
       {/* HeroSection     */}
@@ -134,7 +149,11 @@ export function HeroSection() {
                   src={card.src}
                   alt={card.alt}
                   title={card.title}
-                  description={card.description}
+                  description={
+                    card.description.length > 102
+                      ? card.description.substring(0, 102) + '...'
+                      : card.description
+                  }
                   link={card.link}
                 />
               ))}
@@ -156,7 +175,11 @@ export function HeroSection() {
                     src={game.imageUrl}
                     alt={game.name}
                     title={game.name}
-                    description={game.description}
+                    description={
+                      game.description.length > 102
+                        ? game.description.substring(0, 102) + '...'
+                        : game.description
+                    }
                     link={game.bggLink}
                   />
                 ))}

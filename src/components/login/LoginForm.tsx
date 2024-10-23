@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import React, { useState } from 'react';
 import MeepleButton from '../ui/meeple-button';
+import Loading from '@/app/loading';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -13,10 +14,12 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLogin, setIsLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     if (isLogin) {
       try {
@@ -28,19 +31,28 @@ export default function LoginForm() {
 
         if (result?.error) {
           setError('Invalid username/email or password');
+          setIsLoading(false);
         } else if (result?.ok) {
           router.push('/admin/game-inventory');
+          // Keep isLoading true as we're transitioning to the admin page
         } else {
           setError('An unexpected error occurred');
+          setIsLoading(false);
         }
       } catch (error) {
         setError('An error occurred during login');
+        setIsLoading(false);
       }
     } else {
       // Handle sign up logic here
       setError('Sign up functionality is not implemented yet');
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <main className='flex flex-col h-screen'>
@@ -99,7 +111,7 @@ export default function LoginForm() {
                     <MeepleButton
                       type='submit'
                       variant='primary'
-                      className='w-full'
+                      className='w-full hover:bg-white'
                     >
                       Let's go!
                     </MeepleButton>

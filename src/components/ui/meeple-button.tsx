@@ -25,7 +25,7 @@ const MeepleButton: React.FC<MeepleButtonProps> = ({
   const variantStyles = {
     primary: "text-black bg-meeple-tertiary border-2 border-black hover:bg-meeple-secondary",
     secondary: "text-white bg-indigo-500 border-2 border-black hover:bg-white hover:text-indigo-500 hover:border-indigo-500 hover:shadow-[5px_5px_0px_#6366F1] active:bg-indigo-500 active:border-gray-800 active:text-white",
-    outline: "text-black bg-meeple-primary border-2 border-black hover:bg-meeple-tertiary hover:text-black hover:border-black hover:shadow-[5px_5px_0px_#000000]"
+    outline: "text-black bg-meeple-primary border-2 border-black hover:bg-white hover:text-black hover:border-black hover:shadow-[5px_5px_0px_#000000]"
   };
 
   const sizeStyles = {

@@ -2,7 +2,8 @@ import axios from 'axios';
 import debounce from 'lodash/debounce';
 import Image from 'next/image';
 import React, { useCallback, useState } from 'react';
-import { FaSearch, FaPlus } from 'react-icons/fa';
+import { FaPlus, FaSearch } from 'react-icons/fa';
+
 import MeepleButton from '../ui/meeple-button';
 
 interface BGGGame {
@@ -94,17 +95,17 @@ export default function BGGSearch({ onAddGame }: BGGSearchProps) {
   };
 
   return (
-    <div className='bg-meeple-secondary border-4 border-black rounded-lg p-4 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]'>
+    <div className='bg-meeple-tertiary border-4 border-black rounded-lg p-4 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)]'>
       <div className='flex flex-col sm:flex-row gap-2'>
         <div className='flex-grow relative'>
+          <FaSearch className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10' />
           <input
             type='text'
             value={searchQuery}
             onChange={handleInputChange}
-            placeholder='Enter game name or keywords'
-            className='w-full px-4 py-2 border-2 border-black rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-meeple-shadow'
+            placeholder='Search BoardGameGeek...'
+            className='w-full pl-10 pr-4 py-2 border-2 border-black rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-meeple-shadow'
           />
-          <FaSearch className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400' />
         </div>
       </div>
 

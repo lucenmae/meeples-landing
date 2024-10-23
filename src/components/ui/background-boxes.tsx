@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
-export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
+export const BoxesCore = ({ className, onLoad, ...rest }: { className?: string; onLoad?: () => void }) => {
   const [dimensions, setDimensions] = useState({ rows: 0, cols: 0, boxSize: 0 });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,6 +21,7 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
 
       setDimensions({ rows, cols, boxSize: adjustedBoxSize });
       setIsLoading(false);
+      if (onLoad) onLoad();
     };
 
     // Use requestAnimationFrame for smoother initial render
@@ -32,7 +33,7 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
     return () => {
       window.removeEventListener("resize", debouncedResize);
     };
-  }, []);
+  }, [onLoad]);
 
   const colors = useMemo(() => [
     "#86d3ea", "#f5bf22", "#f3cc15", "#2b2a28"

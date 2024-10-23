@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 
 import Navbar from '@/components/layout/Navbar';
+import Loading from '@/app/loading';
 
 import LoginForm from '../../components/login/LoginForm';
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 
 const DynamicBoxes = dynamic(() => import('@/components/ui/background-boxes').then(mod => mod.Boxes), {
   ssr: false,
-  loading: () => <div className="fixed left-0 top-0 w-full h-full bg-[#F3F3F3]" />
+  loading: () => <Loading />
 });
 
 export default function LoginPage() {

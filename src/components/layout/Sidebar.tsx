@@ -48,14 +48,14 @@ export default function Sidebar({ isOpen, setIsOpen, toggleSidebar, isMinimized 
           )}
           <button
             onClick={toggleSidebar}
-            className={`${toggleButtonClass} ml-2 ${isLargeScreen ? '' : ''}`}
+            className={`${toggleButtonClass} ml-2  hover:bg-white ${isLargeScreen ? '' : ''}`}
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-6 h-6 " />
           </button>
         </div>
         <nav className="flex-1 mt-4 overflow-y-auto">
           {navItems.map((item, index) => (
-            <Link key={index} href={item.href} className="flex items-center px-4 py-3 m-2 bg-meeple-tertiary shadow-[5px_5px_0px_#000] border-2 border-black rounded-md hover:translate-x-1 hover:-translate-y-1 transition-transform duration-200">
+            <Link key={index} href={item.href} className="flex items-center px-4 py-3 m-2 bg-meeple-tertiary hover:bg-white shadow-[5px_5px_0px_#000] border-2 border-black rounded-md hover:translate-x-1 hover:-translate-y-1 transition-transform duration-200">
               <item.icon className="w-5 h-5" />
               {(!isLargeScreen || !isMinimized) && <span className="ml-4">{item.label}</span>}
             </Link>

@@ -5,16 +5,20 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 import MeepleButton from '@/components/ui/meeple-button';
+import Loading from '@/app/loading';
 
 import Logo from '../Logo';
 import NextImage from '../NextImage';
 
 interface NavbarProps {
-  scrollToSection?: (section: React.RefObject<HTMLDivElement>) => void;
+  scrollToSection?: (ref: React.RefObject<HTMLDivElement>) => void;
   gamesRef?: React.RefObject<HTMLDivElement>;
   aboutRef?: React.RefObject<HTMLDivElement>;
   buttonClassName?: string;
   logoClassName?: string;
+  onLoginClick?: () => void;
+  isLoading?: boolean;
+  setIsLoading?: (loading: boolean) => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ 
@@ -22,7 +26,10 @@ const Navbar: React.FC<NavbarProps> = ({
   gamesRef, 
   aboutRef,
   buttonClassName = '',
-  logoClassName = ''
+  logoClassName = '',
+  onLoginClick,
+  isLoading = false,
+  setIsLoading,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
@@ -47,6 +54,21 @@ const Navbar: React.FC<NavbarProps> = ({
   const handleNavigation = (path: string) => {
     router.push(path);
   };
+
+  const handleLoginClick = () => {
+    if (setIsLoading) {
+      setIsLoading(true);
+    }
+    if (onLoginClick) {
+      onLoginClick();
+    } else {
+      router.push('/login');
+    }
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <nav className='absolute w-full top-5 py-5 z-30'>
@@ -150,13 +172,14 @@ const Navbar: React.FC<NavbarProps> = ({
                 </a>
               </li>              
               <li className='lg:pl-3 sm:pl-0 md:pl-2'>
-                <MeepleButton 
-                  variant='outline' 
-                  onClick={() => handleNavigation('/login')}
-                  tooltip='meeple admin for now 🥺'
+                <MeepleButton
+                  variant='outline'
+                  onClick={handleLoginClick}
+                  tooltip='Admin access 🔐'
                   className={buttonClassName}
+                  disabled={isLoading}
                 >
-                  Login
+                  {isLoading ? 'Loading...' : 'Login'}
                 </MeepleButton>
               </li>
             </ul>
