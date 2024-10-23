@@ -36,22 +36,22 @@ const Cards: React.FC<CardsProps> = ({ src, alt, title, description, link }) => 
             </div>
           </div>
         </div>
-        <div className='flip-card-back flex flex-col justify-center items-center transform rotate-y-180'>
-          <div className='p-6'>
+        <div className='flip-card-back flex flex-col justify-between items-center transform rotate-y-180 p-4'>
+          <div className='flex flex-col h-full'>
             <div className='block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900'>
               {title}
             </div>
-            <div className='block font-sans text-base antialiased font-light leading-relaxed text-inherit'>
+            <div className='block font-sans text-sm antialiased font-light leading-relaxed text-inherit overflow-y-auto flex-grow'>
               {truncateText(description, 102)} 
             </div>
           </div>
-          <div className='p-6 pt-0'>
+          <div className='mb-4'>
             <a
               href={link} 
               className='cursor-none text-sm font-semibold leading-6 text-gray-900'
             >
               <button
-                className='cursor-none inline-block px-6 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1 mr-4'
+                className='cursor-none inline-block px-6 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1'
               >
                 Read More
               </button>
