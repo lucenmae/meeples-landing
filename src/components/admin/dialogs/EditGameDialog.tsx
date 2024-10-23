@@ -69,11 +69,9 @@ export function EditGameDialog({
                 name='name'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className='font-bold border-2 border-black'>
-                      Game Name
-                    </FormLabel>
+                    <FormLabel className='font-bold '>Game Name</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input className='border-2 border-black' {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
