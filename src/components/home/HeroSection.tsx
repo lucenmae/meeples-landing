@@ -134,7 +134,9 @@ export function HeroSection() {
                   src={card.src}
                   alt={card.alt}
                   title={card.title}
-                  description={card.description}
+                  description={card.description.length > 102 
+                    ? card.description.substring(0, 102) + '...' 
+                    : card.description}
                   link={card.link}
                 />
               ))}
@@ -156,7 +158,9 @@ export function HeroSection() {
                     src={game.imageUrl}
                     alt={game.name}
                     title={game.name}
-                    description={game.description}
+                    description={game.description.length > 102 
+                      ? game.description.substring(0, 102) + '...' 
+                      : game.description}
                     link={game.bggLink}
                   />
                 ))}
