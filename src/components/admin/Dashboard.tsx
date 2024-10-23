@@ -27,6 +27,16 @@ interface DashboardProps {
   session: Session;
 }
 
+interface Game {
+  _id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  bggLink: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export default function Dashboard({ session }: DashboardProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
@@ -56,13 +66,12 @@ export default function Dashboard({ session }: DashboardProps) {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  const handleAddGame = async (newGame: Omit<Game, '_id'>) => {
+  const handleAddGame = async (newGame: Omit<Game, '_id' | 'createdAt' | 'updatedAt'>) => {
     try {
       const response = await axios.post('/api/games', newGame);
       if (response.status === 201) {
         toast.success('Game added successfully');
         setIsAddGameModalOpen(false);
-        // Pass the newly added game to GameManagement
         return response.data; // This should be the newly added game with _id
       } else {
         toast.error('Error adding game');

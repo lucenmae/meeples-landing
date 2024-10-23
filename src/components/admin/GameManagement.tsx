@@ -12,7 +12,6 @@ import {
 } from 'react-icons/fa';
 
 import { Input } from '@/components/ui/input';
-import { Game } from '@/types/game'; 
 
 import MeepleButton from '../ui/meeple-button';
 
@@ -34,7 +33,7 @@ interface Game {
 
 interface GameManagementProps {
   onAddGame: () => void;
-  handleAddGame: (newGame: Omit<Game, '_id'>) => Promise<Game | undefined>;
+  handleAddGame: (newGame: Omit<Game, '_id' | 'createdAt' | 'updatedAt'>) => Promise<Game | undefined>;
 }
 
 interface BGGGame {
@@ -81,7 +80,7 @@ export default function GameManagement({ onAddGame, handleAddGame }: GameManagem
         game.description.toLowerCase().includes(searchTerm.toLowerCase()),
     );
     setFilteredGames(filtered);
-    setCurrentPage(1); // Reset to first page when filtering
+    setCurrentPage(1);
   }, [games, searchTerm]);
 
   const handleDelete = async (game: Game) => {
@@ -173,10 +172,18 @@ export default function GameManagement({ onAddGame, handleAddGame }: GameManagem
     }
   };
 
-  const addNewGame = async (newGame: Omit<Game, '_id'>) => {
-    const addedGame = await handleAddGame(newGame);
-    if (addedGame) {
-      setGames(prevGames => [...prevGames, addedGame]);
+  const addNewGame = async (newGame: Omit<Game, '_id' | 'createdAt' | 'updatedAt'>) => {
+    try {
+      const addedGame = await handleAddGame(newGame);
+      if (addedGame) {
+        setGames(prevGames => [...prevGames, addedGame]);
+        setFilteredGames(prevFilteredGames => [...prevFilteredGames, addedGame]);
+        toast.success(`"${addedGame.name}" added to your inventory.`);
+        fetchGames(); // Refresh the entire game list
+      }
+    } catch (error) {
+      console.error('Error adding new game:', error);
+      toast.error('Failed to add new game');
     }
   };
 
