@@ -99,7 +99,7 @@ export default function LoginForm() {
                     <MeepleButton
                       type='submit'
                       variant='primary'
-                      className='w-full'
+                      className='w-full hover:bg-white'
                     >
                       Let's go!
                     </MeepleButton>
