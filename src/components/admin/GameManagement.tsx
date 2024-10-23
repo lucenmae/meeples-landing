@@ -1,8 +1,8 @@
 import axios from 'axios';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { toast } from 'react-hot-toast';
-import { FaEdit, FaPlus, FaSearch, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaPlus, FaSearch, FaTrash, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 import MeepleButton from '../ui/meeple-button';
 import { Input } from "@/components/ui/input";
@@ -34,6 +34,8 @@ interface BGGGame {
   bggLink: string;
 }
 
+const GAMES_PER_PAGE = 5;
+
 export default function GameManagement({ onAddGame }: GameManagementProps) {
   const [games, setGames] = useState<Game[]>([]);
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
@@ -44,10 +46,21 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [gameToAdd, setGameToAdd] = useState<BGGGame | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const fetchGames = useCallback(async () => {
+    try {
+      const response = await axios.get('/api/games');
+      setGames(response.data);
+    } catch (error) {
+      console.error('Error fetching games:', error);
+      toast.error('Failed to fetch games');
+    }
+  }, []);
 
   useEffect(() => {
     fetchGames();
-  }, []);
+  }, [fetchGames]);
 
   useEffect(() => {
     const filtered = games.filter(game => 
@@ -55,16 +68,8 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
       game.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredGames(filtered);
+    setCurrentPage(1); // Reset to first page when filtering
   }, [games, searchTerm]);
-
-  const fetchGames = async () => {
-    try {
-      const response = await axios.get('/api/games');
-      setGames(response.data);
-    } catch (error) {
-      console.error('Error fetching games:', error);
-    }
-  };
 
   const handleDelete = async (game: Game) => {
     setGameToDelete(game);
@@ -77,14 +82,23 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
     try {
       const response = await axios.delete(`/api/games/${gameToDelete._id}`);
       if (response.status === 200) {
-        setGames(prevGames => prevGames.filter(g => g._id !== gameToDelete._id));
+        const updatedGames = games.filter(g => g._id !== gameToDelete._id);
+        setGames(updatedGames);
         toast.success('Game deleted successfully');
+        
+        // Adjust current page if necessary
+        const totalPages = Math.ceil(updatedGames.length / GAMES_PER_PAGE);
+        if (currentPage > totalPages) {
+          setCurrentPage(Math.max(totalPages, 1));
+        }
       } else {
         toast.error('Error deleting game');
       }
     } catch (error) {
       console.error('Error deleting game:', error);
       toast.error('Error deleting game');
+    } finally {
+      setIsDeleteModalOpen(false);
     }
   };
 
@@ -141,6 +155,20 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
     }
   };
 
+  const totalPages = Math.ceil(filteredGames.length / GAMES_PER_PAGE);
+  const paginatedGames = filteredGames.slice(
+    (currentPage - 1) * GAMES_PER_PAGE,
+    currentPage * GAMES_PER_PAGE
+  );
+
+  const goToNextPage = () => {
+    setCurrentPage((page) => Math.min(page + 1, totalPages));
+  };
+
+  const goToPreviousPage = () => {
+    setCurrentPage((page) => Math.max(page - 1, 1));
+  };
+
   return (
     <div className="space-y-8 p-4 lg:p-6">
       <h2 className="text-4xl font-bold text-black mb-6">Inventory Management</h2>
@@ -195,7 +223,7 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
               </tr>
             </thead>
             <tbody>
-              {filteredGames.map((game, index) => (
+              {paginatedGames.map((game, index) => (
                 <tr key={game._id} className={index % 2 === 0 ? 'bg-white' : 'bg-meeple-tertiary'}>
                   <td className="px-6 py-4 whitespace-nowrap border-b border-black">
                     <div className="flex items-center">
@@ -237,6 +265,39 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
             </tbody>
           </table>
         </div>
+        {filteredGames.length > 0 ? (
+          totalPages > 1 && (
+            <div className="mt-4 flex justify-between items-center">
+              <div className="text-sm text-gray-700">
+                Page {currentPage} of {totalPages}
+              </div>
+              <div className="flex space-x-2">
+                <MeepleButton
+                  onClick={goToPreviousPage}
+                  disabled={currentPage === 1}
+                  variant="outline"
+                  size="sm"
+                  className="bg-white hover:bg-meeple-tertiary"
+                  icon={<FaChevronLeft />}
+                >
+                  Previous
+                </MeepleButton>
+                <MeepleButton
+                  onClick={goToNextPage}
+                  disabled={currentPage === totalPages}
+                  variant="outline"
+                  size="sm"
+                  className="bg-white hover:bg-meeple-tertiary"
+                  icon={<FaChevronRight />}
+                >
+                  Next
+                </MeepleButton>
+              </div>
+            </div>
+          )
+        ) : (
+          <p className="text-center mt-4">No games found.</p>
+        )}
       </div>
 
       {gameToEdit && (
