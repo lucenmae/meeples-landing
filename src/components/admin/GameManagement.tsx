@@ -15,10 +15,10 @@ import { Input } from '@/components/ui/input';
 
 import MeepleButton from '../ui/meeple-button';
 
-import BGGSearch from './BGGSearch';
 import DeleteGameDialog from './dialogs/DeleteGameDialog';
-import EditGameDialog from './dialogs/EditGameDialog';
+import { EditGameDialog } from './dialogs/EditGameDialog';
 import WarningDialog from './dialogs/WarningDialog';
+import BGGSearch from './BGGSearch';
 
 interface Game {
   _id: string;
