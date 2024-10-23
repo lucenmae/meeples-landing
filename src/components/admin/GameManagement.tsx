@@ -42,10 +42,19 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this game?')) {
       try {
-        await axios.delete(`/api/games/${id}`);
-        fetchGames();
+        const response = await axios.delete(`/api/games/${id}`);
+        if (response.status === 200) {
+          // Remove the deleted game from the local state
+          setGames(prevGames => prevGames.filter(game => game._id !== id));
+          console.log('Game deleted successfully');
+        } else {
+          console.error('Error deleting game:', response.data);
+        }
       } catch (error) {
         console.error('Error deleting game:', error);
+        if (axios.isAxiosError(error)) {
+          console.error('Error response:', error.response?.data);
+        }
       }
     }
   };
