@@ -6,6 +6,8 @@ import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -54,8 +56,21 @@ export default function Dashboard({ session }: DashboardProps) {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  const handleAddGame = () => {
-    setIsAddGameModalOpen(true);
+  const handleAddGame = async (newGame: Omit<Game, '_id'>) => {
+    try {
+      const response = await axios.post('/api/games', newGame);
+      if (response.status === 201) {
+        toast.success('Game added successfully');
+        setIsAddGameModalOpen(false);
+        // Pass the newly added game to GameManagement
+        return response.data; // This should be the newly added game with _id
+      } else {
+        toast.error('Error adding game');
+      }
+    } catch (error) {
+      console.error('Failed to add game:', error);
+      toast.error('Failed to add game');
+    }
   };
 
   const handleLogout = async () => {
@@ -164,10 +179,14 @@ export default function Dashboard({ session }: DashboardProps) {
 
         <main className='flex-1 overflow-x-hidden overflow-y-auto'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
-            <GameManagement onAddGame={handleAddGame} />
+            <GameManagement 
+              onAddGame={() => setIsAddGameModalOpen(true)}
+              handleAddGame={handleAddGame}
+            />
             <AddGameDialog
               open={isAddGameModalOpen}
               onOpenChange={setIsAddGameModalOpen}
+              onAddGame={handleAddGame}
             />
           </div>
         </main>

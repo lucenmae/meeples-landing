@@ -25,7 +25,7 @@ import MeepleButton from '@/components/ui/meeple-button';
 import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z.object({
-  gameName: z.string().min(2, {
+  name: z.string().min(2, {
     message: 'Game name must be at least 2 characters.',
   }),
   description: z.string().min(10, {
@@ -42,26 +42,32 @@ const formSchema = z.object({
 interface AddGameDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onAddGame: (game: z.infer<typeof formSchema>) => Promise<void>;
 }
 
 export default function AddGameDialog({
   open,
   onOpenChange,
+  onAddGame,
 }: AddGameDialogProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      gameName: '',
+      name: '',
       description: '',
       imageUrl: '',
       bggLink: '',
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    onOpenChange(false);
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      await onAddGame(values);
+      onOpenChange(false);
+      form.reset();
+    } catch (error) {
+      console.error('Failed to add game:', error);
+    }
   }
 
   return (
@@ -80,7 +86,7 @@ export default function AddGameDialog({
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
             <FormField
               control={form.control}
-              name='gameName'
+              name='name'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className='text-lg font-semibold text-black'>

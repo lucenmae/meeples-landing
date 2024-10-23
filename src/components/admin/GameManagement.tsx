@@ -12,9 +12,11 @@ import {
 } from 'react-icons/fa';
 
 import { Input } from '@/components/ui/input';
+import { Game } from '@/types/game'; 
 
 import MeepleButton from '../ui/meeple-button';
 
+import AddGameDialog from './dialogs/AddGameDialog';
 import DeleteGameDialog from './dialogs/DeleteGameDialog';
 import { EditGameDialog } from './dialogs/EditGameDialog';
 import WarningDialog from './dialogs/WarningDialog';
@@ -32,6 +34,7 @@ interface Game {
 
 interface GameManagementProps {
   onAddGame: () => void;
+  handleAddGame: (newGame: Omit<Game, '_id'>) => Promise<Game | undefined>;
 }
 
 interface BGGGame {
@@ -44,7 +47,7 @@ interface BGGGame {
 
 const GAMES_PER_PAGE = 5;
 
-export default function GameManagement({ onAddGame }: GameManagementProps) {
+export default function GameManagement({ onAddGame, handleAddGame }: GameManagementProps) {
   const [games, setGames] = useState<Game[]>([]);
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -55,6 +58,7 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [gameToAdd, setGameToAdd] = useState<BGGGame | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isAddGameModalOpen, setIsAddGameModalOpen] = useState(false);
 
   const fetchGames = useCallback(async () => {
     try {
@@ -166,6 +170,13 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
     } catch (error) {
       console.error('Error updating game:', error);
       toast.error('Error updating game');
+    }
+  };
+
+  const addNewGame = async (newGame: Omit<Game, '_id'>) => {
+    const addedGame = await handleAddGame(newGame);
+    if (addedGame) {
+      setGames(prevGames => [...prevGames, addedGame]);
     }
   };
 
@@ -360,6 +371,13 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
           gameName={gameToAdd.name}
         />
       )}
+
+      <button onClick={() => setIsAddGameModalOpen(true)}>Add New Game</button>
+      <AddGameDialog
+        open={isAddGameModalOpen}
+        onOpenChange={setIsAddGameModalOpen}
+        onAddGame={addNewGame}
+      />
     </div>
   );
 }
