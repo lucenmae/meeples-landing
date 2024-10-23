@@ -113,6 +113,8 @@ export default function Dashboard({ session }: DashboardProps) {
                     <Settings className="mr-2 h-4 w-4" />
                     <span>Settings</span>
                   </DropdownMenuItem>
+                  
+                  <div className="border-t-2 border-black my-2"></div>
                   <DropdownMenuItem
                     className="cursor-pointer bg-red-500 font-bold hover:bg-meeple-shadow hover:text-white"
                     onSelect={(event) => {
