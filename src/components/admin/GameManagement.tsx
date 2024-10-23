@@ -1,10 +1,13 @@
 import axios from 'axios';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
 
 import MeepleButton from '../ui/meeple-button';
 
 import BGGSearch from './BGGSearch';
+import DeleteGameDialog from './DeleteGameDialog';
 import EditGameDialog from './EditGameDialog';
 
 interface Game {
@@ -21,10 +24,20 @@ interface GameManagementProps {
   onAddGame: () => void;
 }
 
+interface BGGGame {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  bggLink: string;
+}
+
 export default function GameManagement({ onAddGame }: GameManagementProps) {
   const [games, setGames] = useState<Game[]>([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [gameToEdit, setGameToEdit] = useState<Game | null>(null);
+  const [gameToDelete, setGameToDelete] = useState<Game | null>(null);
 
   useEffect(() => {
     fetchGames();
@@ -39,28 +52,37 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this game?')) {
-      try {
-        const response = await axios.delete(`/api/games/${id}`);
-        if (response.status === 200) {
-          // Remove the deleted game from the local state
-          setGames(prevGames => prevGames.filter(game => game._id !== id));
-          console.log('Game deleted successfully');
-        } else {
-          console.error('Error deleting game:', response.data);
-        }
-      } catch (error) {
-        console.error('Error deleting game:', error);
-        if (axios.isAxiosError(error)) {
-          console.error('Error response:', error.response?.data);
-        }
+  const handleDelete = async (game: Game) => {
+    setGameToDelete(game);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!gameToDelete) return;
+
+    try {
+      const response = await axios.delete(`/api/games/${gameToDelete._id}`);
+      if (response.status === 200) {
+        setGames(prevGames => prevGames.filter(g => g._id !== gameToDelete._id));
+        toast.success('Game deleted successfully');
+      } else {
+        toast.error('Error deleting game');
       }
+    } catch (error) {
+      console.error('Error deleting game:', error);
+      toast.error('Error deleting game');
     }
   };
 
-  const handleAddGameFromBGG = async (bggGame: any) => {
+  const handleAddGameFromBGG = async (bggGame: BGGGame) => {
     try {
+      // Check if the game already exists in the inventory
+      const existingGame = games.find(game => game.name.toLowerCase() === bggGame.name.toLowerCase());
+      if (existingGame) {
+        toast.custom(<div>{`"${bggGame.name}" is already in your inventory.`}</div>);
+        return;
+      }
+
       const newGame = {
         name: bggGame.name,
         description: bggGame.description,
@@ -70,8 +92,10 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
       const response = await axios.post('/api/games', newGame);
       console.log('Server response:', response.data);
       fetchGames();
+      toast.success(`"${bggGame.name}" added to your inventory.`);
     } catch (error) {
       console.error('Error adding game from BGG:', error);
+      toast.error('Error adding game from BGG');
       if (axios.isAxiosError(error)) {
         console.error('Error response:', error.response?.data);
       }
@@ -89,11 +113,13 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
       if (response.status === 200) {
         fetchGames();
         setIsEditModalOpen(false);
+        toast.success('Game updated successfully');
       } else {
-        console.error('Error updating game:', response.data);
+        toast.error('Error updating game');
       }
     } catch (error) {
       console.error('Error updating game:', error);
+      toast.error('Error updating game');
     }
   };
 
@@ -140,7 +166,7 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
                 <td className="px-6 py-4 whitespace-nowrap border-b border-black">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-16 w-16 border-2 border-black rounded-md overflow-hidden">
-                      <img className="h-full w-full object-cover" src={game.imageUrl} alt={game.name} />
+                      <Image className="h-full w-full object-cover" src={game.imageUrl} alt={game.name} width={64} height={64} />
                     </div>
                     <div className="ml-4">
                       <div className="text-sm font-bold text-black">{game.name}</div>
@@ -162,7 +188,7 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
                       Edit
                     </MeepleButton>
                     <MeepleButton
-                      onClick={() => handleDelete(game._id)}
+                      onClick={() => handleDelete(game)}
                       variant="outline"
                       size="sm"
                       className="bg-red-500 hover:bg-red-700"
@@ -184,6 +210,15 @@ export default function GameManagement({ onAddGame }: GameManagementProps) {
           onOpenChange={setIsEditModalOpen}
           game={gameToEdit}
           onUpdateGame={handleUpdateGame}
+        />
+      )}
+
+      {gameToDelete && (
+        <DeleteGameDialog
+          open={isDeleteModalOpen}
+          onOpenChange={setIsDeleteModalOpen}
+          onConfirmDelete={confirmDelete}
+          gameName={gameToDelete.name}
         />
       )}
     </div>
