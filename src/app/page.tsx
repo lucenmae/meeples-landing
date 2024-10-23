@@ -12,37 +12,25 @@ import Loading from '@/app/loading';
 
 const DynamicBoxes = dynamic(() => import('@/components/ui/background-boxes').then(mod => mod.Boxes), {
   ssr: false,
-  loading: () => <div className="fixed left-0 top-0 w-full h-full bg-[#F3F3F3]" />
+  loading: () => <Loading />
 });
 
 export default function HomePage() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate any necessary data loading or initialization
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500); // Reduced loading time to 500ms
-
-    return () => clearTimeout(timer);
-  }, []);
+  const [isBoxesLoaded, setIsBoxesLoaded] = useState(false);
 
   return (
     <FollowerPointerCard>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <main>
-          <Head>
-            <title>Meeples - Tabletop Games Organization</title>
-          </Head>
-          <DynamicBoxes />
-          <section>
-            <HeroSection />
-          </section>
-          <ScrollToTopButton />
-        </main>
-      )}
+      {!isBoxesLoaded && <Loading />}
+      <main>
+        <Head>
+          <title>Meeples - Tabletop Games Organization</title>
+        </Head>
+        <DynamicBoxes onLoad={() => setIsBoxesLoaded(true)} />
+        <section>
+          <HeroSection />
+        </section>
+        <ScrollToTopButton />
+      </main>
     </FollowerPointerCard>
   );
 }
