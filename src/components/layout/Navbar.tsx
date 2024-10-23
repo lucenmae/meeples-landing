@@ -159,7 +159,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
             {/* Logo */}
             <div className='hidden lg:flex items-center'>
-              <Logo size={200} className={`cursor-none ${logoClassName}`} />
+              <Logo  className={`cursor-none ${logoClassName}`} />
             </div>
 
             {/* Action Buttons */}

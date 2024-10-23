@@ -13,10 +13,10 @@ interface SidebarProps {
 
 const navItems = [
   { icon: Archive, label: "Inventory", href: "/admin/game-inventory" },
-  { icon: Rss, label: "Blogs", href: "/admin/blogs" },
-  { icon: Gamepad, label: "Games", href: "/admin/games" },
-  { icon: Users, label: "Users", href: "/admin/users" },
-  { icon: Clock, label: "Activity Log", href: "/admin/activity" },
+  { icon: Rss, label: "Blogs", href: "/admin/game-inventory" },
+  { icon: Gamepad, label: "Games", href: "/admin/game-inventory" },
+  { icon: Users, label: "Users", href: "/admin/game-inventory" },
+  { icon: Clock, label: "Activity Log", href: "/admin/game-inventory" },
 ];
 
 export default function Sidebar({ isOpen, setIsOpen, toggleSidebar, isMinimized }: SidebarProps) {
