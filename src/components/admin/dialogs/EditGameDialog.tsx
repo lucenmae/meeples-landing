@@ -46,7 +46,6 @@ export function EditGameDialog({
   });
 
   const handleSubmit: SubmitHandler<Game> = (data) => {
-    // Ensure createdAt and updatedAt are included in the submitted data
     const updatedGame = {
       ...data,
       createdAt: game.createdAt,
@@ -70,7 +69,9 @@ export function EditGameDialog({
                 name='name'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className='font-bold'>Game Name</FormLabel>
+                    <FormLabel className='font-bold border-2 border-black'>
+                      Game Name
+                    </FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -85,7 +86,10 @@ export function EditGameDialog({
                   <FormItem>
                     <FormLabel className='font-bold'>Description</FormLabel>
                     <FormControl>
-                      <Textarea {...field} />
+                      <Textarea
+                        className='border-2 border-black bg-white'
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -98,7 +102,7 @@ export function EditGameDialog({
                   <FormItem>
                     <FormLabel className='font-bold'>Image URL</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input className='border-2 border-black' {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -111,7 +115,7 @@ export function EditGameDialog({
                   <FormItem>
                     <FormLabel className='font-bold'>BGG Link</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input className='border-2 border-black' {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
