@@ -13,7 +13,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 import Sidebar from "../layout/Sidebar"
 
-import AddGameDialog from "./AddGameDialog"
+import AddGameDialog from "./dialogs/AddGameDialog"
 import GameManagement from "./GameManagement"
 
 interface DashboardProps {

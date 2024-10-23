@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Dialog, DialogContent, DialogDescription, DialogFooter,DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-import MeepleButton from '../ui/meeple-button';
+import MeepleButton from '../../ui/meeple-button';
 
 interface DeleteGameDialogProps {
   open: boolean;
