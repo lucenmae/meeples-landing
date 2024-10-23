@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form"
 import { ControllerRenderProps, FieldValues } from "react-hook-form"
 import * as z from "zod"
 
-import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -21,6 +20,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import MeepleButton from "../ui/meeple-button"
 
 interface Game {
   _id: string;
@@ -81,7 +81,7 @@ export default function EditGameDialog({ open, onOpenChange, game, onUpdateGame 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto bg-meeple-secondary border-4 border-black rounded-lg shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] z-50">
         <DialogHeader>
-          <DialogTitle>Edit Game</DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-black">Edit Game</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -90,9 +90,9 @@ export default function EditGameDialog({ open, onOpenChange, game, onUpdateGame 
               name="gameName"
               render={({ field }: { field: ControllerRenderProps<FieldValues, "gameName"> }) => (
                 <FormItem>
-                  <FormLabel>Game Name</FormLabel>
+                  <FormLabel className="font-bold">Game Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter game name" {...field} />
+                    <Input placeholder="Enter game name" className="border-2 border-black bg-white" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -103,11 +103,11 @@ export default function EditGameDialog({ open, onOpenChange, game, onUpdateGame 
               name="description"
               render={({ field }: { field: ControllerRenderProps<FieldValues, "description"> }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel className="font-bold">Description</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Enter game description"
-                      className="resize-none"
+                      className="resize-none border-2 border-black bg-white"
                       {...field}
                     />
                   </FormControl>
@@ -120,9 +120,9 @@ export default function EditGameDialog({ open, onOpenChange, game, onUpdateGame 
               name="imageUrl"
               render={({ field }: { field: ControllerRenderProps<FieldValues, "imageUrl"> }) => (
                 <FormItem>
-                  <FormLabel>Image URL</FormLabel>
+                  <FormLabel className="font-bold">Image URL</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter image URL" {...field} />
+                    <Input placeholder="Enter image URL" className="border-2 border-black bg-white" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -133,17 +133,32 @@ export default function EditGameDialog({ open, onOpenChange, game, onUpdateGame 
               name="bggLink"
               render={({ field }: { field: ControllerRenderProps<FieldValues, "bggLink"> }) => (
                 <FormItem>
-                  <FormLabel>BoardGameGeek Link</FormLabel>
+                  <FormLabel className="font-bold">BoardGameGeek Link</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter BoardGameGeek URL" {...field} />
+                    <Input placeholder="Enter BoardGameGeek URL" className="border-2 border-black bg-white" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <DialogFooter>
-              <Button type="submit" className="w-full sm:w-auto">Save</Button>
-              <Button type="button" variant="secondary" onClick={() => onOpenChange(false)} className="ml-2">Cancel</Button>
+            <DialogFooter className="mt-6 flex justify-end space-x-4">
+              <MeepleButton
+                type="submit"
+                variant="primary"
+                size="lg"
+                className="w-full sm:w-auto hover:bg-white"
+              >
+                Save
+              </MeepleButton>
+              <MeepleButton
+                type="button"
+                variant="outline"
+                size="lg"
+                onClick={() => onOpenChange(false)}
+                className="w-full sm:w-auto bg-white hover:bg-meeple-tertiary"
+              >
+                Cancel
+              </MeepleButton>
             </DialogFooter>
           </form>
         </Form>
