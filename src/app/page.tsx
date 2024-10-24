@@ -1,37 +1,23 @@
-'use client';
-import dynamic from 'next/dynamic';
-import Head from 'next/head';
-import { useState } from 'react';
+import { Metadata } from 'next';
 
-import Loading from '@/app/loading';
-import HeroSection from '@/components/home/HeroSection';
-import ScrollToTopButton from '@/components/ScrollToTop';
-import { FollowerPointerCard } from '@/components/ui/following-pointer';
+import ClientHome from '@/components/ClientHome';
+import connectMongoDB from '@/lib/mongodb';
+import { Game } from '@/models/Game';
 
-const DynamicBoxes = dynamic(
-  () => import('@/components/ui/background-boxes').then((mod) => mod.Boxes),
-  {
-    ssr: false,
-    loading: () => <Loading />,
-  },
-);
+export const metadata: Metadata = {
+  title: 'LSU Meeples',
+  description:
+    'LSU Meeples - An Interest-Based Organization at La Salle University Ozamiz City Promoting Tabletop Games',
+};
 
-export default function HomePage() {
-  const [isBoxesLoaded, setIsBoxesLoaded] = useState(false);
+async function getGames() {
+  await connectMongoDB();
+  const games = await Game.find({}).lean();
+  return JSON.parse(JSON.stringify(games));
+}
 
-  return (
-    <FollowerPointerCard>
-      {!isBoxesLoaded && <Loading />}
-      <main>
-        <Head>
-          <title>Meeples - Tabletop Games Organization</title>
-        </Head>
-        <DynamicBoxes onLoad={() => setIsBoxesLoaded(true)} />
-        <section>
-          <HeroSection />
-        </section>
-        <ScrollToTopButton />
-      </main>
-    </FollowerPointerCard>
-  );
+export default async function Home() {
+  const initialGames = await getGames();
+
+  return <ClientHome initialGames={initialGames} />;
 }

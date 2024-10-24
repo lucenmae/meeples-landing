@@ -1,7 +1,14 @@
-import { AnimatePresence, motion, MotionValue, useMotionValue } from "framer-motion";
-import React, { useCallback,useEffect, useState } from "react";
+'use client';
 
-import { cn } from "@/lib/utils";
+import {
+  AnimatePresence,
+  motion,
+  MotionValue,
+  useMotionValue,
+} from 'framer-motion';
+import React, { useCallback, useEffect, useState } from 'react';
+
+import { cn } from '@/lib/utils';
 
 export const FollowerPointerCard = ({
   children,
@@ -19,9 +26,9 @@ export const FollowerPointerCard = ({
   const [isInside, setIsInside] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(true); // Default to true for SSR
   const [pointerTitle, setPointerTitle] = useState<string | React.ReactNode>(
-    title || ""
+    title || '',
   );
-  const [pointerColor, setPointerColor] = useState<string>("");
+  const [pointerColor, setPointerColor] = useState<string>('');
 
   useEffect(() => {
     const updateRect = () => {
@@ -36,13 +43,13 @@ export const FollowerPointerCard = ({
     };
     checkMobile();
 
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       updateRect();
       checkMobile();
     });
     return () => {
-      window.removeEventListener("resize", updateRect);
-      window.removeEventListener("resize", checkMobile);
+      window.removeEventListener('resize', updateRect);
+      window.removeEventListener('resize', checkMobile);
     };
   }, []);
 
@@ -60,18 +67,12 @@ export const FollowerPointerCard = ({
   };
 
   const getRandomTitle = useCallback(() => {
-    const titles = [
-      "Amazing You",
-      "Cool You",
-      "Meeple",
-      "Cutie",
-      "Pretty You",
-    ];
+    const titles = ['Amazing You', 'Cool You', 'Meeple', 'Cutie', 'Pretty You'];
     return titles[Math.floor(Math.random() * titles.length)];
   }, []);
 
   const getRandomColor = useCallback(() => {
-    const colors = ["#86d3ea", "#f5bf22", "#86d3ea"];
+    const colors = ['#86d3ea', '#f5bf22', '#86d3ea'];
     return colors[Math.floor(Math.random() * colors.length)];
   }, []);
 
@@ -88,13 +89,18 @@ export const FollowerPointerCard = ({
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
-      style={{ cursor: isMobile ? "default" : "none" }}
+      style={{ cursor: isMobile ? 'default' : 'none' }}
       ref={ref}
-      className={cn("relative", className)}
+      className={cn('relative', className)}
     >
       <AnimatePresence>
         {isInside && !isMobile && (
-          <FollowPointer x={x} y={y} title={pointerTitle} color={pointerColor} />
+          <FollowPointer
+            x={x}
+            y={y}
+            title={pointerTitle}
+            color={pointerColor}
+          />
         )}
       </AnimatePresence>
       {children}
@@ -115,11 +121,11 @@ export const FollowPointer = ({
 }) => {
   return (
     <motion.div
-      className="h-4 w-4 rounded-full absolute z-50"
+      className='h-4 w-4 rounded-full absolute z-50'
       style={{
         top: y,
         left: x,
-        pointerEvents: "none",
+        pointerEvents: 'none',
       }}
       initial={{
         scale: 1,
@@ -135,16 +141,16 @@ export const FollowPointer = ({
       }}
     >
       <svg
-        stroke="currentColor"
-        fill="#f5bf22"
-        strokeWidth="1"
-        viewBox="0 0 16 16"
-        className="h-6 w-6 text-sky-500 transform -rotate-[70deg] -translate-x-[12px] -translate-y-[10px] stroke-black"
-        height="1em"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+        stroke='currentColor'
+        fill='#f5bf22'
+        strokeWidth='1'
+        viewBox='0 0 16 16'
+        className='h-6 w-6 text-sky-500 transform -rotate-[70deg] -translate-x-[12px] -translate-y-[10px] stroke-black'
+        height='1em'
+        width='1em'
+        xmlns='http://www.w3.org/2000/svg'
       >
-        <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"></path>
+        <path d='M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z'></path>
       </svg>
       <motion.div
         style={{ backgroundColor: color }}
@@ -160,7 +166,7 @@ export const FollowPointer = ({
           scale: 0.5,
           opacity: 0,
         }}
-        className="px-2 py-2 bg-neutral-200 text-gray-900 font-semibold border-solid border border-gray-900 whitespace-nowrap min-w-max text-sm rounded-full"
+        className='px-2 py-2 bg-neutral-200 text-gray-900 font-semibold border-solid border border-gray-900 whitespace-nowrap min-w-max text-sm rounded-full'
       >
         {title || `Default Title`}
       </motion.div>

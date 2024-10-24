@@ -1,5 +1,7 @@
+'use client';
+
 import axios from 'axios';
-import { useRouter,useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
 import Loading from '@/app/loading';
@@ -18,7 +20,11 @@ interface Game {
   bggLink: string;
 }
 
-export function HeroSection() {
+interface HeroSectionProps {
+  initialGames: Game[];
+}
+
+export function HeroSection({ initialGames }: HeroSectionProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const words = ['PLAY', 'CONNECT', 'THRIVE'];
@@ -62,20 +68,26 @@ export function HeroSection() {
     },
   ];
 
-  const [gameInventory, setGameInventory] = useState<Game[]>([]);
+  const [gameInventory, setGameInventory] = useState<Game[]>(initialGames);
+  const [isInventoryLoading, setIsInventoryLoading] = useState(false);
 
   useEffect(() => {
     const fetchGames = async () => {
+      setIsInventoryLoading(true);
       try {
         const response = await axios.get<Game[]>('/api/games');
         setGameInventory(response.data);
       } catch (error) {
         console.error('Error fetching games:', error);
+      } finally {
+        setIsInventoryLoading(false);
       }
     };
 
-    fetchGames();
-  }, []);
+    if (initialGames.length === 0) {
+      fetchGames();
+    }
+  }, [initialGames]);
 
   //smooth scroll
   const gamesRef = useRef<HTMLDivElement>(null);
@@ -169,20 +181,27 @@ export function HeroSection() {
             </div>
             <div className=' border-4 bg-[#e2e2e2] border-gray-800 shadow-[5px_5px_0px_#2b2a28] rounded-lg px-4 py-2 mt-12'>
               <div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 pb-10 pt-5 sm:pr-0 md:pr-0 lg:pr-10 align-middle justify-center items-center'>
-                {gameInventory.map((game) => (
-                  <Cards
-                    key={game._id}
-                    src={game.imageUrl}
-                    alt={game.name}
-                    title={game.name}
-                    description={
-                      game.description.length > 102
-                        ? game.description.substring(0, 102) + '...'
-                        : game.description
-                    }
-                    link={game.bggLink}
-                  />
-                ))}
+                {isInventoryLoading ? (
+                  // Add a loading skeleton here
+                  Array.from({ length: 5 }).map((_, index) => (
+                    <div key={index} className="animate-pulse bg-gray-300 h-64 w-48 rounded-lg m-2"></div>
+                  ))
+                ) : (
+                  gameInventory.map((game) => (
+                    <Cards
+                      key={game._id}
+                      src={game.imageUrl}
+                      alt={game.name}
+                      title={game.name}
+                      description={
+                        game.description.length > 102
+                          ? game.description.substring(0, 102) + '...'
+                          : game.description
+                      }
+                      link={game.bggLink}
+                    />
+                  ))
+                )}
               </div>
             </div>
           </div>

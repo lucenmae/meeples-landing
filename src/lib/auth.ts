@@ -1,38 +1,31 @@
-import bcrypt from 'bcryptjs';
-import { AuthOptions } from 'next-auth';
+import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 import connectMongoDB from '@/lib/mongodb';
-
 import User from '@/models/User';
 
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        usernameOrEmail: { label: "Username or Email", type: "text" },
-        password: { label: "Password", type: "password" }
+        email: { label: 'Email', type: 'text' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.usernameOrEmail || !credentials?.password) {
+        if (!credentials?.email || !credentials?.password) {
           return null;
         }
 
         await connectMongoDB();
 
-        const user = await User.findOne({
-          $or: [
-            { userName: { $regex: new RegExp(`^${credentials.usernameOrEmail}$`, 'i') } },
-            { email: credentials.usernameOrEmail.toLowerCase() }
-          ]
-        });
+        const user = await User.findOne({ email: credentials.email });
 
         if (!user) {
           return null;
         }
 
-        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
+        const isPasswordCorrect = await user.comparePassword(credentials.password);
 
         if (!isPasswordCorrect) {
           return null;
@@ -41,32 +34,31 @@ export const authOptions: AuthOptions = {
         return {
           id: user._id.toString(),
           email: user.email,
-          name: `${user.firstName} ${user.lastName}`,
-          username: user.userName,
+          name: user.name,
           role: user.role,
         };
-      }
-    })
+      },
+    }),
   ],
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
         token.role = user.role;
-        token.username = user.username;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token && session.user) {
-        session.user.id = token.id;
+      if (session?.user) {
         session.user.role = token.role as string;
-        session.user.username = token.username as string;
       }
       return session;
-    }
+    },
   },
   pages: {
     signIn: '/login',
   },
+  session: {
+    strategy: 'jwt',
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
