@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Link from 'next/link';
 import NextImage from '../NextImage';
 
 interface CardsProps {
@@ -52,14 +52,11 @@ const Cards: React.FC<CardsProps> = ({
             </div>
           </div>
           <div className='mb-4'>
-            <a
-              href={link}
-              className='cursor-none text-sm font-semibold leading-6 text-gray-900'
-            >
-              <button className='cursor-none inline-block px-6 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1'>
+            <Link href={link} passHref>
+              <button className='inline-block px-6 py-2.5 text-md font-bold text-center text-black bg-white border-2 border-black rounded-md shadow-[5px_5px_0px_#000] transition-all ease-linear hover:bg-yellow-400 hover:-translate-y-1 active:shadow-none active:translate-y-1'>
                 Read More
               </button>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

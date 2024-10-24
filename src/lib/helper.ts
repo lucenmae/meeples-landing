@@ -1,13 +1,21 @@
-export function getFromLocalStorage(key: string): string | null {
-  if (typeof window !== 'undefined') {
-    return window.localStorage.getItem(key);
-  }
-  return null;
+import { useEffect, useState } from 'react';
+
+export function useLocalStorage(key: string): string | null {
+  const [value, setValue] = useState<string | null>(null);
+
+  useEffect(() => {
+    setValue(localStorage.getItem(key));
+  }, [key]);
+
+  return value;
 }
 
-export function getFromSessionStorage(key: string): string | null {
-  if (typeof sessionStorage !== 'undefined') {
-    return sessionStorage.getItem(key);
-  }
-  return null;
+export function useSessionStorage(key: string): string | null {
+  const [value, setValue] = useState<string | null>(null);
+
+  useEffect(() => {
+    setValue(sessionStorage.getItem(key));
+  }, [key]);
+
+  return value;
 }

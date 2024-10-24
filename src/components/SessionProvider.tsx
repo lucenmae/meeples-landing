@@ -3,23 +3,17 @@
 import { Session } from 'next-auth';
 import { SessionProvider as NextAuthSessionProvider } from 'next-auth/react';
 
-interface CustomSession extends Session {
-  user: {
-    id: string;
-    username: string;
-    role: string;
-  };
-}
-
 interface SessionProviderProps {
   children: React.ReactNode;
-  session: CustomSession | null;
+  session?: Session | null;
 }
 
-export default function SessionProvider({ children, session }: SessionProviderProps) {
+const SessionProvider: React.FC<SessionProviderProps> = ({ children, session }) => {
   return (
-    <NextAuthSessionProvider session={session as Session | null}>
+    <NextAuthSessionProvider session={session}>
       {children}
     </NextAuthSessionProvider>
   );
-}
+};
+
+export default SessionProvider;
