@@ -15,11 +15,11 @@ import { Input } from '@/components/ui/input';
 
 import MeepleButton from '../ui/meeple-button';
 
+import BGGSearch from './BGGSearch';
 import AddGameDialog from './dialogs/AddGameDialog';
 import DeleteGameDialog from './dialogs/DeleteGameDialog';
 import { EditGameDialog } from './dialogs/EditGameDialog';
 import WarningDialog from './dialogs/WarningDialog';
-import BGGSearch from './BGGSearch';
 
 interface Game {
   _id: string;
@@ -33,7 +33,9 @@ interface Game {
 
 interface GameManagementProps {
   onAddGame: () => void;
-  handleAddGame: (newGame: Omit<Game, '_id' | 'createdAt' | 'updatedAt'>) => Promise<Game | undefined>;
+  handleAddGame: (
+    newGame: Omit<Game, '_id' | 'createdAt' | 'updatedAt'>,
+  ) => Promise<Game | undefined>;
 }
 
 interface BGGGame {
@@ -46,7 +48,10 @@ interface BGGGame {
 
 const GAMES_PER_PAGE = 5;
 
-export default function GameManagement({ onAddGame, handleAddGame }: GameManagementProps) {
+export default function GameManagement({
+  onAddGame,
+  handleAddGame,
+}: GameManagementProps) {
   const [games, setGames] = useState<Game[]>([]);
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -172,12 +177,17 @@ export default function GameManagement({ onAddGame, handleAddGame }: GameManagem
     }
   };
 
-  const addNewGame = async (newGame: Omit<Game, '_id' | 'createdAt' | 'updatedAt'>) => {
+  const addNewGame = async (
+    newGame: Omit<Game, '_id' | 'createdAt' | 'updatedAt'>,
+  ) => {
     try {
       const addedGame = await handleAddGame(newGame);
       if (addedGame) {
-        setGames(prevGames => [...prevGames, addedGame]);
-        setFilteredGames(prevFilteredGames => [...prevFilteredGames, addedGame]);
+        setGames((prevGames) => [...prevGames, addedGame]);
+        setFilteredGames((prevFilteredGames) => [
+          ...prevFilteredGames,
+          addedGame,
+        ]);
         toast.success(`"${addedGame.name}" added to your inventory.`);
         fetchGames(); // Refresh the entire game list
       }
@@ -330,9 +340,8 @@ export default function GameManagement({ onAddGame, handleAddGame }: GameManagem
                   variant='outline'
                   size='sm'
                   className='bg-white hover:bg-meeple-tertiary'
-                  icon={<FaChevronLeft />}
                 >
-                  Previous
+                  <FaChevronLeft className='inline-block mr-1' /> Previous
                 </MeepleButton>
                 <MeepleButton
                   onClick={goToNextPage}
@@ -340,9 +349,8 @@ export default function GameManagement({ onAddGame, handleAddGame }: GameManagem
                   variant='outline'
                   size='sm'
                   className='bg-white hover:bg-meeple-tertiary'
-                  icon={<FaChevronRight />}
                 >
-                  Next
+                  Next <FaChevronRight className='inline-block ml-1' />
                 </MeepleButton>
               </div>
             </div>
@@ -379,7 +387,7 @@ export default function GameManagement({ onAddGame, handleAddGame }: GameManagem
         />
       )}
 
-      <button onClick={() => setIsAddGameModalOpen(true)}>Add New Game</button>
+      {/* <button onClick={() => setIsAddGameModalOpen(true)}>Add New Game</button> */}
       <AddGameDialog
         open={isAddGameModalOpen}
         onOpenChange={setIsAddGameModalOpen}
